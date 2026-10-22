@@ -94,3 +94,17 @@ body .thought-rail{max-height:200px;padding-block:6px;touch-action:pan-y}
 @media(max-width:759px){body .workspace>.thought-feed,body .thought-one{height:170px;max-height:170px}body .thought-rail{max-height:170px}}
 .claim-focus-button{position:fixed;top:92px;left:50%;translate:-50% 0;z-index:95;display:flex;align-items:center;gap:9px;border:1px solid var(--accent);border-radius:999px;padding:11px 18px;background:var(--surface-raised);color:var(--text);font-size:15px;box-shadow:0 6px 30px #0003}.claim-focus-button[hidden]{display:none}.claim-focus-button svg{width:19px;height:19px;fill:none;stroke:var(--accent);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 @media(max-width:759px){.claim-focus-button{top:76px;font-size:14px}}
+
+/* One circular disclosure beside the group’s three-person avatar stack. */
+body .people-menu>summary{align-items:center;gap:10px;min-height:44px}
+body .people-menu .people-chevron{display:grid;place-items:center;flex:0 0 40px;width:40px;height:40px;margin:0;border:1.5px solid var(--text);border-radius:50%;background:transparent;color:var(--text);transition:background .2s,border-color .2s,transform .2s}
+body .people-chevron svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .22s}
+body .people-menu[open] .people-chevron svg{transform:rotate(180deg)}
+body .people-menu>summary:hover .people-chevron,body .people-menu>summary:focus-visible .people-chevron{background:var(--surface-hover);border-color:var(--accent)}
+body .people-stack>.people-hover-target:nth-child(n){display:inline-flex}
+@media(max-width:760px){body .people-menu .people-chevron{width:36px;height:36px;flex-basis:36px}body .people-menu>summary{gap:8px}}
+@media(prefers-reduced-motion:reduce){body .people-chevron svg{transition:none}}
+body .people-menu .people-chevron{display:grid!important;margin-left:0!important}
+body .people-menu .people-chevron:after{display:none!important}
+body .people-menu>summary{gap:10px!important}
+body .people-menu:not([open]) .people-list,body .people-menu:not([open]) .profile-card{display:none!important}
