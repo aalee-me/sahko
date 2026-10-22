@@ -231,3 +231,5 @@ body #voidComposer{bottom:20px;margin:0!important;max-width:calc(100vw - 32px)}
  body #onboarding:not(.landing-step)[open] .onboard-copy.has-back{padding-top:50px!important}
  body #onboarding:not(.landing-step)[open] #onboardTitle{margin-top:0}
 }
+/* White rings belong to portraits on the orbital, not people-list icons. */
+#avatars .avatar,#exitLayer .avatar,#onboarding #previewPeople .preview-person{border-color:#fff!important}
