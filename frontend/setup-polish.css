@@ -213,3 +213,12 @@ body.in-void{overflow:hidden}
 .void-timeline path{fill:none;stroke:var(--text);stroke-width:1;stroke-linecap:round;vector-effect:non-scaling-stroke}
 .void-space .constellation-sky{margin-bottom:var(--void-composer-reserve,130px)}
 body #voidComposer{bottom:20px;margin:0!important;max-width:calc(100vw - 32px)}
+/* Keep the landing invitation below the clouds when the layout stacks. */
+@media(max-width:999px){
+ #onboarding.landing-step .onboard-layout{display:flex;flex-direction:column;align-items:stretch;justify-content:center;gap:24px;padding-top:16px}
+ #onboarding.landing-step .onboard-visual{order:0;position:relative;top:auto;align-self:center;width:100%;max-width:480px;margin:0 auto}
+ #onboarding.landing-step .orbit-preview{width:100%;aspect-ratio:1.3;max-height:none}
+ #onboarding.landing-step .onboard-copy{order:1;flex:0 0 auto;width:100%;max-width:none}
+ #onboarding.landing-step #onboardTitle{margin-top:0}
+}
+@media(max-width:480px){#onboarding.landing-step .onboard-layout{gap:18px}}
