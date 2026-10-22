@@ -1,0 +1,2243 @@
+<!DOCTYPE html>
+<html lang="en" class="dark light-theme">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quantum 3D Amorphous Heightmap Studio — 100% GPU Accelerated</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Crimson+Pro:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-void: #020307;
+      --bg-panel: #070b14;
+      --border-subtle: #162035;
+      --accent-cyan: #38bdf8;
+      --accent-gold: #facc15;
+    }
+    html.light-theme {
+      --bg-void: #fffff7;
+      --bg-panel: #ffffff;
+      --border-subtle: #cbd5e1;
+    }
+    * {
+      box-sizing: border-box;
+      scrollbar-width: thin;
+      scrollbar-color: #1e2d4a #050811;
+    }
+    body {
+      background-color: var(--bg-void);
+      color: #e2e8f0;
+      font-family: 'Inter', -apple-system, sans-serif;
+      overflow-x: hidden;
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+    html.light-theme body {
+      background-color: #fffff7;
+      color: #0f172a;
+    }
+    html.light-theme header {
+      background-color: rgba(255, 255, 255, 0.92) !important;
+      border-color: #cbd5e1 !important;
+    }
+    html.light-theme .theme-card {
+      background-color: #ffffff !important;
+      border-color: #cbd5e1 !important;
+      color: #0f172a !important;
+      box-shadow: 0 12px 32px -8px rgba(15, 23, 42, 0.08) !important;
+    }
+    html.light-theme .theme-subpanel {
+      background-color: #f8fafc !important;
+      border-color: #e2e8f0 !important;
+    }
+    html.light-theme .theme-bar {
+      background-color: #f1f5f9 !important;
+      border-color: #cbd5e1 !important;
+    }
+    html.light-theme .text-white {
+      color: #0f172a !important;
+    }
+    html.light-theme .text-slate-300,
+    html.light-theme .text-slate-400 {
+      color: #475569 !important;
+    }
+    .font-mono-code { font-family: 'JetBrains Mono', monospace; }
+    .font-serif-label {
+      font-family: 'Crimson Pro', Georgia, serif;
+      letter-spacing: 0.03em;
+    }
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      background: #111a2e;
+      height: 5px;
+      border-radius: 999px;
+      outline: none;
+    }
+    html.light-theme input[type="range"] {
+      background: #cbd5e1;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #38bdf8;
+      border: 2px solid #020307;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.75);
+      transition: transform 0.12s ease, background-color 0.12s ease;
+    }
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.22);
+      background: #facc15;
+    }
+    input[type="color"] {
+      -webkit-appearance: none;
+      appearance: none;
+      border: none;
+      padding: 0;
+      background: none;
+      cursor: pointer;
+    }
+    input[type="color"]::-webkit-color-swatch-wrapper {
+      padding: 0;
+    }
+    input[type="color"]::-webkit-color-swatch {
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 6px;
+    }
+    .state-card {
+      transition: all 0.16s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .state-card:hover {
+      transform: translateY(-2px);
+      border-color: #38bdf8;
+      box-shadow: 0 8px 22px -6px rgba(56, 189, 248, 0.28);
+    }
+    .state-card.active {
+      border-color: #facc15;
+      background: radial-gradient(circle at 50% 0%, rgba(250, 204, 21, 0.16), rgba(7, 11, 20, 0.96) 75%);
+      box-shadow: 0 0 0 1px #facc15, 0 10px 26px -6px rgba(250, 204, 21, 0.3);
+    }
+    .morph-btn.active,
+    .preset-chip.active {
+      border-color: #facc15;
+      background-color: rgba(250, 204, 21, 0.18);
+      color: #fde047;
+    }
+    .stage-3d-cursor {
+      cursor: grab;
+    }
+    .stage-3d-cursor:active {
+      cursor: grabbing;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-sky-500/30 selection:text-amber-200">
+
+  <header class="sticky top-0 z-40 border-b border-[#162035] bg-[#04070f]/90 backdrop-blur-md px-4 lg:px-6 py-3">
+    <div class="max-w-[1800px] mx-auto flex flex-wrap items-center justify-between gap-3">
+      <!-- Brand Identity -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-[#0a1222] border border-amber-400/40 flex items-center justify-center shadow-inner relative overflow-hidden">
+          <svg viewBox="0 0 44 44" class="w-9 h-9">
+            <defs>
+              <linearGradient id="amorphousIconGrad" x1="0" y1="1" x2="0" y2="0">
+                <stop offset="0%" stop-color="#021024"/>
+                <stop offset="35%" stop-color="#2994d1"/>
+                <stop offset="65%" stop-color="#ffffff"/>
+                <stop offset="85%" stop-color="#facc15"/>
+                <stop offset="100%" stop-color="#ff3b00"/>
+              </linearGradient>
+            </defs>
+            <path d="M 11 35 C 11 26, 13 20, 16 21 C 18 11, 20 6, 22 6 C 24 6, 26 13, 28 23 C 31 22, 33 27, 33 35 Z" fill="url(#amorphousIconGrad)"/>
+          </svg>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-base sm:text-lg font-semibold tracking-tight text-white">Quantum 3D Amorphous Heightmap Studio</h1>
+            <span class="text-[11px] font-mono-code uppercase px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-400/30">100% GPU Shader • Custom Gradient Map</span>
+          </div>
+          <p class="text-xs text-slate-400">Zero-CPU-Overhead GLSL Orbital Heightfield • Customizable Pastel &amp; Warm Gradient Stops</p>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="flex items-center gap-2 flex-wrap">
+        <div class="px-2.5 py-1.5 rounded-xl bg-[#080e1c] theme-subpanel border border-[#1a2744] text-[11px] font-mono-code text-slate-300 flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span id="fps-telemetry">GPU: 60 FPS</span>
+        </div>
+
+        <button onclick="triggerPuddleReemerge()" class="px-3 py-2 rounded-xl text-xs font-mono-code font-semibold bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 border border-sky-400/40 flex items-center gap-1.5 transition" title="Melt orbital into a ground puddle and organically rise back up">
+          <span>💧 Puddle Rise</span>
+        </button>
+
+        <button onclick="reseedLobeOrganicPhase()" class="px-3 py-2 rounded-xl text-xs font-mono-code font-semibold bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-400/40 flex items-center gap-1.5 transition" title="Subtly shift the organic asymmetry phase of each lobe">
+          <span>🎲 Shift Organic Phase</span>
+        </button>
+
+        <button onclick="toggleStudioTheme()" id="btn-theme-toggle" class="px-3 py-2 rounded-xl text-xs font-mono-code font-semibold bg-[#0b1324] hover:bg-[#13203b] text-sky-300 border border-sky-500/30 flex items-center gap-1.5 transition">
+          <span id="theme-icon">🌙</span>
+          <span id="theme-label">Mode: LIGHT</span>
+        </button>
+
+        <button onclick="toggleWaveformOscillation()" id="btn-wave-toggle" class="px-3.5 py-2 rounded-xl text-xs font-mono-code font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-400/40 flex items-center gap-1.5 transition">
+          <span id="wave-icon">⏸</span>
+          <span>Wave: <strong id="wave-status">BREATHING</strong></span>
+        </button>
+
+        <button onclick="downloadWebGLPNG()" class="px-3.5 py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 text-white shadow-lg shadow-sky-500/25 flex items-center gap-1.5 transition">
+          <span>📸 Save 3D Render .PNG</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-[1800px] w-full mx-auto grid grid-cols-1 xl:grid-cols-12 gap-6 p-4 lg:p-6">
+    
+    <!-- LEFT COLUMN: TRUE QUANTUM ORBITAL CATALOG -->
+    <section class="xl:col-span-4 flex flex-col gap-4">
+      <div class="rounded-2xl bg-[#060a13] theme-card border border-[#162035] p-4 sm:p-5 shadow-2xl flex flex-col gap-4">
+        
+        <!-- Lobe Shape Style Selector -->
+        <div class="rounded-xl bg-[#09101f] theme-subpanel border border-[#1b2a4a] p-3 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-mono-code uppercase tracking-wider text-amber-400 font-semibold">Lobe Silhouette Style (GPU Evaluated)</span>
+          </div>
+          <div class="grid grid-cols-2 gap-1.5">
+            <button onclick="setLobeMorphStyle('shouldered')" id="morph-shouldered" class="morph-btn active px-2.5 py-2 rounded-lg border border-[#223458] bg-[#0c1528] text-left transition flex items-center gap-2">
+              <svg viewBox="0 0 28 28" class="w-6 h-6 shrink-0 text-amber-300">
+                <path d="M 6 24 C 6 17, 8 13, 10 14 C 12 6, 14 3, 15 3 C 16 3, 18 8, 19 16 C 21 15, 22 18, 22 24 Z" fill="currentColor" opacity="0.85"/>
+              </svg>
+              <div>
+                <div class="text-[11px] font-semibold leading-tight">Stepped Shoulders</div>
+                <div class="text-[9px] text-slate-400">Asymmetric side ridges</div>
+              </div>
+            </button>
+
+            <button onclick="setLobeMorphStyle('bilobed')" id="morph-bilobed" class="morph-btn px-2.5 py-2 rounded-lg border border-[#223458] bg-[#0c1528] text-left text-slate-300 transition flex items-center gap-2">
+              <svg viewBox="0 0 28 28" class="w-6 h-6 shrink-0 text-sky-300">
+                <path d="M 9 23 C 5 18, 4 9, 10 6 C 12 5, 14 7, 14 8 C 14 7, 16 4, 19 6 C 24 9, 23 18, 19 23 Z" fill="currentColor" opacity="0.85"/>
+              </svg>
+              <div>
+                <div class="text-[11px] font-semibold leading-tight">Bilobed Crown</div>
+                <div class="text-[9px] text-slate-400">Clefted heart/crest</div>
+              </div>
+            </button>
+
+            <button onclick="setLobeMorphStyle('pinched')" id="morph-pinched" class="morph-btn px-2.5 py-2 rounded-lg border border-[#223458] bg-[#0c1528] text-left text-slate-300 transition flex items-center gap-2">
+              <svg viewBox="0 0 28 28" class="w-6 h-6 shrink-0 text-emerald-300">
+                <path d="M 5 14 C 5 8, 10 8, 13 11 C 15 12, 16 11, 18 9 C 22 6, 25 10, 24 15 C 23 20, 18 20, 15 17 C 13 16, 11 18, 8 19 C 6 19, 5 17, 5 14 Z" fill="currentColor" opacity="0.85"/>
+              </svg>
+              <div>
+                <div class="text-[11px] font-semibold leading-tight">Pinched Peanut</div>
+                <div class="text-[9px] text-slate-400">Gourd/hourglass waist</div>
+              </div>
+            </button>
+
+            <button onclick="setLobeMorphStyle('organic')" id="morph-organic" class="morph-btn px-2.5 py-2 rounded-lg border border-[#223458] bg-[#0c1528] text-left text-slate-300 transition flex items-center gap-2">
+              <svg viewBox="0 0 28 28" class="w-6 h-6 shrink-0 text-purple-300">
+                <path d="M 7 24 C 8 15, 11 6, 15 4 C 18 6, 19 14, 22 24 Z" fill="currentColor" opacity="0.85"/>
+              </svg>
+              <div>
+                <div class="text-[11px] font-semibold leading-tight">Soft Organic Sway</div>
+                <div class="text-[9px] text-slate-400">Subtle natural drift</div>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between border-b border-[#11192b] pb-3">
+          <div>
+            <span class="text-[10px] font-mono-code uppercase tracking-widest text-sky-400">Instant GPU Puddle Transitions</span>
+            <h2 class="font-serif-label text-xl text-white">3D Hydrogen States ($n, l, m$)</h2>
+          </div>
+          <div class="flex items-center gap-1">
+            <button onclick="filterCatalog('featured')" id="cat-featured" class="px-2.5 py-1 rounded text-[11px] font-mono-code bg-amber-400/20 text-amber-300 border border-amber-400/40">8 Core</button>
+            <button onclick="filterCatalog('all')" id="cat-all" class="px-2.5 py-1 rounded text-[11px] font-mono-code bg-[#0b1220] text-slate-400 border border-[#162035]">All 14</button>
+          </div>
+        </div>
+
+        <div id="states-catalog-grid" class="grid grid-cols-2 gap-2.5 max-h-[560px] overflow-y-auto pr-1"></div>
+      </div>
+    </section>
+
+    <!-- RIGHT/CENTER COLUMN: FULL-WIDTH GPU 3D STAGE & CONTROLS -->
+    <section class="xl:col-span-8 flex flex-col gap-5">
+      
+      <div class="rounded-2xl bg-[#060a13] theme-card border border-[#162035] overflow-hidden shadow-2xl flex flex-col">
+        
+        <div class="px-4 py-3 bg-[#090f1d] theme-bar border-b border-[#162035] flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <span id="stage-state-badge" class="px-3 py-1 rounded-lg bg-amber-400/15 border border-amber-400/40 text-amber-300 font-mono-code text-xs font-semibold">
+              n=3, l=1, m=1 (3p)
+            </span>
+            <div>
+              <h3 id="stage-state-title" class="text-sm font-semibold text-white">3p (m=1) — Twin Inner Spikes &amp; Left/Right Crescent Saddles</h3>
+              <p id="stage-state-subtitle" class="text-[11px] font-mono-code text-slate-400">100% GPU Vertex Displacement &amp; Analytic Normals • Zero CPU Lag</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button onclick="matchReferenceCameraAngle()" class="px-2.5 py-1 rounded-lg bg-sky-500/15 hover:bg-sky-500/25 text-sky-400 border border-sky-400/30 text-[11px] font-mono-code transition">
+              🎯 GSAP Snap Angle
+            </button>
+            <button onclick="gsapCinematicSweep()" class="px-2.5 py-1 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 text-amber-400 border border-amber-400/30 text-[11px] font-mono-code transition">
+              🎬 GSAP Orbit Sweep
+            </button>
+          </div>
+        </div>
+
+        <!-- FULL-WIDTH THREE.JS GPU VIEWPORT -->
+        <div id="viewports-wrapper" class="relative h-[500px] sm:h-[540px] w-full bg-[#010204] overflow-hidden stage-3d-cursor select-none" style="background-color:#fffff7">
+          <div id="webgl-canvas-host" class="w-full h-full"></div>
+
+          <!-- Video Typography Overlay -->
+          <div class="absolute top-6 left-7 pointer-events-none select-none" id="video-typography-overlay">
+            <div id="hud-serif-text" class="font-serif-label italic text-slate-900 drop-shadow-[0_1px_4px_rgba(255,255,255,0.9)] leading-none">
+              <div class="flex items-baseline gap-6 text-4xl sm:text-5xl font-semibold">
+                <span id="hud-n">n=3</span>
+                <span id="hud-orbital" class="not-italic font-normal text-slate-900">3p</span>
+              </div>
+              <div id="hud-l" class="text-4xl sm:text-5xl font-semibold -mt-1">l=1</div>
+              <div id="hud-m" class="text-4xl sm:text-5xl font-semibold -mt-1">m=1</div>
+            </div>
+          </div>
+
+          <div class="absolute bottom-3 left-3 pointer-events-none px-3 py-1 rounded-lg bg-black/75 border border-white/10 text-[11px] font-mono-code text-sky-300 backdrop-blur-sm">
+            Drag to Orbit Camera • Click any state on the left to watch it melt &amp; rise out of the ground puddle
+          </div>
+        </div>
+
+        <!-- INTERACTIVE GRADIENT MAP & PASTEL/WARM PALETTE STUDIO -->
+        <div class="px-4 sm:px-5 py-4 bg-[#09101f] theme-bar border-t border-[#162035] space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center gap-2.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-gradient-to-tr from-rose-400 via-amber-300 to-emerald-300"></span>
+              <span class="text-xs font-mono-code uppercase tracking-wider text-amber-300 font-semibold">4. Custom 6-Stop Gradient Map &amp; Pastel / Warm Palettes</span>
+            </div>
+
+            <!-- Preset Palette Chips -->
+            <div class="flex items-center gap-1.5 flex-wrap">
+              <button onclick="applyGradientPreset('quantum')" id="preset-quantum" class="preset-chip px-2.5 py-1 rounded-lg border border-[#223458] bg-[#0c1528] text-[11px] font-mono-code text-slate-300 hover:text-white transition">
+                🔬 Classic Quantum
+              </button>
+              <button onclick="applyGradientPreset('pastelMesh')" id="preset-pastelMesh" class="preset-chip active px-2.5 py-1 rounded-lg border border-[#223458] bg-[#0c1528] text-[11px] font-mono-code text-slate-300 hover:text-white transition" title="Lavender-blue, sage pistachio, warm golden yellow, peach & rose coral">
+                🌸 Pastel Mesh (Ref)
+              </button>
+              <button onclick="applyGradientPreset('warmPeachGold')" id="preset-warmPeachGold" class="preset-chip px-2.5 py-1 rounded-lg border border-[#223458] bg-[#0c1528] text-[11px] font-mono-code text-slate-300 hover:text-white transition" title="Warm rose, apricot, honey gold, cream & soft coral">
+                🍑 Warm Peach &amp; Gold
+              </button>
+              <button onclick="applyGradientPreset('sunsetSorbet')" id="preset-sunsetSorbet" class="preset-chip px-2.5 py-1 rounded-lg border border-[#223458] bg-[#0c1528] text-[11px] font-mono-code text-slate-300 hover:text-white transition" title="Soft plum, blush pink, tangerine, butter yellow & warm cream">
+                🌅 Sunset Sorbet
+              </button>
+              <button onclick="applyGradientPreset('matchaHoney')" id="preset-matchaHoney" class="preset-chip px-2.5 py-1 rounded-lg border border-[#223458] bg-[#0c1528] text-[11px] font-mono-code text-slate-300 hover:text-white transition" title="Soft periwinkle, pistachio green, warm lemon, apricot & rose">
+                🍵 Pistachio &amp; Honey
+              </button>
+            </div>
+          </div>
+
+          <!-- Live Gradient Preview Bar -->
+          <div id="gradient-preview-bar" class="w-full h-4 rounded-lg border border-white/15 shadow-inner transition-all"></div>
+
+            <!-- 6 Individual Color Stop Pickers + Pastel & Warmth Sliders -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center pt-1">
+            <div class="lg:col-span-8 grid grid-cols-3 sm:grid-cols-6 gap-2" id="gradient-stops-container">
+              <!-- Populated dynamically by JS -->
+            </div>
+
+            <div class="lg:col-span-4 grid grid-cols-2 gap-3 bg-[#0b1220] theme-subpanel border border-[#18253f] rounded-xl p-2.5">
+              <div class="space-y-1">
+                <div class="flex justify-between text-[11px]">
+                  <label class="text-slate-300">Pastel Softness</label>
+                  <span id="val-pastelLift" class="font-mono-code text-rose-300">0.18</span>
+                </div>
+                <input id="slider-pastelLift" type="range" min="0.00" max="0.75" step="0.01" value="0.18" oninput="updateStudioParam('pastelLift', this.value)" class="w-full">
+              </div>
+
+              <div class="space-y-1">
+                <div class="flex justify-between text-[11px]">
+                  <label class="text-slate-300">Warmth Bias</label>
+                  <span id="val-warmthTint" class="font-mono-code text-amber-300">0.34</span>
+                </div>
+                <input id="slider-warmthTint" type="range" min="-0.40" max="0.75" step="0.01" value="0.34" oninput="updateStudioParam('warmthTint', this.value)" class="w-full">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CONTROLS GRID -->
+        <div class="p-4 sm:p-5 bg-[#080d18] theme-bar border-t border-[#162035] grid grid-cols-1 lg:grid-cols-3 gap-5">
+          
+          <!-- GROUP 1: INDIVIDUAL LOBE SHAPE & IMPERFECTION -->
+          <div class="rounded-xl bg-[#0b1220] theme-subpanel border border-amber-500/30 p-3.5 space-y-3">
+            <div class="flex items-center justify-between border-b border-[#142038] pb-2">
+              <span class="text-xs font-mono-code uppercase tracking-wider text-amber-400 font-semibold">1. Lobe Silhouette Shape</span>
+              <button onclick="resetLobeShapeParams()" class="text-[10px] font-mono-code text-amber-300 hover:text-white">Reset Shape</button>
+            </div>
+
+            <div class="space-y-1">
+              <div class="flex gap-1.5">
+                <button id="model-reference" type="button" onclick="setShapeModel('reference')" class="flex-1 px-2 py-1.5 rounded-lg border border-[#223458] text-[11px] font-mono-code font-semibold transition">Reference orbitals</button>
+                <button id="model-classic" type="button" onclick="setShapeModel('classic')" class="flex-1 px-2 py-1.5 rounded-lg border border-[#223458] text-[11px] font-mono-code font-semibold transition">Classic lobes</button>
+              </div>
+              <div id="model-hint" class="text-[10px] text-slate-400"></div>
+            </div>
+
+            <div class="space-y-1">
+              <div class="flex justify-between text-xs">
+                <label class="text-slate-300">Stepped Shoulder Ridge</label>
+                <span id="val-shoulderStep" class="font-mono-code text-amber-400">0.82</span>
+              </div>
+              <input id="slider-shoulderStep" type="range" min="0.00" max="1.00" step="0.02" value="0.82" oninput="updateStudioParam('shoulderStep', this.value)" class="w-full">
+            </div>
+
+            <div class="space-y-1">
+              <div class="flex justify-between text-xs">
+                <label class="text-slate-300">Waist Pinch / Bilobed Cleft</label>
+                <span id="val-waistPinch" class="font-mono-code text-sky-400">0.36</span>
+              </div>
+              <input id="slider-waistPinch" type="range" min="0.00" max="1.00" step="0.02" value="0.36" oninput="updateStudioParam('waistPinch', this.value)" class="w-full">
+            </div>
+
+            <div class="space-y-1">
+              <div class="flex justify-between text-xs">
+                <label class="text-slate-300">Organic Contour Wobble</label>
+                <span id="val-contourWobble" class="font-mono-code text-emerald-400">0.32</span>
+              </div>
+              <input id="slider-contourWobble" type="range" min="0.00" max="0.90" step="0.02" value="0.32" oninput="updateStudioParam('contourWobble', this.value)" class="w-full">
+            </div>
+
+            <div class="space-y-1">
+              <div class="flex justify-between text-xs">
+                <label class="text-slate-300">Apex Lean / Asymmetry</label>
+                <span id="val-tipLean" class="font-mono-code text-purple-400">0.24</span>
+              </div>
+              <input id="slider-tipLean" type="range" min="0.00" max="0.85" step="0.02" value="0.24" oninput="updateStudioParam('tipLean', this.value)" class="w-full">
+            </div>
+          </div>
+
+          <!-- GROUP 2: CAMERA ANGLE, HEIGHT & HEATMAP -->
+          <div class="rounded-xl bg-[#0b1220] theme-subpanel border border-[#18253f] p-3.5 space-y-3">
+            <div class="flex items-center justify-between border-b border-[#142038] pb-2">
+              <span class="text-xs font-mono-code uppercase tracking-wider text-sky-400 font-semibold">2. 3D Angle &amp; Heatmap Height</span>
+              <button onclick="matchReferenceCameraAngle()" class="text-[10px] font-mono-code text-slate-400 hover:text-white">GSAP Reset</button>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div class="space-y-1">
+                <div class="flex justify-between text-xs">
+                  <label class="text-slate-300">Pitch</label>
+                  <span id="val-pitch" class="font-mono-code text-sky-400">54°</span>
+                </div>
+                <input id="slider-pitch" type="range" min="18" max="82" step="1" value="54" oninput="updateStudioParam('pitch', this.value)" class="w-full">
+              </div>
+              <div class="space-y-1">
+                <div class="flex justify-between text-xs">
+                  <label class="text-slate-300">Azimuth</label>
+                  <span id="val-azimuth" class="font-mono-code text-sky-400">-18°</span>
+                </div>
+                <input id="slider-azimuth" type="range" min="-188" max="180" step="1" value="-18" oninput="updateStudioParam('azimuth', this.value)" class="w-full">
+              </div>
+            </div>
+
+            <div class="space-y-1">
+              <div class="flex justify-between text-xs">
+                <label class="text-slate-300">3D Peak Height (Heatmap Locked)</label>
+                <span id="val-extrusion" class="font-mono-code text-amber-400">0.15x</span>
+              </div>
+              <input id="slider-extrusion" type="range" min="0.12" max="1.60" step="0.01" value="0.15" oninput="updateStudioParam('extrusion', this.value)" class="w-full">
+            </div>
+
+            <div class="space-y-1">
+              <div class="flex justify-between text-xs">
+                <label class="text-slate-300">Outer Ring / Crescent Spread</label>
+                <span id="val-ringSpread" class="font-mono-code text-sky-400">2.00x</span>
+              </div>
+              <input id="slider-ringSpread" type="range" min="0.75" max="2.30" step="0.05" value="2.00" oninput="updateStudioParam('ringSpread', this.value)" class="w-full">
+            </div>
+
+            <div class="space-y-1">
+              <div class="flex justify-between text-xs">
+                <label class="text-slate-300">Gradient Elevation Gain</label>
+                <span id="val-heatGain" class="font-mono-code text-rose-400">2.15x</span>
+              </div>
+              <input id="slider-heatGain" type="range" min="0.75" max="2.40" step="0.01" value="2.15" oninput="updateStudioParam('heatGain', this.value)" class="w-full">
+            </div>
+
+            <div class="space-y-1">
+              <div class="flex justify-between text-xs">
+                <label class="text-slate-300" title="Controls how strongly the first lobe extrudes before the rest of the lobes/rings follow">Sequential Lobe Stagger</label>
+                <span id="val-stagger" class="font-mono-code text-emerald-400">0.80</span>
+              </div>
+              <input id="slider-stagger" type="range" min="0.00" max="1.00" step="0.05" value="0.80" oninput="updateStudioParam('stagger', this.value)" class="w-full">
+            </div>
+          </div>
+
+          <!-- GROUP 3: WAVEFORM, BLUR & FILM GRAIN -->
+          <div class="rounded-xl bg-[#0b1220] theme-subpanel border border-[#18253f] p-3.5 space-y-3">
+            <div class="flex items-center justify-between border-b border-[#142038] pb-2">
+              <span class="text-xs font-mono-code uppercase tracking-wider text-purple-400 font-semibold">3. Wave, Blur &amp; Film Grain</span>
+              <button onclick="resetBlurAndFeather()" class="text-[10px] font-mono-code text-slate-400 hover:text-white">Reset FX</button>
+            </div>
+
+            <div class="space-y-1">
+              <div class="flex justify-between text-xs">
+                <label class="text-slate-300">Wave Breathing Amplitude</label>
+                <span id="val-waveAmp" class="font-mono-code text-emerald-400">0.28</span>
+              </div>
+              <input id="slider-waveAmp" type="range" min="0.00" max="0.75" step="0.02" value="0.28" oninput="updateStudioParam('waveAmp', this.value)" class="w-full">
+            </div>
+
+            <div class="space-y-1">
+              <div class="flex justify-between text-xs">
+                <label class="text-slate-300">Edge-Only Feather (<span class="font-mono-code">σ_edge</span>)</label>
+                <span id="val-blur" class="font-mono-code text-purple-400">8.5 px</span>
+              </div>
+              <input id="slider-blur" type="range" min="0" max="24" step="0.5" value="8.5" oninput="updateStudioParam('blur', this.value)" class="w-full">
+            </div>
+
+            <div class="space-y-1">
+              <div class="flex justify-between text-xs">
+                <label class="text-slate-300">Global All-Over Blur (<span class="font-mono-code">σ_all</span>)</label>
+                <span id="val-globalBlur" class="font-mono-code text-purple-300">0.0 px</span>
+              </div>
+              <input id="slider-globalBlur" type="range" min="0" max="16" step="0.5" value="0.0" oninput="updateStudioParam('globalBlur', this.value)" class="w-full">
+            </div>
+
+            <div class="space-y-1">
+              <div class="flex justify-between text-xs">
+                <label class="text-slate-300">Cinematic 35mm Film Grain</label>
+                <span id="val-grain" class="font-mono-code text-amber-400">0.84</span>
+              </div>
+              <input id="slider-grain" type="range" min="0.00" max="1.00" step="0.02" value="0.84" oninput="updateStudioParam('grain', this.value)" class="w-full">
+            </div>
+
+            <div class="space-y-1">
+              <div class="flex justify-between text-xs">
+                <label class="text-slate-300">Cloud Dissolve &amp; Grain Density</label>
+                <span id="val-dissolve" class="font-mono-code text-sky-300">0.18</span>
+              </div>
+              <input id="slider-dissolve" type="range" min="0.00" max="1.00" step="0.02" value="0.18" oninput="updateStudioParam('dissolve', this.value)" class="w-full">
+            </div>
+
+            <div class="space-y-1">
+              <div class="flex justify-between text-xs">
+                <label class="text-slate-300">Overall Transparency (whole cloud)</label>
+                <span id="val-transparency" class="font-mono-code text-sky-300">0.14</span>
+              </div>
+              <input id="slider-transparency" type="range" min="0.00" max="0.90" step="0.02" value="0.14" oninput="updateStudioParam('transparency', this.value)" class="w-full">
+            </div>
+
+            <div class="space-y-1">
+              <div class="flex justify-between text-xs">
+                <label class="text-slate-300">Contour Roughness (imperfect curve)</label>
+                <span id="val-rough" class="font-mono-code text-sky-300">0.66</span>
+              </div>
+              <input id="slider-rough" type="range" min="0.00" max="1.00" step="0.02" value="0.66" oninput="updateStudioParam('rough', this.value)" class="w-full">
+            </div>
+
+            <div class="space-y-1">
+              <div class="flex justify-between text-xs">
+                <label class="text-slate-300">Dissolve Grain Size</label>
+                <span id="val-grainSize" class="font-mono-code text-sky-300">3.0</span>
+              </div>
+              <input id="slider-grainSize" type="range" min="1" max="24" step="0.5" value="3" oninput="updateStudioParam('grainSize', this.value)" class="w-full">
+            </div>
+
+            <div class="space-y-1">
+              <div class="flex justify-between text-xs">
+                <label class="text-slate-300">Haze Fill (soft fog between grains)</label>
+                <span id="val-haze" class="font-mono-code text-amber-300">0.00</span>
+              </div>
+              <input id="slider-haze" type="range" min="0.00" max="1.00" step="0.02" value="0.00" oninput="updateStudioParam('haze', this.value)" class="w-full">
+            </div>
+
+            <div class="space-y-1">
+              <div class="flex justify-between text-xs">
+                <label class="text-slate-300">Particle Glow &amp; Bloom</label>
+                <span id="val-glow" class="font-mono-code text-amber-300">0.00</span>
+              </div>
+              <input id="slider-glow" type="range" min="0.00" max="1.50" step="0.02" value="0.00" oninput="updateStudioParam('glow', this.value)" class="w-full">
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <div id="studio-toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 pointer-events-none transition-all duration-300 flex items-center gap-3 px-4 py-3 rounded-xl bg-[#0b1324] border border-sky-400/50 text-white shadow-2xl">
+    <div class="w-6 h-6 rounded-full bg-sky-500/20 border border-sky-400 flex items-center justify-center text-sky-300">
+      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+    </div>
+    <div>
+      <div id="toast-head" class="text-xs font-semibold">GPU State Updated</div>
+      <div id="toast-sub" class="text-[11px] text-slate-400">100% WebGL Vertex Shader Evaluation</div>
+    </div>
+  </div>
+
+  <script>
+    /*************************************************************************
+     * QUANTUM 3D AMORPHOUS HEIGHTMAP STUDIO — 100% GPU VERTEX SHADER ENGINE
+     *************************************************************************/
+
+    const EXTRUDED_STATES = [
+      {
+        id: "2s_200", n: 2, l: 0, m: 0, label: "2s", featured: true,
+        title: "2s Orbital — Shouldered Central Spire & Organic Crater Rim",
+        desc: "1 spherical nodal trough separating the stepped-shoulder central spire from an undulating crater ring.",
+        defaultPitch: 33, defaultAzimuth: -33,
+        components: [
+          { type: "spike", r: 0, phi: 0, height: 1.02, radius: 0.14, phase: 1 },
+          { type: "ring", r: 0.42, width: 0.24, height: 0.48, phase: -1 }
+        ]
+      },
+      {
+        id: "2p_210", n: 2, l: 1, m: 0, label: "2p", featured: true,
+        title: "2p (m=0) — Twin Polar Amorphous Lobes",
+        desc: "Two polar probability peaks shaped with stepped shoulders and pinched waists across the nodal trench.",
+        defaultPitch: 33, defaultAzimuth: -33,
+        components: [
+          { type: "cone", r: 0.27, phi: 90, height: 0.96, rx: 0.29, ry: 0.27, phase: 1 },
+          { type: "cone", r: 0.27, phi: 270, height: 0.94, rx: 0.28, ry: 0.28, phase: -1 }
+        ]
+      },
+      {
+        id: "2p_211", n: 2, l: 1, m: 1, label: "2p", featured: true,
+        title: "2p (m=1) — Twin Side-by-Side Amorphous Cones",
+        desc: "Equatorial twin probability mountains with stepped side-shoulders and organic leaning tips.",
+        defaultPitch: 33, defaultAzimuth: -33,
+        components: [
+          { type: "cone", r: 0.27, phi: 0, height: 0.97, rx: 0.27, ry: 0.30, phase: 1 },
+          { type: "cone", r: 0.27, phi: 180, height: 0.94, rx: 0.28, ry: 0.29, phase: -1 }
+        ]
+      },
+      {
+        id: "3s_300", n: 3, l: 0, m: 0, label: "3s", featured: true,
+        title: "3s Orbital — Stepped Spire + Inner Crater + Wide Wavy Ring",
+        desc: "2 concentric nodal troughs with a stepped-shoulder central spire and non-uniform crater rims.",
+        defaultPitch: 33, defaultAzimuth: -33,
+        components: [
+          { type: "spike", r: 0, phi: 0, height: 1.05, radius: 0.10, phase: 1 },
+          { type: "ring", r: 0.27, width: 0.13, height: 0.50, phase: -1 },
+          { type: "ring", r: 0.64, width: 0.26, height: 0.34, phase: 1 }
+        ]
+      },
+      {
+        id: "3p_310", n: 3, l: 1, m: 0, label: "3p", featured: true,
+        title: "3p (m=0) — Shouldered Inner Spires & Pinched Fore/Aft Saddles",
+        desc: "Two tall stepped-shoulder central spires flanked along the polar axis by pinched-waist crescent hills.",
+        defaultPitch: 33, defaultAzimuth: -33,
+        components: [
+          { type: "cone", r: 0.14, phi: 90, height: 0.98, rx: 0.13, ry: 0.13, phase: 1 },
+          { type: "cone", r: 0.14, phi: 270, height: 0.95, rx: 0.13, ry: 0.13, phase: -1 },
+          { type: "crescent", r: 0.56, phi: 90, spanDeg: 125, width: 0.24, height: 0.54, phase: -1 },
+          { type: "crescent", r: 0.56, phi: 270, spanDeg: 125, width: 0.24, height: 0.52, phase: 1 }
+        ]
+      },
+      {
+        id: "3p_311", n: 3, l: 1, m: 1, label: "3p", featured: true,
+        title: "3p (m=1) — Stepped Twin Spires & Amorphous Crescent Saddles",
+        desc: "Two central horns with stepped shoulder ridges surrounded by organically pinched left/right crescents.",
+        defaultPitch: 33, defaultAzimuth: -33,
+        components: [
+          { type: "cone", r: 0.14, phi: 0, height: 0.98, rx: 0.13, ry: 0.13, phase: 1 },
+          { type: "cone", r: 0.14, phi: 180, height: 0.95, rx: 0.13, ry: 0.13, phase: -1 },
+          { type: "crescent", r: 0.56, phi: 0, spanDeg: 125, width: 0.24, height: 0.54, phase: -1 },
+          { type: "crescent", r: 0.56, phi: 180, spanDeg: 125, width: 0.24, height: 0.52, phase: 1 }
+        ]
+      },
+      {
+        id: "3d_320", n: 3, l: 2, m: 0, label: "3d", featured: true,
+        title: "3d (m=0) — Shouldered Polar Peaks & Equatorial Saddle Blobs",
+        desc: "Two dominant polar peaks with stepped shoulders paired with two organic equatorial saddle mounds.",
+        defaultPitch: 33, defaultAzimuth: -33,
+        components: [
+          { type: "cone", r: 0.26, phi: 90, height: 0.98, rx: 0.22, ry: 0.22, phase: 1 },
+          { type: "cone", r: 0.26, phi: 270, height: 0.95, rx: 0.22, ry: 0.22, phase: 1 },
+          { type: "cone", r: 0.34, phi: 0, height: 0.44, rx: 0.26, ry: 0.22, phase: -1 },
+          { type: "cone", r: 0.34, phi: 180, height: 0.42, rx: 0.26, ry: 0.22, phase: -1 }
+        ]
+      },
+      {
+        id: "3d_321", n: 3, l: 2, m: 1, label: "3d", featured: true,
+        title: "3d (m=1) — 4-Lobe Amorphous Cloverleaf Mountains",
+        desc: "Four diagonal 3D lobes with asymmetric stepped shoulders and gently curving tips.",
+        defaultPitch: 33, defaultAzimuth: -33,
+        components: [
+          { type: "cone", r: 0.28, phi: 45, height: 0.97, rx: 0.23, ry: 0.23, phase: 1 },
+          { type: "cone", r: 0.28, phi: 135, height: 0.93, rx: 0.23, ry: 0.23, phase: -1 },
+          { type: "cone", r: 0.28, phi: 225, height: 0.96, rx: 0.23, ry: 0.23, phase: 1 },
+          { type: "cone", r: 0.28, phi: 315, height: 0.92, rx: 0.23, ry: 0.23, phase: -1 }
+        ]
+      },
+      {
+        id: "4d_421", n: 4, l: 2, m: 1, label: "4d", featured: true,
+        title: "4d (m=1) — 4 Shouldered Inner Spires + 4 Pinched Outer Hills",
+        desc: "Four stepped-shoulder inner spires encircled by four organically pinched outer saddle hills.",
+        defaultPitch: 33, defaultAzimuth: -33,
+        components: [
+          { type: "cone", r: 0.16, phi: 45, height: 0.98, rx: 0.11, ry: 0.11, phase: 1 },
+          { type: "cone", r: 0.16, phi: 135, height: 0.95, rx: 0.11, ry: 0.11, phase: -1 },
+          { type: "cone", r: 0.16, phi: 225, height: 0.97, rx: 0.11, ry: 0.11, phase: 1 },
+          { type: "cone", r: 0.16, phi: 315, height: 0.94, rx: 0.11, ry: 0.11, phase: -1 },
+          { type: "crescent", r: 0.58, phi: 45, spanDeg: 74, width: 0.24, height: 0.62, phase: -1 },
+          { type: "crescent", r: 0.58, phi: 135, spanDeg: 74, width: 0.24, height: 0.60, phase: 1 },
+          { type: "crescent", r: 0.58, phi: 225, spanDeg: 74, width: 0.24, height: 0.63, phase: -1 },
+          { type: "crescent", r: 0.58, phi: 315, spanDeg: 74, width: 0.24, height: 0.59, phase: 1 }
+        ]
+      },
+      {
+        id: "5p_511", n: 5, l: 1, m: 1, label: "5p", featured: true,
+        title: "5p (m=1) — Shouldered Twin Needles & 3 Wavy Split Rings",
+        desc: "Twin central needles with stepped shoulders surrounded by 3 organically undulating split ripple rings.",
+        defaultPitch: 33, defaultAzimuth: -33,
+        components: [
+          { type: "cone", r: 0.06, phi: 0, height: 1.00, rx: 0.055, ry: 0.055, phase: 1 },
+          { type: "cone", r: 0.06, phi: 180, height: 0.97, rx: 0.055, ry: 0.055, phase: -1 },
+          { type: "crescent", r: 0.18, phi: 0, spanDeg: 148, width: 0.08, height: 0.52, phase: -1 },
+          { type: "crescent", r: 0.18, phi: 180, spanDeg: 148, width: 0.08, height: 0.50, phase: 1 },
+          { type: "crescent", r: 0.36, phi: 0, spanDeg: 154, width: 0.12, height: 0.44, phase: 1 },
+          { type: "crescent", r: 0.36, phi: 180, spanDeg: 154, width: 0.12, height: 0.42, phase: -1 },
+          { type: "crescent", r: 0.68, phi: 0, spanDeg: 160, width: 0.26, height: 0.36, phase: -1 },
+          { type: "crescent", r: 0.68, phi: 180, spanDeg: 160, width: 0.26, height: 0.35, phase: 1 }
+        ]
+      },
+      {
+        id: "1s_100", n: 1, l: 0, m: 0, label: "1s", featured: false,
+        title: "1s Orbital — Fundamental Stepped-Shoulder Spire",
+        desc: "Ground state single central peak sculpted with asymmetric stepped shoulders and organic base.",
+        defaultPitch: 33, defaultAzimuth: -33,
+        components: [
+          { type: "spike", r: 0, phi: 0, height: 1.00, radius: 0.34, phase: 1 }
+        ]
+      },
+      {
+        id: "4s_400", n: 4, l: 0, m: 0, label: "4s", featured: false,
+        title: "4s Orbital — Central Spire & 3 Undulating Crater Rings",
+        desc: "3 spherical nodal troughs creating a multi-tiered organic circular ripple cascade.",
+        defaultPitch: 33, defaultAzimuth: -33,
+        components: [
+          { type: "spike", r: 0, phi: 0, height: 1.04, radius: 0.07, phase: 1 },
+          { type: "ring", r: 0.18, width: 0.08, height: 0.54, phase: -1 },
+          { type: "ring", r: 0.40, width: 0.12, height: 0.42, phase: 1 },
+          { type: "ring", r: 0.70, width: 0.22, height: 0.32, phase: -1 }
+        ]
+      },
+      {
+        id: "4p_411", n: 4, l: 1, m: 1, label: "4p", featured: false,
+        title: "4p (m=1) — Twin Inner Needles & 2 Organic Crescent Tiers",
+        desc: "2 radial nodal troughs and 1 angular nodal valley with pinched-waist outer crescents.",
+        defaultPitch: 33, defaultAzimuth: -33,
+        components: [
+          { type: "cone", r: 0.09, phi: 0, height: 0.98, rx: 0.08, ry: 0.08, phase: 1 },
+          { type: "cone", r: 0.09, phi: 180, height: 0.95, rx: 0.08, ry: 0.08, phase: -1 },
+          { type: "crescent", r: 0.30, phi: 0, spanDeg: 140, width: 0.12, height: 0.54, phase: -1 },
+          { type: "crescent", r: 0.30, phi: 180, spanDeg: 140, width: 0.12, height: 0.52, phase: 1 },
+          { type: "crescent", r: 0.64, phi: 0, spanDeg: 148, width: 0.24, height: 0.40, phase: 1 },
+          { type: "crescent", r: 0.64, phi: 180, spanDeg: 148, width: 0.24, height: 0.39, phase: -1 }
+        ]
+      },
+      {
+        id: "4f_431", n: 4, l: 3, m: 1, label: "4f", featured: false,
+        title: "4f (m=1) — 6-Lobe Amorphous Rosette Mountain Ring",
+        desc: "Four tall diagonal shouldered peaks paired with two pinched equatorial saddle hills.",
+        defaultPitch: 33, defaultAzimuth: -33,
+        components: [
+          { type: "cone", r: 0.36, phi: 32, height: 0.95, rx: 0.20, ry: 0.18, phase: 1 },
+          { type: "cone", r: 0.36, phi: 148, height: 0.92, rx: 0.20, ry: 0.18, phase: -1 },
+          { type: "cone", r: 0.36, phi: 212, height: 0.94, rx: 0.20, ry: 0.18, phase: -1 },
+          { type: "cone", r: 0.36, phi: 328, height: 0.91, rx: 0.20, ry: 0.18, phase: 1 },
+          { type: "cone", r: 0.38, phi: 90, height: 0.56, rx: 0.18, ry: 0.15, phase: -1 },
+          { type: "cone", r: 0.38, phi: 270, height: 0.54, rx: 0.18, ry: 0.15, phase: 1 }
+        ]
+      }
+    ];
+
+    // 6-Stop Gradient Presets (from outer base skirt -> mid slopes -> crest -> peak tip)
+    const GRADIENT_PRESETS = {
+      quantum: {
+        name: "Classic Quantum",
+        pastelLift: 0.00,
+        warmthTint: 0.00,
+        stops: ["#041330", "#268fd9", "#6bc9fa", "#fafaeb", "#fcc70d", "#ff1f00"]
+      },
+      pastelMesh: {
+        name: "Pastel Mesh (Ref)",
+        pastelLift: 0.18,
+        warmthTint: 0.34,
+        stops: ["#8360e1", "#7eb2c4", "#9ad97e", "#fadd3c", "#fca652", "#f78fa7"]
+      },
+      warmPeachGold: {
+        name: "Warm Peach & Gold",
+        pastelLift: 0.22,
+        warmthTint: 0.28,
+        stops: ["#4a2545", "#c95b78", "#f48b72", "#fbd36b", "#fff1bf", "#ff6b6b"]
+      },
+      sunsetSorbet: {
+        name: "Sunset Sorbet",
+        pastelLift: 0.24,
+        warmthTint: 0.24,
+        stops: ["#5e4fa2", "#b86b9e", "#f28482", "#f6bd60", "#f7ede2", "#ff5d8f"]
+      },
+      matchaHoney: {
+        name: "Pistachio & Honey",
+        pastelLift: 0.20,
+        warmthTint: 0.18,
+        stops: ["#6c8ebf", "#7ec8a3", "#b8e070", "#fde156", "#fbb161", "#f47c7c"]
+      }
+    };
+
+    const STOP_LABELS = [
+      "1. Deep Base",
+      "2. Outer Skirt",
+      "3. Mid Slope",
+      "4. Saddle Crest",
+      "5. Upper Peak",
+      "6. Apex Tip"
+    ];
+
+    const isMobileDevice = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || window.innerWidth < 768;
+
+    // ---- Per-mode default settings matching your two screenshots (Light vs Dark) ----
+    const MODE_DEFAULTS = {
+      light: {
+        shapeModel: 'reference',
+        pastelLift: 0.18, warmthTint: 0.34,
+        colorStops: ["#8360e1", "#7eb2c4", "#9ad97e", "#fadd3c", "#fca652", "#f78fa7"],
+        shoulderStep: 0.82, waistPinch: 0.36, contourWobble: 0.32, tipLean: 0.24,
+        pitch: 54, azimuth: -18, extrusion: 0.15, ringSpread: 2.00, heatGain: 2.15, stagger: 0.80,
+        waveAmp: 0.28, blur: 8.5, globalBlur: 0.0, grain: 0.84,
+        dissolve: 0.18, transparency: 0.14, rough: 0.66, grainSize: 3.0, haze: 0.0, glow: 0.0
+      },
+      dark: {
+        shapeModel: 'classic',
+        pastelLift: 0.18, warmthTint: 0.15,
+        colorStops: ["#968ce6", "#7ec4b6", "#9ad97e", "#fadd3c", "#fca652", "#f78fa7"],
+        shoulderStep: 0.48, waistPinch: 0.36, contourWobble: 0.32, tipLean: 0.28,
+        pitch: 30, azimuth: -188, extrusion: 0.31, ringSpread: 1.80, heatGain: 1.32, stagger: 0.85,
+        waveAmp: 0.58, blur: 15.5, globalBlur: 0.5, grain: 0.84,
+        dissolve: 0.00, transparency: 0.00, rough: 0.44, grainSize: 3.0, haze: 0.0, glow: 0.0
+      }
+    };
+    const MODE_SLIDER_KEYS = [
+      'pastelLift', 'warmthTint',
+      'shoulderStep', 'waistPinch', 'contourWobble', 'tipLean',
+      'pitch', 'azimuth', 'extrusion', 'ringSpread', 'heatGain', 'stagger',
+      'waveAmp', 'blur', 'globalBlur', 'grain',
+      'dissolve', 'transparency', 'rough', 'grainSize', 'haze', 'glow'
+    ];
+    const modeSaved = {
+      light: { ...MODE_DEFAULTS.light, colorStops: [...MODE_DEFAULTS.light.colorStops] },
+      dark: { ...MODE_DEFAULTS.dark, colorStops: [...MODE_DEFAULTS.dark.colorStops] }
+    };
+
+    function formatParamLabel(key, val) {
+      if (key === 'pitch' || key === 'azimuth') return `${Math.round(val)}°`;
+      if (key === 'extrusion' || key === 'ringSpread' || key === 'heatGain') return `${val.toFixed(2)}x`;
+      if (key === 'blur' || key === 'globalBlur') return `${val.toFixed(1)} px`;
+      if (key === 'grainSize') return val.toFixed(1);
+      return val.toFixed(2);
+    }
+
+    function syncParamUI(key) {
+      const sl = document.getElementById('slider-' + key);
+      const lb = document.getElementById('val-' + key);
+      if (sl) sl.value = studio[key];
+      if (lb) lb.textContent = formatParamLabel(key, studio[key]);
+    }
+
+    function applyModeProfile(mode, source) {
+      const prof = source || modeSaved[mode];
+      if (typeof gsap !== 'undefined') gsap.killTweensOf(studio);
+      MODE_SLIDER_KEYS.forEach(k => {
+        studio[k] = prof[k];
+        syncParamUI(k);
+      });
+      if (prof.colorStops) {
+        studio.colorStops = [...prof.colorStops];
+        renderGradientPickerUI();
+      }
+      if (prof.shapeModel) {
+        setShapeModel(prof.shapeModel);
+      }
+      if (typeof glRenderer !== 'undefined' && glRenderer && glRenderer.domElement) {
+        glRenderer.domElement.style.filter = studio.globalBlur > 0.1 ? `blur(${studio.globalBlur.toFixed(1)}px)` : 'none';
+      }
+      if (typeof updateWebGLCameraPose === 'function' && typeof glRenderer !== 'undefined' && glRenderer) {
+        updateWebGLCameraPose();
+      }
+    }
+
+    let studio = {
+      selectedIndex: 5,
+      catalogFilter: 'featured',
+      theme: 'light',
+      lobeMorphStyle: 'shouldered',
+      activePreset: 'pastelMesh',
+      shapeModel: 'reference',
+      colorStops: [...MODE_DEFAULTS.light.colorStops],
+      pastelLift: 0.18,
+      warmthTint: 0.34,
+      puddleEmergence: 1.0,
+      stagger: 0.80,
+      shoulderStep: 0.82,
+      waistPinch: 0.36,
+      contourWobble: 0.32,
+      tipLean: 0.24,
+      seedPhase: 1.35,
+      pitch: 54,
+      azimuth: -18,
+      extrusion: 0.15,
+      ringSpread: 2.00,
+      heatGain: 2.15,
+      wavePlaying: true,
+      waveAmp: 0.28,
+      waveSpeed: 1.05,
+      blur: 8.5,
+      globalBlur: 0.0,
+      feather: 1.35,
+      grain: 0.84,
+      dissolve: 0.18,
+      transparency: 0.14,
+      rough: 0.66,
+      grainSize: 3.0,
+      haze: 0.00,
+      glow: 0.00,
+      gloss: 0.92,
+      time: 0,
+      dragging: false,
+      lastX: 0,
+      lastY: 0
+    };
+
+    const MAX_GPU_COMPS = 8;
+
+    function hexToThreeColor(hex) {
+      return new THREE.Color(hex);
+    }
+
+    function renderGradientPickerUI() {
+      const container = document.getElementById('gradient-stops-container');
+      const bar = document.getElementById('gradient-preview-bar');
+      if (bar) {
+        const stopsCSS = studio.colorStops.map((hex, idx) => {
+          const pct = Math.round((idx / (studio.colorStops.length - 1)) * 100);
+          return `${hex} ${pct}%`;
+        }).join(', ');
+        bar.style.background = `linear-gradient(90deg, ${stopsCSS})`;
+      }
+      if (!container) return;
+
+      container.innerHTML = studio.colorStops.map((hex, idx) => `
+        <div class="flex items-center gap-2 bg-[#0b1220] theme-subpanel border border-[#18253f] rounded-lg px-2 py-1.5">
+          <input type="color" value="${hex}" oninput="updateColorStop(${idx}, this.value)" class="w-6 h-6 shrink-0 rounded cursor-pointer" title="Pick color for ${STOP_LABELS[idx]}">
+          <div class="min-w-0 flex-1">
+            <div class="text-[10px] font-semibold text-slate-200 truncate">${STOP_LABELS[idx]}</div>
+            <div id="hex-label-${idx}" class="text-[9px] font-mono-code text-slate-400 uppercase">${hex}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function updateColorStop(index, hexVal) {
+      studio.colorStops[index] = hexVal;
+      const lbl = document.getElementById(`hex-label-${index}`);
+      if (lbl) lbl.textContent = hexVal;
+      const bar = document.getElementById('gradient-preview-bar');
+      if (bar) {
+        const stopsCSS = studio.colorStops.map((hex, idx) => {
+          const pct = Math.round((idx / (studio.colorStops.length - 1)) * 100);
+          return `${hex} ${pct}%`;
+        }).join(', ');
+        bar.style.background = `linear-gradient(90deg, ${stopsCSS})`;
+      }
+      renderStatesCatalog();
+      renderGPUFrame();
+    }
+
+    function applyGradientPreset(presetKey) {
+      const preset = GRADIENT_PRESETS[presetKey];
+      if (!preset) return;
+      studio.activePreset = presetKey;
+      studio.colorStops = [...preset.stops];
+      studio.pastelLift = preset.pastelLift;
+      studio.warmthTint = preset.warmthTint;
+
+      Object.keys(GRADIENT_PRESETS).forEach(k => {
+        const btn = document.getElementById(`preset-${k}`);
+        if (!btn) return;
+        if (k === presetKey) btn.classList.add('active');
+        else btn.classList.remove('active');
+      });
+
+      const pSlider = document.getElementById('slider-pastelLift');
+      const pVal = document.getElementById('val-pastelLift');
+      const wSlider = document.getElementById('slider-warmthTint');
+      const wVal = document.getElementById('val-warmthTint');
+      if (pSlider) pSlider.value = studio.pastelLift;
+      if (pVal) pVal.textContent = studio.pastelLift.toFixed(2);
+      if (wSlider) wSlider.value = studio.warmthTint;
+      if (wVal) wVal.textContent = studio.warmthTint.toFixed(2);
+
+      renderGradientPickerUI();
+      renderStatesCatalog();
+      renderGPUFrame();
+      showStudioToast(`🎨 Palette: ${preset.name}`, "Updated 6-stop GPU gradient map & pastel warmth.");
+    }
+
+    const ORBITAL_GAMMA = 0.58;
+    const ORBITAL_EDGE_R = 0.80;
+    const _orbCache = {};
+    function orbAngSq(l, m, c) {
+      const c2 = c * c, s2 = 1 - c2;
+      if (l === 0) return 1;
+      if (l === 1) return m === 0 ? c2 : s2;
+      if (l === 2) { if (m === 0) { const t = 3 * c2 - 1; return t * t; } return m === 1 ? 9 * s2 * c2 : 9 * s2 * s2; }
+      if (m === 0) { const t = 5 * c * c2 - 3 * c; return t * t; }
+      if (m === 1) { const t = 5 * c2 - 1; return 2.25 * s2 * t * t; }
+      return m === 2 ? 225 * c2 * s2 * s2 : 225 * s2 * s2 * s2;
+    }
+    function orbitalParams(n, l, m) {
+      const key = n + '_' + l + '_' + m;
+      if (_orbCache[key]) return _orbCache[key];
+      const k = n - l - 1, alpha = 2 * l + 1;
+      const fact = x => { let f = 1; for (let i = 2; i <= x; i++) f *= i; return f; };
+      const cf = [0, 0, 0, 0, 0];
+      for (let j = 0; j <= k && j < 5; j++) cf[j] = ((j % 2) ? -1 : 1) * fact(k + alpha) / (fact(k - j) * fact(alpha + j)) / fact(j);
+      const dens = (rho, c) => {
+        const L = cf[0] + rho * (cf[1] + rho * (cf[2] + rho * (cf[3] + rho * cf[4])));
+        return Math.exp(-(Math.sqrt(rho * rho + 0.25) - 0.5)) * Math.pow(Math.max(rho, 1e-4), 2 * l) * L * L * orbAngSq(l, m, c);
+      };
+      let maxD = 0;
+      for (let rho = 0.02; rho < 70; rho += 0.04) for (let c = 0; c <= 1.0001; c += 0.02) maxD = Math.max(maxD, dens(rho, c));
+      let ext = 1;
+      for (let rho = 0.02; rho < 70; rho += 0.04) for (let c = 0; c <= 1.0001; c += 0.05) {
+        if (Math.pow(dens(rho, c) / maxD, ORBITAL_GAMMA) > 0.07) ext = Math.max(ext, rho);
+      }
+      return (_orbCache[key] = { cf, l, m, normInv: 1 / maxD, invScale: ext / ORBITAL_EDGE_R, gamma: ORBITAL_GAMMA });
+    }
+
+    function packStateToGPUUniforms(stateObj, targetUniforms) {
+      for (let i = 0; i < MAX_GPU_COMPS; i++) { targetUniforms.uCompC.value[i].set(0, 0, 0, 0); targetUniforms.uCompD.value[i].set(0, 0, 0, 0); }
+      if (studio.shapeModel === 'reference' && typeof stateObj.n === 'number') {
+        const o = orbitalParams(stateObj.n, stateObj.l, Math.abs(stateObj.m));
+        targetUniforms.uCompA.value[0].set(5.0, 0.0, 0.0, 1.0);
+        targetUniforms.uCompB.value[0].set(o.cf[4], o.normInv, 0.0, 1.0);
+        targetUniforms.uCompC.value[0].set(o.invScale, o.l, o.m, o.gamma);
+        targetUniforms.uCompD.value[0].set(o.cf[0], o.cf[1], o.cf[2], o.cf[3]);
+        for (let i = 1; i < MAX_GPU_COMPS; i++) { targetUniforms.uCompA.value[i].set(0, 0, 0, 0); targetUniforms.uCompB.value[i].set(0, 0, 0, 0); }
+        targetUniforms.uCompCount.value = 1;
+        return;
+      }
+      const count = Math.min(MAX_GPU_COMPS, stateObj.components.length);
+      for (let i = 0; i < MAX_GPU_COMPS; i++) {
+        const comp = stateObj.components[i];
+        if (!comp) {
+          targetUniforms.uCompA.value[i].set(0, 0, 0, 0);
+          targetUniforms.uCompB.value[i].set(0, 0, 0, 0);
+          continue;
+        }
+        let staggerOrder = 0.0;
+        if (count > 1) {
+          const isOuterRingOrCrescent = (comp.type === 'ring' || comp.type === 'crescent');
+          const radialTier = Math.min(1.0, (comp.r || 0.0) / 0.68);
+          const indexFraction = i / Math.max(1, count - 1);
+          if (i === 0) {
+            staggerOrder = 0.0;
+          } else if (!isOuterRingOrCrescent) {
+            staggerOrder = 0.24 + 0.30 * indexFraction;
+          } else {
+            staggerOrder = 0.44 + 0.34 * (0.45 * indexFraction + 0.55 * radialTier);
+          }
+        }
+
+        const phiRad = ((comp.phi || 0) * Math.PI) / 180.0;
+        if (comp.type === 'spike') {
+          targetUniforms.uCompA.value[i].set(1.0, comp.r || 0.0, phiRad, comp.height);
+          targetUniforms.uCompB.value[i].set(comp.radius, 0.0, staggerOrder, comp.phase || 1.0);
+        } else if (comp.type === 'cone') {
+          targetUniforms.uCompA.value[i].set(2.0, comp.r || 0.0, phiRad, comp.height);
+          targetUniforms.uCompB.value[i].set(comp.rx, comp.ry, staggerOrder, comp.phase || 1.0);
+        } else if (comp.type === 'ring') {
+          targetUniforms.uCompA.value[i].set(3.0, comp.r || 0.0, 0.0, comp.height);
+          targetUniforms.uCompB.value[i].set(comp.width, 0.0, staggerOrder, comp.phase || 1.0);
+        } else if (comp.type === 'crescent') {
+          const halfSpanRad = ((comp.spanDeg * 0.5) * Math.PI) / 180.0;
+          targetUniforms.uCompA.value[i].set(4.0, comp.r || 0.0, phiRad, comp.height);
+          targetUniforms.uCompB.value[i].set(comp.width, halfSpanRad, staggerOrder, comp.phase || 1.0);
+        }
+      }
+      targetUniforms.uCompCount.value = count;
+    }
+
+    function getMorphStyleIndex() {
+      if (studio.lobeMorphStyle === 'shouldered') return 0;
+      if (studio.lobeMorphStyle === 'bilobed') return 1;
+      if (studio.lobeMorphStyle === 'pinched') return 2;
+      return 3;
+    }
+
+    let glScene, glCamera, glRenderer, glMesh, glGeometry, glUniforms;
+
+    function initWebGLHeightmap() {
+      const host = document.getElementById('webgl-canvas-host');
+      if (!host || typeof THREE === 'undefined') return;
+
+      const width = host.clientWidth || 720;
+      const height = host.clientHeight || 520;
+
+      glScene = new THREE.Scene();
+      glScene.background = new THREE.Color(studio.theme === 'light' ? 0xfffff7 : 0x010204);
+
+      glCamera = new THREE.PerspectiveCamera(34, width / height, 0.1, 100);
+
+      glRenderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance", preserveDrawingBuffer: true });
+      glRenderer.setSize(width, height);
+      glRenderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isMobileDevice ? 1.5 : 2.0));
+      host.innerHTML = '';
+      host.appendChild(glRenderer.domElement);
+
+      const segs = isMobileDevice ? 160 : 224;
+      glGeometry = new THREE.PlaneBufferGeometry(2.85, 2.85, segs, segs);
+
+      const compAArray = [];
+      const compBArray = [];
+      const compCArray = [];
+      const compDArray = [];
+      for (let i = 0; i < MAX_GPU_COMPS; i++) {
+        compAArray.push(new THREE.Vector4(0, 0, 0, 0));
+        compBArray.push(new THREE.Vector4(0, 0, 0, 0));
+        compCArray.push(new THREE.Vector4(0, 0, 0, 0));
+        compDArray.push(new THREE.Vector4(0, 0, 0, 0));
+      }
+
+      glUniforms = {
+        uCompA: { value: compAArray },
+        uCompB: { value: compBArray },
+        uCompC: { value: compCArray },
+        uCompD: { value: compDArray },
+        uCompCount: { value: 4 },
+        uTime: { value: 0.0 },
+        uPuddleEmerge: { value: studio.puddleEmergence },
+        uStagger: { value: studio.stagger },
+        uMaxExtrusion: { value: studio.extrusion },
+        uRingSpread: { value: studio.ringSpread },
+        uFeather: { value: studio.feather },
+        uEdgeBlur: { value: studio.blur },
+        uDissolve: { value: studio.dissolve },
+        uTransparency: { value: studio.transparency },
+        uRough: { value: studio.rough },
+        uGrainSize: { value: studio.grainSize },
+        uHaze: { value: studio.haze },
+        uGlow: { value: studio.glow },
+        uWaveAmp: { value: studio.waveAmp },
+        uShoulderStep: { value: studio.shoulderStep },
+        uWaistPinch: { value: studio.waistPinch },
+        uContourWobble: { value: studio.contourWobble },
+        uTipLean: { value: studio.tipLean },
+        uSeedPhase: { value: studio.seedPhase },
+        uMorphStyle: { value: getMorphStyleIndex() },
+        uGloss: { value: studio.gloss },
+        uHeatGain: { value: studio.heatGain },
+        uGrain: { value: studio.grain },
+        uLightMode: { value: studio.theme === 'light' ? 1.0 : 0.0 },
+        uLightDir: { value: new THREE.Vector3(-0.32, 0.48, 0.88).normalize() },
+        uColor1: { value: hexToThreeColor(studio.colorStops[0]) },
+        uColor2: { value: hexToThreeColor(studio.colorStops[1]) },
+        uColor3: { value: hexToThreeColor(studio.colorStops[2]) },
+        uColor4: { value: hexToThreeColor(studio.colorStops[3]) },
+        uColor5: { value: hexToThreeColor(studio.colorStops[4]) },
+        uColor6: { value: hexToThreeColor(studio.colorStops[5]) },
+        uPastelLift: { value: studio.pastelLift },
+        uWarmthTint: { value: studio.warmthTint }
+      };
+
+      packStateToGPUUniforms(EXTRUDED_STATES[studio.selectedIndex], glUniforms);
+
+      const vertexShader = `
+        uniform vec4 uCompA[8];
+        uniform vec4 uCompB[8];
+        uniform vec4 uCompC[8];
+        uniform vec4 uCompD[8];
+        uniform int uCompCount;
+        uniform float uTime;
+        uniform float uPuddleEmerge;
+        uniform float uStagger;
+        uniform float uMaxExtrusion;
+        uniform float uRingSpread;
+        uniform float uFeather;
+        uniform float uEdgeBlur;
+        uniform float uWaveAmp;
+        uniform float uShoulderStep;
+        uniform float uWaistPinch;
+        uniform float uContourWobble;
+        uniform float uTipLean;
+        uniform float uSeedPhase;
+        uniform int uMorphStyle;
+
+        varying float vDensity;
+        varying float vSignedDisp;
+        varying vec2 vPlanarPos;
+        varying vec3 vNormalWatch;
+        varying vec3 vViewPos;
+
+        float sMax(float a, float b, float k) {
+          float h = max(k - abs(a - b), 0.0) / k;
+          return max(a, b) + h * h * k * 0.25;
+        }
+
+        // Smooth blend that preserves signed sub-surface water-droplet troughs (Z < 0) as well as crests (Z > 0)
+        float sBlendSigned(float acc, float val, float weight) {
+          return mix(acc, val, clamp(weight, 0.0, 1.0));
+        }
+
+        float easeOutBackQuad(float x) {
+          float t = clamp(x, 0.0, 1.0);
+          float inv = 1.0 - t;
+          return clamp(t * t * (3.0 - 2.0 * t) + 0.14 * sin(t * 3.14159265) * t * inv, 0.0, 1.05);
+        }
+
+        // Non-uniform, staggered water-drop oscillation:
+        // Combines two incommensurate quantum frequencies (golden-ratio beat) + per-lobe & radial phase lag,
+        // and plunges BELOW the ground plane (negative values) like a true droplet cavity before rebounding!
+        float computeWaterDropWave(float t, float lobeSeed, float radialDist, float phaseSign, float staggerStart, float emerge) {
+          if (uWaveAmp <= 0.001) return 1.0;
+
+          // Staggered phase offset per lobe + quantum parity offset (+ vs - lobe) + outward radial ripple delay
+          float parityLag = (phaseSign > 0.0 ? 0.0 : 2.35) + staggerStart * 3.1 + lobeSeed * 1.73;
+          float radialLag = radialDist * 5.2;
+
+          // Two incommensurate frequencies so lobes never pulse mechanically or uniformly
+          float w1 = sin(t * 2.15 - radialLag + parityLag);
+          float w2 = 0.55 * sin(t * 3.47 - radialLag * 0.72 + parityLag * 1.618 + uSeedPhase);
+          float w3 = 0.28 * cos(t * 1.31 + radialLag * 0.45 - lobeSeed * 2.4);
+          float combinedWave = (w1 + w2 + w3) / 1.83; // Normalized roughly to [-1, +1]
+
+          // Asymmetric water-drop plunge: when combinedWave < 0, allow the peak to dip BELOW 0.0 into a concave ground trough!
+          // At uWaveAmp = 0.30..0.58, combinedWave * (1.0 + 1.45 * uWaveAmp) goes below -1.0, driving height (1.0 + dropOffset) negative!
+          float plungeGain = uWaveAmp * 2.35 * min(1.0, emerge);
+          float signedMultiplier = 1.0 - 0.32 * uWaveAmp + combinedWave * plungeGain;
+          return signedMultiplier;
+        }
+
+        vec2 evalShapedLobe(float u, float v, float sx, float sy, float compIdx, float emergeFactor) {
+          float puddleSpread = 1.0 + (1.0 - min(1.0, emergeFactor)) * 0.65;
+          float nx = u / max(0.001, sx * puddleSpread);
+          float ny = v / max(0.001, sy * puddleSpread);
+
+          float phase = uSeedPhase + compIdx * 1.45;
+          float leanShiftX = uTipLean * 0.18 * emergeFactor * sin(phase);
+          float leanShiftY = uTipLean * 0.15 * emergeFactor * cos(phase * 1.3);
+
+          float rLocal = length(vec2(nx, ny));
+          float rSafe = max(0.0001, rLocal);
+          float cosA = nx / rSafe;
+          float sinA = ny / rSafe;
+          float cos2A = cosA * cosA - sinA * sinA;
+          float sin2A = 2.0 * cosA * sinA;
+          float cos3A = 4.0 * cosA * cosA * cosA - 3.0 * cosA;
+          float sin3A = 3.0 * sinA - 4.0 * sinA * sinA * sinA;
+
+          float radialWeight = (rLocal * rLocal) / (rLocal * rLocal + 0.18);
+
+          float contourMod = 1.0 + uContourWobble * radialWeight * (
+            0.13 * (sin2A * cos(phase) + cos2A * sin(phase)) +
+            0.07 * (cos3A * cos(phase * 0.8) - sin3A * sin(phase * 0.8))
+          );
+
+          float waistMod = 1.0 - uWaistPinch * 0.22 * radialWeight * cos2A;
+
+          float effNx = (nx - leanShiftX * 0.30) / max(0.15, contourMod * waistMod);
+          float effNy = (ny - leanShiftY * 0.30) / max(0.15, contourMod);
+          float distSq = effNx * effNx + effNy * effNy;
+
+          float coreDx = effNx - leanShiftX * 0.42;
+          float coreDy = effNy - leanShiftY * 0.42;
+          float coreDistSq = coreDx * coreDx + coreDy * coreDy;
+          float mainSpire = exp(-coreDistSq * 1.25) * (0.72 + 0.28 * exp(-coreDistSq * 2.4));
+
+          if (uShoulderStep > 0.01) {
+            float shLx = effNx + 0.52;
+            float shLy = effNy - 0.06;
+            float shL_distSq = (shLx * shLx) / 0.42 + (shLy * shLy) / 0.58;
+            float leftShoulder = (0.44 + 0.22 * uShoulderStep) * exp(-shL_distSq * 1.45);
+
+            float shRx = effNx - 0.56;
+            float shRy = effNy + 0.08;
+            float shR_distSq = (shRx * shRx) / 0.45 + (shRy * shRy) / 0.60;
+            float rightShoulder = (0.34 + 0.18 * uShoulderStep) * exp(-shR_distSq * 1.50);
+
+            float shoulders = sMax(leftShoulder, rightShoulder, 0.12);
+            mainSpire = sMax(mainSpire, shoulders * min(1.0, emergeFactor), 0.14);
+          }
+
+          if (uWaistPinch > 0.02) {
+            if (uMorphStyle == 1) {
+              float leftCrown = 0.84 * exp(-((effNx + 0.34) * (effNx + 0.34) * 1.9 + (effNy - 0.14) * (effNy - 0.14) * 1.8));
+              float rightCrown = 0.90 * exp(-((effNx - 0.34) * (effNx - 0.34) * 1.8 + (effNy - 0.16) * (effNy - 0.16) * 1.7));
+              float crownPair = sMax(leftCrown, rightCrown, 0.12);
+              mainSpire = mix(mainSpire, crownPair, uWaistPinch * 0.48);
+            } else if (uMorphStyle == 2) {
+              float swellA = 0.86 * exp(-((effNx + 0.38) * (effNx + 0.38) * 1.85 + effNy * effNy * 1.75));
+              float swellB = 0.92 * exp(-((effNx - 0.38) * (effNx - 0.38) * 1.70 + effNy * effNy * 1.65));
+              float peanut = sMax(swellA, swellB, 0.12);
+              mainSpire = mix(mainSpire, peanut, uWaistPinch * 0.52);
+            }
+          }
+
+          return vec2(min(1.08, mainSpire), distSq);
+        }
+
+        float orbAngSq(float l, float m, float c) {
+          float c2 = c * c;
+          float s2 = 1.0 - c2;
+          if (l < 0.5) return 1.0;
+          if (l < 1.5) return m < 0.5 ? c2 : s2;
+          if (l < 2.5) {
+            if (m < 0.5) { float t = 3.0 * c2 - 1.0; return t * t; }
+            if (m < 1.5) return 9.0 * s2 * c2;
+            return 9.0 * s2 * s2;
+          }
+          if (m < 0.5) { float t = 5.0 * c * c2 - 3.0 * c; return t * t; }
+          if (m < 1.5) { float t = 5.0 * c2 - 1.0; return 2.25 * s2 * t * t; }
+          if (m < 2.5) return 225.0 * c2 * s2 * s2;
+          return 225.0 * s2 * s2 * s2;
+        }
+
+        // Analytic hydrogen-like orbital slice: exp(-rho) * rho^(2l) * Laguerre^2 * angular lobes, lifted by gamma
+        // Uses 100% C-infinity smooth coordinates for localPhaseLag so there is NEVER a slice or seam down the middle!
+        float evalReferenceOrbital(vec2 p, vec4 cB, vec4 cC, vec4 cD, float fi, float emerge, out float localPhaseLag) {
+          vec2 q = p / (0.60 + 0.20 * uRingSpread);
+          q += uContourWobble * 0.05 * vec2(sin(q.y * 6.0 + uSeedPhase + fi), cos(q.x * 5.0 + uSeedPhase * 1.3 + fi));
+          q /= 1.0 + (1.0 - min(1.0, emerge)) * 0.5;
+          float rq = length(q);
+          float rho = rq * cC.x;
+          float c = q.y / max(rq, 0.0001);
+          float L = cD.x + rho * (cD.y + rho * (cD.z + rho * (cD.w + rho * cB.x)));
+
+          // Smooth, continuous spatial phase lag (no step jumps or atan branch cuts that slice the mesh!)
+          localPhaseLag = rq * 2.1 + 0.85 * sin(q.x * 2.8 + uSeedPhase) + 0.75 * cos(q.y * 2.4 - uSeedPhase * 0.7);
+
+          float dens = exp(-(sqrt(rho * rho + 0.25) - 0.5)) * pow(max(rho, 0.0001), 2.0 * cC.y) * L * L * orbAngSq(cC.y, cC.z, c);
+          float g = cC.w * (1.0 - 0.28 * uEdgeBlur / 24.0);
+          float v = pow(clamp(dens * cB.y, 0.0, 2.0), g);
+          return v * (1.0 - smoothstep(1.15, 1.5, rq));
+        }
+
+        // Returns vec2(positiveEnvelopeDensityForColor, signedHeightDisplacementWithSubSurfacePlunge)
+        vec2 evalOrbitalField(vec2 p) {
+          float r = length(p);
+          if (r > 1.78) return vec2(0.0, 0.0);
+
+          if (uPuddleEmerge <= 0.0005) return vec2(0.0, 0.0);
+
+          float edgeBlurSpread = 1.0 + (uEdgeBlur / 24.0) * 0.68;
+
+          float puddleBell = sin(clamp(uPuddleEmerge, 0.0, 1.0) * 3.14159265);
+          float puddleWeight = puddleBell * puddleBell * smoothstep(0.0, 0.18, uPuddleEmerge);
+          float totalDensity = 0.0;
+          float signedDisplacement = 0.0;
+
+          if (puddleWeight > 0.002) {
+            float puddleR = 0.62 * sqrt(uRingSpread);
+            float puddleRipple = sin(r * 10.5 - uTime * 4.8);
+            float puddleEnv = 0.18 * puddleWeight * exp(-(r * r) / (puddleR * puddleR));
+            totalDensity = puddleEnv * (1.0 + 0.25 * puddleRipple);
+            signedDisplacement = puddleEnv * puddleRipple;
+          }
+
+          for (int i = 0; i < 8; i++) {
+            if (i >= uCompCount) break;
+            vec4 cA = uCompA[i];
+            vec4 cB = uCompB[i];
+            float cType = cA.x;
+            float compR = cA.y;
+            float phiRad = cA.z;
+            float compH = cA.w;
+            float staggerStart = cB.z * uStagger;
+            float phaseSign = cB.w;
+            float fi = float(i);
+
+            float windowSpan = max(0.22, 1.0 - staggerStart);
+            float rawLocalProgress = clamp((uPuddleEmerge - staggerStart) / windowSpan, 0.0, 1.0);
+            float localEmerge = easeOutBackQuad(rawLocalProgress);
+
+            if (localEmerge <= 0.0001) continue;
+
+            if (cType > 4.5) {
+              float refLag = 0.0;
+              float vOrb = compH * localEmerge * evalReferenceOrbital(p, cB, uCompC[i], uCompD[i], fi, localEmerge, refLag);
+              float dropWave = computeWaterDropWave(uTime, fi + refLag * 0.55, r * 0.55, phaseSign, staggerStart, localEmerge);
+              // Keep color density smooth and un-creased while 3D height smoothly plunges below & above ground
+              float colorEnv = vOrb * (0.82 + 0.22 * dropWave);
+              totalDensity = sMax(totalDensity, max(0.0, colorEnv), 0.06);
+              signedDisplacement += vOrb * dropWave;
+              continue;
+            }
+
+            float val = 0.0;
+            float localRadialDist = r;
+
+            if (cType < 1.5) {
+              float sx = cB.x * (0.98 + 0.25 * uFeather);
+              vec2 res = evalShapedLobe(p.x, p.y, sx, sx, fi, localEmerge);
+              float distSqSkirt = res.y / (edgeBlurSpread * edgeBlurSpread * (0.85 + 0.35 * uRingSpread));
+              float softEdgeSkirt = exp(-distSqSkirt * 0.85);
+              val = compH * localEmerge * (0.78 * res.x + 0.22 * softEdgeSkirt);
+              localRadialDist = compR + r * 0.35;
+            }
+            else if (cType < 2.5) {
+              float activeR = compR * (0.62 + 0.38 * min(1.0, localEmerge));
+              float cosP = cos(phiRad);
+              float sinP = sin(phiRad);
+              vec2 center = vec2(activeR * cosP, activeR * sinP);
+              vec2 d = p - center;
+
+              float u = -d.x * sinP + d.y * cosP;
+              float v =  d.x * cosP + d.y * sinP;
+
+              float spreadMult = compR > 0.2 ? (0.78 + 0.34 * uRingSpread) : 1.04;
+              float sx = cB.x * uFeather * spreadMult;
+              float sy = cB.y * uFeather * spreadMult;
+
+              vec2 res = evalShapedLobe(u, v, sx, sy, fi, localEmerge);
+              float distSqSkirt = res.y / (edgeBlurSpread * edgeBlurSpread);
+              float featheredBase = exp(-distSqSkirt * 0.78) * 0.34;
+              float coneProfile = sMax(res.x, featheredBase, 0.10);
+
+              float nodalCoord = v + activeR;
+              float nodalValley = 1.0 - (0.88 * min(1.0, localEmerge)) * exp(-(nodalCoord * nodalCoord) / (0.012 + 0.015 * (1.0 - min(1.0, localEmerge))));
+
+              val = compH * localEmerge * coneProfile * nodalValley;
+              localRadialDist = compR + length(d) * 0.45;
+            }
+            else if (cType < 3.5) {
+              float rSafe = max(0.0001, r);
+              float cosA = p.x / rSafe;
+              float sinA = p.y / rSafe;
+              float sin2A = 2.0 * sinA * cosA;
+              float cos2A = cosA * cosA - sinA * sinA;
+
+              float radWarp = 1.0 + uContourWobble * 0.07 * (sin2A * cos(uSeedPhase + fi) + cos2A * sin(uSeedPhase + fi));
+              float ringCenterR = compR * (0.88 + 0.18 * uRingSpread) * radWarp * (0.75 + 0.25 * min(1.0, localEmerge));
+              float localSpread = (r > ringCenterR)
+                ? uFeather * uRingSpread * edgeBlurSpread
+                : uFeather * (0.78 + 0.32 * uRingSpread);
+              float dr = (r - ringCenterR) / max(0.01, cB.x * 0.65 * localSpread);
+
+              float crestMod = 1.0 + uContourWobble * 0.12 * sin2A - uWaistPinch * 0.10 * cos2A;
+              float mainRingBell = exp(-(dr * dr) * 1.12);
+              float outerShoulderShelf = uShoulderStep * 0.36 * exp(-((dr - 0.82) * (dr - 0.82)) * 2.1);
+              float ringProfile = sMax(mainRingBell, outerShoulderShelf, 0.10);
+              val = compH * localEmerge * ringProfile * crestMod;
+              localRadialDist = r + 0.12 * sin2A;
+            }
+            else {
+              vec2 dir = vec2(cos(phiRad), sin(phiRad));
+              float rSafe = max(0.0001, r);
+              float cosDelta = dot(p, dir) / rSafe;
+              float sinDelta = (-p.x * dir.y + p.y * dir.x) / rSafe;
+
+              float halfSpanRad = cB.y;
+              float angSigma = halfSpanRad * (0.62 + 0.18 * uRingSpread) * (0.92 + 0.18 * edgeBlurSpread);
+              float deltaAngle = atan(sinDelta, cosDelta);
+              float angNorm = deltaAngle / max(0.05, angSigma);
+
+              float angBell = exp(-(angNorm * angNorm) * 1.15) * pow(max(0.0, (1.0 + cosDelta) * 0.5), 0.65);
+
+              float radWarp = 1.0 + uContourWobble * 0.06 * sin(angNorm * 1.6 + uSeedPhase + fi)
+                                  - uWaistPinch * 0.07 * cos(angNorm * 2.2);
+              float crescCenterR = compR * (0.88 + 0.18 * uRingSpread) * radWarp * (0.72 + 0.28 * min(1.0, localEmerge));
+              float localSpread = (r > crescCenterR)
+                ? uFeather * uRingSpread * edgeBlurSpread
+                : uFeather * (0.80 + 0.30 * uRingSpread);
+              float dr = (r - crescCenterR) / max(0.01, cB.x * 0.68 * localSpread);
+              float radialBell = exp(-(dr * dr) * 1.08);
+
+              float leftStep = uShoulderStep * 0.32 * exp(-((angNorm + 0.65) * (angNorm + 0.65)) * 3.2);
+              float rightStep = uShoulderStep * 0.26 * exp(-((angNorm - 0.68) * (angNorm - 0.68)) * 3.4);
+              float centerPinchDip = 1.0 - uWaistPinch * 0.16 * exp(-(angNorm * angNorm) * 4.5);
+              float asymTilt = 1.0 + uContourWobble * 0.10 * sin(angNorm * 1.5 + uSeedPhase);
+
+              float shapedAngEnv = sMax(angBell * centerPinchDip, sMax(leftStep, rightStep, 0.12) * angBell, 0.10) * asymTilt;
+              val = compH * localEmerge * radialBell * shapedAngEnv;
+              localRadialDist = compR + r * 0.25 + angNorm * 0.12;
+            }
+
+            // Staggered, non-uniform water-drop oscillation for this specific lobe/ring
+            float dropWave = computeWaterDropWave(uTime, fi, localRadialDist, phaseSign, staggerStart, localEmerge);
+
+            // Smooth positive color envelope (no abs() V-crease!) while 3D height plunges below & above ground
+            float colorEnv = val * (0.82 + 0.22 * dropWave);
+            float prevDensity = totalDensity;
+            totalDensity = sMax(totalDensity, max(0.0, colorEnv), 0.08);
+
+            // Weight each lobe's signed vertical displacement by its smooth contribution to the surface
+            float weight = smoothstep(0.0, max(0.04, prevDensity + val), val);
+            signedDisplacement = mix(signedDisplacement, val * dropWave, weight);
+          }
+
+          return vec2(max(0.0, totalDensity), signedDisplacement);
+        }
+
+        void main() {
+          vec2 xy = position.xy;
+          vec2 fieldCenter = evalOrbitalField(xy);
+          float dCenter = fieldCenter.x;
+          float hScale = uMaxExtrusion * 0.85;
+          float zCenter = fieldCenter.y * hScale;
+
+          float eps = 0.014;
+          float zRight = evalOrbitalField(xy + vec2(eps, 0.0)).y * hScale;
+          float zUp    = evalOrbitalField(xy + vec2(0.0, eps)).y * hScale;
+
+          vec3 tangentX = vec3(eps, 0.0, zRight - zCenter);
+          vec3 tangentY = vec3(0.0, eps, zUp - zCenter);
+          vec3 computedNormal = normalize(cross(tangentX, tangentY));
+
+          vDensity = dCenter;
+          vSignedDisp = fieldCenter.y;
+          vPlanarPos = xy;
+
+          vec3 displacedPos = vec3(xy, zCenter);
+          vec4 mvPosition = modelViewMatrix * vec4(displacedPos, 1.0);
+          vViewPos = -mvPosition.xyz;
+          vNormalWatch = normalize(normalMatrix * computedNormal);
+          gl_Position = projectionMatrix * mvPosition;
+        }
+      `;
+
+      const fragmentShader = `
+        varying float vDensity;
+        varying float vSignedDisp;
+        varying vec2 vPlanarPos;
+        varying vec3 vNormalWatch;
+        varying vec3 vViewPos;
+        uniform float uGloss;
+        uniform float uHeatGain;
+        uniform float uGrain;
+        uniform float uEdgeBlur;
+        uniform float uDissolve;
+        uniform float uTransparency;
+        uniform float uRough;
+        uniform float uSeedPhase;
+        uniform float uWaveAmp;
+        uniform float uGrainSize;
+        uniform float uHaze;
+        uniform float uGlow;
+        uniform float uTime;
+        uniform float uLightMode;
+        uniform vec3 uLightDir;
+        uniform vec3 uColor1;
+        uniform vec3 uColor2;
+        uniform vec3 uColor3;
+        uniform vec3 uColor4;
+        uniform vec3 uColor5;
+        uniform vec3 uColor6;
+        uniform float uPastelLift;
+        uniform float uWarmthTint;
+
+        float hash21(vec2 p) {
+          vec3 p3 = fract(vec3(p.xyx) * 0.1031);
+          p3 += dot(p3, p3.yzx + 33.33);
+          return fract((p3.x + p3.y) * p3.z);
+        }
+
+        float vnoise(vec2 p) {
+          vec2 i = floor(p);
+          vec2 f = fract(p);
+          f = f * f * (3.0 - 2.0 * f);
+          float a = hash21(i);
+          float b = hash21(i + vec2(1.0, 0.0));
+          float c = hash21(i + vec2(0.0, 1.0));
+          float d = hash21(i + vec2(1.0, 1.0));
+          return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
+        }
+
+        vec3 getQuantumRamp(float h, vec3 bgCol) {
+          vec3 c1 = uColor1;
+          vec3 c2 = uColor2;
+          vec3 c3 = uColor3;
+          vec3 c4 = uColor4;
+          vec3 c5 = uColor5;
+          vec3 c6 = uColor6;
+
+          vec3 col = bgCol;
+          col = mix(col, c1, smoothstep(0.001, 0.030, h));
+          col = mix(col, c2, smoothstep(0.020, 0.180, h));
+          col = mix(col, c3, smoothstep(0.165, 0.360, h));
+          col = mix(col, c4, smoothstep(0.340, 0.530, h));
+          col = mix(col, c5, smoothstep(0.500, 0.760, h));
+          col = mix(col, c6, smoothstep(0.730, 0.980, h));
+
+          if (abs(uWarmthTint) > 0.005) {
+            vec3 warmTarget = vec3(1.00, 0.80, 0.62);
+            vec3 coolTarget = vec3(0.68, 0.84, 1.00);
+            vec3 tintCol = uWarmthTint >= 0.0 ? warmTarget : coolTarget;
+            col = mix(col, col * 0.72 + tintCol * 0.36, abs(uWarmthTint) * 0.58 * smoothstep(0.005, 0.18, h));
+          }
+
+          if (uPastelLift > 0.005) {
+            vec3 creamyPastel = vec3(1.00, 0.96, 0.92);
+            col = mix(col, creamyPastel, uPastelLift * 0.48 * smoothstep(0.005, 0.16, h));
+          }
+
+          return col;
+        }
+
+        void main() {
+          vec3 bgCol = mix(vec3(0.004, 0.008, 0.016), vec3(1.000, 1.000, 0.969), uLightMode);
+          float rawDensity = vDensity;
+
+          float heatVal = clamp(rawDensity * uHeatGain, 0.0, 1.08);
+          vec3 baseCol = getQuantumRamp(heatVal, bgCol);
+
+          vec3 N = normalize(vNormalWatch);
+          vec3 L = normalize(uLightDir);
+          vec3 V = normalize(vViewPos);
+          vec3 H = normalize(L + V);
+
+          float diff = max(dot(N, L) * 0.65 + 0.35, 0.0);
+          float spec = pow(max(dot(N, H), 0.0), 38.0) * uGloss;
+
+          float edgeSoftness = 0.02 + (uEdgeBlur / 24.0) * 0.14;
+          float puddleAlpha = smoothstep(0.001, edgeSoftness, rawDensity);
+          float radialDist = length(vPlanarPos);
+          float outerRimFade = (1.0 - smoothstep(0.96, 1.40, radialDist)) * puddleAlpha;
+
+          // Subtle sub-surface water-drop depth shading when a lobe plunges below the ground plane (vSignedDisp < 0)
+          float subSurfaceDepth = clamp(-vSignedDisp * 0.45, 0.0, 0.28);
+          float diffFloor = mix(0.74, 0.86, uPastelLift) - subSurfaceDepth * 0.18;
+          float diffSpan  = mix(0.32, 0.20, uPastelLift);
+          vec3 surfaceColor = baseCol * (diffFloor + diffSpan * diff) + vec3(1.0, 0.98, 0.95) * spec * 0.20 * smoothstep(0.06, 0.32, rawDensity);
+          vec3 finalColor = mix(bgCol, surfaceColor, outerRimFade);
+
+          if (uDissolve > 0.001 || uTransparency > 0.001) {
+            float edgeW = uEdgeBlur / 24.0;
+
+            vec2 np = vPlanarPos * 3.4 + vec2(uSeedPhase * 1.7, uSeedPhase * 2.3);
+            float cn = 0.62 * vnoise(np) + 0.38 * vnoise(np * 2.3 + 17.0);
+            float jitter = (cn - 0.5) * uRough;
+
+            float rip = sin(uTime * 2.4 - radialDist * 4.8) * clamp(uWaveAmp * 2.2, 0.0, 0.6);
+
+            float skirtBand = 0.08 + edgeW * 0.30;
+            float skirtSparse = 1.0 - smoothstep(0.0, skirtBand, rawDensity + jitter * skirtBand * 1.6);
+
+            float rimSparse = smoothstep(0.84 + jitter * 0.25, 1.10 + edgeW * 0.35 + jitter * 0.25, radialDist);
+
+            float facing = abs(dot(N, V));
+            float silSparse = smoothstep(0.42 + jitter * 0.35, 0.95, 1.0 - facing);
+
+            float tipSparse = smoothstep(0.55, 1.0, heatVal);
+            float yellowSparse = smoothstep(0.30, 0.50, heatVal) * (1.0 - smoothstep(0.78, 0.98, heatVal));
+            float bodySparse = 0.22;
+
+            float dissolveMask = clamp(skirtSparse + rimSparse * 0.9 + silSparse * 0.85 + tipSparse * 0.55 + yellowSparse * 0.45 + bodySparse, 0.0, 1.0);
+            float trans = clamp(uTransparency * (1.0 + rip * 0.8), 0.0, 0.95);
+            float coverage = (1.0 - clamp(uDissolve * dissolveMask * (1.0 + rip), 0.0, 1.0)) * (1.0 - trans);
+
+            float cov = clamp(coverage - jitter * 0.9 * (1.0 - coverage), 0.0, 1.0);
+
+            float gs = max(0.001, uGrainSize * 0.001);
+            vec2 gq = vec2(0.8253 * vPlanarPos.x + 0.5646 * vPlanarPos.y, -0.5646 * vPlanarPos.x + 0.8253 * vPlanarPos.y);
+            vec2 gw = gq / (gs * 1.35);
+            vec2 gWarp = vec2(vnoise(gw), vnoise(gw + 31.7)) - 0.5;
+            vec2 gGrid = (gq + gWarp * gs * 0.95) / gs;
+            vec2 gCell = floor(gGrid) + vec2(uSeedPhase * 7.0, uSeedPhase * 3.0);
+
+            float edgeMask = clamp(skirtSparse + rimSparse + silSparse, 0.0, 1.0);
+            float grainGlow = 0.0;
+
+            if (hash21(gCell) > cov) {
+              if (hash21(gCell + 7.3) > uHaze * (1.0 - edgeMask)) discard;
+              finalColor = mix(bgCol, finalColor, 0.24 + 0.10 * rip);
+            } else {
+              finalColor = mix(finalColor, bgCol, (uDissolve * dissolveMask + trans) * 0.30);
+              grainGlow = 1.0 - smoothstep(0.0, 0.62, length(fract(gGrid) - 0.5));
+            }
+
+            float emissive = uGlow * grainGlow * (0.35 + 1.1 * dissolveMask) * (1.0 - 0.7 * uLightMode);
+            finalColor = finalColor * (1.0 + emissive) + vec3(1.0, 0.96, 0.86) * emissive * 0.18;
+          }
+
+          if (uGlow > 0.001) {
+            float bodyBloom = smoothstep(0.01, 0.35, rawDensity);
+            float rimLight = pow(1.0 - abs(dot(N, V)), 2.5);
+            float gk = uGlow * (1.0 - 0.7 * uLightMode);
+            finalColor += baseCol * bodyBloom * gk * 0.14 + baseCol * rimLight * bodyBloom * gk * 0.30;
+          }
+
+          if (uGrain > 0.005) {
+            float g1 = hash21(gl_FragCoord.xy + vec2(floor(uTime * 24.0) * 17.3, floor(uTime * 24.0) * 31.7)) - 0.5;
+            finalColor += vec3(g1 * uGrain * 0.13);
+          }
+
+          gl_FragColor = vec4(clamp(finalColor, 0.0, 1.0), 1.0);
+        }
+      `;
+
+      const mat = new THREE.ShaderMaterial({
+        uniforms: glUniforms,
+        vertexShader,
+        fragmentShader,
+        side: THREE.DoubleSide
+      });
+
+      glMesh = new THREE.Mesh(glGeometry, mat);
+      glScene.add(glMesh);
+
+      updateWebGLCameraPose();
+      renderGPUFrame();
+    }
+
+    function updateWebGLCameraPose() {
+      if (!glCamera) return;
+      const pitchRad = (studio.pitch * Math.PI) / 180;
+      const azimRad = ((studio.azimuth - 90) * Math.PI) / 180;
+      const dist = 3.25;
+
+      const horiz = dist * Math.cos(pitchRad);
+      glCamera.position.x = horiz * Math.cos(azimRad);
+      glCamera.position.y = horiz * Math.sin(azimRad);
+      glCamera.position.z = dist * Math.sin(pitchRad) + 0.12;
+      glCamera.up.set(0, 0, 1);
+      glCamera.lookAt(0, 0, 0.14);
+    }
+
+    function syncGPUUniforms() {
+      if (!glUniforms) return;
+      glUniforms.uTime.value = studio.time;
+      glUniforms.uPuddleEmerge.value = studio.puddleEmergence;
+      glUniforms.uStagger.value = studio.stagger;
+      glUniforms.uMaxExtrusion.value = studio.extrusion;
+      glUniforms.uRingSpread.value = studio.ringSpread;
+      glUniforms.uFeather.value = studio.feather;
+      glUniforms.uEdgeBlur.value = studio.blur;
+      glUniforms.uDissolve.value = studio.dissolve;
+      glUniforms.uTransparency.value = studio.transparency;
+      glUniforms.uRough.value = studio.rough;
+      glUniforms.uGrainSize.value = studio.grainSize;
+      glUniforms.uHaze.value = studio.haze;
+      glUniforms.uGlow.value = studio.glow;
+      glUniforms.uWaveAmp.value = studio.waveAmp;
+      glUniforms.uShoulderStep.value = studio.shoulderStep;
+      glUniforms.uWaistPinch.value = studio.waistPinch;
+      glUniforms.uContourWobble.value = studio.contourWobble;
+      glUniforms.uTipLean.value = studio.tipLean;
+      glUniforms.uSeedPhase.value = studio.seedPhase;
+      glUniforms.uMorphStyle.value = getMorphStyleIndex();
+      glUniforms.uGloss.value = studio.gloss;
+      glUniforms.uHeatGain.value = studio.heatGain;
+      glUniforms.uGrain.value = studio.grain;
+      glUniforms.uLightMode.value = studio.theme === 'light' ? 1.0 : 0.0;
+      glUniforms.uColor1.value.set(studio.colorStops[0]);
+      glUniforms.uColor2.value.set(studio.colorStops[1]);
+      glUniforms.uColor3.value.set(studio.colorStops[2]);
+      glUniforms.uColor4.value.set(studio.colorStops[3]);
+      glUniforms.uColor5.value.set(studio.colorStops[4]);
+      glUniforms.uColor6.value.set(studio.colorStops[5]);
+      glUniforms.uPastelLift.value = studio.pastelLift;
+      glUniforms.uWarmthTint.value = studio.warmthTint;
+    }
+
+    function renderGPUFrame() {
+      if (!glRenderer || !glScene || !glCamera) return;
+      syncGPUUniforms();
+      glRenderer.render(glScene, glCamera);
+    }
+
+    function buildMiniCardBadgeSVG(st) {
+      const hasRings = st.components.some(c => c.type === 'ring' || c.type === 'crescent');
+      const numCones = st.components.filter(c => c.type === 'cone' || c.type === 'spike').length;
+      const c1 = studio.colorStops[1] || "#38bdf8";
+      const c2 = studio.colorStops[2] || "#38bdf8";
+      const c4 = studio.colorStops[3] || "#facc15";
+      const c6 = studio.colorStops[5] || "#ff2200";
+      return `<svg viewBox="0 0 80 54" class="w-16 h-11">
+        <defs>
+          <linearGradient id="g_${st.id}" x1="0" y1="1" x2="0" y2="0">
+            <stop offset="0%" stop-color="${c1}" stop-opacity="0.35"/>
+            <stop offset="45%" stop-color="${c2}"/>
+            <stop offset="78%" stop-color="${c4}"/>
+            <stop offset="100%" stop-color="${c6}"/>
+          </linearGradient>
+        </defs>
+        ${hasRings ? `<ellipse cx="40" cy="39" rx="33" ry="10" fill="none" stroke="${c2}" stroke-width="3" opacity="0.65"/>` : ''}
+        ${numCones === 1
+          ? `<path d="M 27 42 C 28 31, 31 24, 34 25 C 36 12, 38 6, 40 6 C 42 6, 44 14, 46 27 C 49 26, 51 32, 53 42 Z" fill="url(#g_${st.id})"/>`
+          : `<path d="M 16 42 C 17 33, 20 26, 23 27 C 25 14, 27 9, 29 9 C 31 9, 33 18, 35 30 C 37 29, 38 35, 39 42 Z" fill="url(#g_${st.id})"/>
+             <path d="M 41 42 C 42 33, 45 26, 48 27 C 50 14, 52 9, 54 9 C 56 9, 58 18, 60 30 C 62 29, 63 35, 64 42 Z" fill="url(#g_${st.id})"/>`
+        }
+      </svg>`;
+    }
+
+    function renderStatesCatalog() {
+      const grid = document.getElementById('states-catalog-grid');
+      if (!grid) return;
+
+      const list = EXTRUDED_STATES.filter(st => {
+        if (studio.catalogFilter === 'featured') return st.featured;
+        return true;
+      });
+
+      grid.innerHTML = list.map(st => {
+        const globalIdx = EXTRUDED_STATES.findIndex(item => item.id === st.id);
+        const isActive = globalIdx === studio.selectedIndex;
+
+        return `
+          <div onclick="selectExtrudedState(${globalIdx})" class="state-card theme-subpanel rounded-xl bg-[#090f1d] border border-[#18253f] p-2.5 flex flex-col justify-between cursor-pointer ${isActive ? 'active' : ''}">
+            <div class="flex items-center justify-between gap-2">
+              <div>
+                <div class="font-serif-label italic text-lg text-amber-300 font-semibold leading-none">${st.label}</div>
+                <div class="font-mono-code text-[11px] text-white font-semibold mt-1">n=${st.n}, l=${st.l}, m=${st.m}</div>
+              </div>
+              <div class="rounded-lg bg-[#03060d] border border-white/5 p-1 flex items-center justify-center">
+                ${buildMiniCardBadgeSVG(st)}
+              </div>
+            </div>
+            <div class="mt-2 text-[10px] text-slate-400 truncate">${st.title.split('—')[1] || st.title}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function filterCatalog(mode) {
+      studio.catalogFilter = mode;
+      const btnFeat = document.getElementById('cat-featured');
+      const btnAll = document.getElementById('cat-all');
+      if (btnFeat && btnAll) {
+        btnFeat.className = mode === 'featured'
+          ? "px-2.5 py-1 rounded text-[11px] font-mono-code bg-amber-400/20 text-amber-300 border border-amber-400/40"
+          : "px-2.5 py-1 rounded text-[11px] font-mono-code bg-[#0b1220] text-slate-400 border border-[#162035]";
+        btnAll.className = mode === 'all'
+          ? "px-2.5 py-1 rounded text-[11px] font-mono-code bg-amber-400/20 text-amber-300 border border-amber-400/40"
+          : "px-2.5 py-1 rounded text-[11px] font-mono-code bg-[#0b1220] text-slate-400 border border-[#162035]";
+      }
+      renderStatesCatalog();
+    }
+
+    function selectExtrudedState(index) {
+      if (index === studio.selectedIndex) {
+        triggerPuddleReemerge();
+        return;
+      }
+      studio.selectedIndex = index;
+      const st = EXTRUDED_STATES[index];
+
+      updateHeaderTelemetry();
+      renderStatesCatalog();
+
+      if (typeof gsap !== 'undefined') {
+        gsap.killTweensOf(studio);
+
+        gsap.to(studio, {
+          pitch: st.defaultPitch,
+          azimuth: st.defaultAzimuth,
+          duration: 0.85,
+          ease: "power2.out",
+          onUpdate: () => {
+            syncCameraSlidersUI();
+            updateWebGLCameraPose();
+          }
+        });
+
+        const tl = gsap.timeline({
+          onUpdate: () => {
+            if (!studio.wavePlaying) renderGPUFrame();
+          }
+        });
+
+        tl.to(studio, {
+          puddleEmergence: 0.0,
+          duration: 0.34,
+          ease: "power2.inOut",
+          onComplete: () => {
+            packStateToGPUUniforms(st, glUniforms);
+          }
+        })
+        .to(studio, {
+          puddleEmergence: 0.0,
+          duration: 0.06
+        })
+        .to(studio, {
+          puddleEmergence: 1.0,
+          duration: 0.92,
+          ease: "power2.out"
+        });
+      } else {
+        studio.pitch = st.defaultPitch;
+        studio.azimuth = st.defaultAzimuth;
+        studio.puddleEmergence = 1.0;
+        packStateToGPUUniforms(st, glUniforms);
+        syncCameraSlidersUI();
+        updateWebGLCameraPose();
+        renderGPUFrame();
+      }
+    }
+
+    function triggerPuddleReemerge() {
+      if (typeof gsap === 'undefined') return;
+      gsap.killTweensOf(studio, "puddleEmergence");
+      const tl = gsap.timeline({
+        onUpdate: () => {
+          if (!studio.wavePlaying) renderGPUFrame();
+        }
+      });
+      tl.to(studio, { puddleEmergence: 0.0, duration: 0.34, ease: "power2.inOut" })
+        .to(studio, { puddleEmergence: 0.0, duration: 0.06 })
+        .to(studio, { puddleEmergence: 1.0, duration: 0.92, ease: "power2.out" });
+      showStudioToast("💧 Full Collapse & Sequential Rise", "Went all the way down to zero; primary lobe extruded first, then the rest followed.");
+    }
+
+    function setShapeModel(model) {
+      studio.shapeModel = model;
+      const ref = model === 'reference';
+      const on = 'bg-amber-400 text-black', off = 'bg-transparent text-slate-300';
+      const bRef = document.getElementById('model-reference'), bCls = document.getElementById('model-classic');
+      if (bRef) bRef.className = bRef.className.replace(/bg-amber-400 text-black|bg-transparent text-slate-300/g, '').trim() + ' ' + (ref ? on : off);
+      if (bCls) bCls.className = bCls.className.replace(/bg-amber-400 text-black|bg-transparent text-slate-300/g, '').trim() + ' ' + (ref ? off : on);
+      const hint = document.getElementById('model-hint');
+      if (hint) hint.textContent = ref
+        ? 'True s/p/d/f lobes and radial nodes. Shoulder, Waist and Apex Lean apply to Classic only; Wobble, Ring Spread and Edge Feather still apply.'
+        : 'The original organic cone, ring and crescent lobes.';
+      if (glUniforms) packStateToGPUUniforms(EXTRUDED_STATES[studio.selectedIndex], glUniforms);
+      renderGPUFrame();
+    }
+
+    function setLobeMorphStyle(style) {
+      studio.lobeMorphStyle = style;
+      ['shouldered', 'bilobed', 'pinched', 'organic'].forEach(s => {
+        const btn = document.getElementById(`morph-${s}`);
+        if (!btn) return;
+        if (s === style) btn.classList.add('active');
+        else btn.classList.remove('active');
+      });
+
+      if (style === 'shouldered') {
+        const M = MODE_DEFAULTS[studio.theme];
+        studio.shoulderStep = M.shoulderStep;
+        studio.waistPinch = M.waistPinch;
+        studio.contourWobble = M.contourWobble;
+        studio.tipLean = M.tipLean;
+      } else if (style === 'bilobed') {
+        studio.shoulderStep = 0.22;
+        studio.waistPinch = 0.68;
+        studio.contourWobble = 0.40;
+        studio.tipLean = 0.26;
+      } else if (style === 'pinched') {
+        studio.shoulderStep = 0.16;
+        studio.waistPinch = 0.76;
+        studio.contourWobble = 0.38;
+        studio.tipLean = 0.28;
+      } else {
+        studio.shoulderStep = 0.20;
+        studio.waistPinch = 0.22;
+        studio.contourWobble = 0.42;
+        studio.tipLean = 0.36;
+      }
+
+      syncShapeSlidersUI();
+      renderGPUFrame();
+    }
+
+    function syncShapeSlidersUI() {
+      ['shoulderStep', 'waistPinch', 'contourWobble', 'tipLean'].forEach(k => {
+        const s = document.getElementById(`slider-${k}`);
+        const v = document.getElementById(`val-${k}`);
+        if (s) s.value = studio[k];
+        if (v) v.textContent = studio[k].toFixed(2);
+      });
+    }
+
+    function resetLobeShapeParams() {
+      setLobeMorphStyle('shouldered');
+      showStudioToast("Reset Lobe Silhouette", "Restored default stepped-shoulder organic lobe profile.");
+    }
+
+    function reseedLobeOrganicPhase() {
+      studio.seedPhase = Number((Math.random() * 6.28).toFixed(2));
+      renderGPUFrame();
+      showStudioToast("🎲 Shifted Organic Lobe Phase", "Updated shoulder & contour asymmetry on the GPU.");
+    }
+
+    function toggleStudioTheme() {
+      MODE_SLIDER_KEYS.forEach(k => { modeSaved[studio.theme][k] = studio[k]; });
+      modeSaved[studio.theme].colorStops = [...studio.colorStops];
+      modeSaved[studio.theme].shapeModel = studio.shapeModel;
+
+      studio.theme = studio.theme === 'dark' ? 'light' : 'dark';
+      const rootEl = document.documentElement;
+      const isLight = studio.theme === 'light';
+
+      if (isLight) rootEl.classList.add('light-theme');
+      else rootEl.classList.remove('light-theme');
+
+      document.getElementById('theme-icon').textContent = isLight ? '🌙' : '☀️';
+      document.getElementById('theme-label').textContent = isLight ? 'Mode: LIGHT' : 'Mode: DARK';
+
+      const wrap = document.getElementById('viewports-wrapper');
+      const hudText = document.getElementById('hud-serif-text');
+      const hudOrb = document.getElementById('hud-orbital');
+
+      if (wrap) wrap.style.backgroundColor = isLight ? '#fffff7' : '#010204';
+      if (glScene) glScene.background.setHex(isLight ? 0xfffff7 : 0x010204);
+
+      if (hudText) {
+        hudText.className = isLight
+          ? 'font-serif-label italic text-slate-900 drop-shadow-[0_1px_4px_rgba(255,255,255,0.9)] leading-none'
+          : 'font-serif-label italic text-[#e5efc1] drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)] leading-none';
+      }
+      if (hudOrb) {
+        hudOrb.className = isLight ? 'not-italic font-normal text-slate-900' : 'not-italic font-normal text-[#e5efc1]';
+      }
+
+      applyModeProfile(studio.theme);
+      renderStatesCatalog();
+      renderGPUFrame();
+    }
+
+    function gsapCinematicSweep() {
+      if (typeof gsap === 'undefined') return;
+      const st = EXTRUDED_STATES[studio.selectedIndex];
+      gsap.killTweensOf(studio, "azimuth,pitch");
+      gsap.to(studio, {
+        azimuth: studio.azimuth + 180,
+        pitch: Math.max(26, Math.min(72, st.defaultPitch + 10)),
+        duration: 1.8,
+        ease: "power2.inOut",
+        onUpdate: () => {
+          studio.azimuth = ((studio.azimuth + 180) % 360) - 180;
+          syncCameraSlidersUI();
+          updateWebGLCameraPose();
+          if (!studio.wavePlaying) renderGPUFrame();
+        }
+      });
+    }
+
+    function updateHeaderTelemetry() {
+      const st = EXTRUDED_STATES[studio.selectedIndex];
+      document.getElementById('stage-state-badge').textContent = `n=${st.n}, l=${st.l}, m=${st.m} (${st.label})`;
+      document.getElementById('stage-state-title').textContent = st.title;
+      document.getElementById('stage-state-subtitle').textContent = st.desc;
+
+      document.getElementById('hud-n').textContent = `n=${st.n}`;
+      document.getElementById('hud-orbital').textContent = st.label;
+      document.getElementById('hud-l').textContent = `l=${st.l}`;
+      document.getElementById('hud-m').textContent = `m=${st.m}`;
+    }
+
+    function syncCameraSlidersUI() {
+      const pSlider = document.getElementById('slider-pitch');
+      const aSlider = document.getElementById('slider-azimuth');
+      const pVal = document.getElementById('val-pitch');
+      const aVal = document.getElementById('val-azimuth');
+      if (pSlider) pSlider.value = Math.round(studio.pitch);
+      if (aSlider) aSlider.value = Math.round(studio.azimuth);
+      if (pVal) pVal.textContent = `${Math.round(studio.pitch)}°`;
+      if (aVal) aVal.textContent = `${Math.round(studio.azimuth)}°`;
+    }
+
+    function matchReferenceCameraAngle() {
+      const M = MODE_DEFAULTS[studio.theme];
+      if (typeof gsap !== 'undefined') {
+        gsap.killTweensOf(studio, "pitch,azimuth,extrusion");
+        gsap.to(studio, {
+          pitch: M.pitch,
+          azimuth: M.azimuth,
+          extrusion: M.extrusion,
+          duration: 0.55,
+          ease: "expo.out",
+          onUpdate: () => {
+            syncCameraSlidersUI();
+            const extSlider = document.getElementById('slider-extrusion');
+            const extVal = document.getElementById('val-extrusion');
+            if (extSlider) extSlider.value = studio.extrusion.toFixed(2);
+            if (extVal) extVal.textContent = `${studio.extrusion.toFixed(2)}x`;
+            updateWebGLCameraPose();
+            if (!studio.wavePlaying) renderGPUFrame();
+          }
+        });
+      }
+    }
+
+    function updateStudioParam(key, rawVal) {
+      const val = parseFloat(rawVal);
+      studio[key] = val;
+
+      const labelEl = document.getElementById(`val-${key}`);
+      if (labelEl) {
+        if (key === 'pitch' || key === 'azimuth') labelEl.textContent = `${Math.round(val)}°`;
+        else if (key === 'extrusion' || key === 'ringSpread' || key === 'heatGain') labelEl.textContent = `${val.toFixed(2)}x`;
+        else if (key === 'blur' || key === 'globalBlur') labelEl.textContent = `${val.toFixed(1)} px`;
+        else labelEl.textContent = val.toFixed(2);
+      }
+
+      if (key === 'pitch' || key === 'azimuth') {
+        updateWebGLCameraPose();
+      }
+      if (key === 'globalBlur' && glRenderer && glRenderer.domElement) {
+        glRenderer.domElement.style.filter = studio.globalBlur > 0.1
+          ? `blur(${studio.globalBlur.toFixed(1)}px)`
+          : 'none';
+      }
+      renderGPUFrame();
+    }
+
+    function resetBlurAndFeather() {
+      const M = MODE_DEFAULTS[studio.theme];
+      const D = { blur: M.blur, globalBlur: M.globalBlur, grain: M.grain, dissolve: M.dissolve, transparency: M.transparency, rough: M.rough, grainSize: M.grainSize, haze: M.haze, glow: M.glow, waveAmp: M.waveAmp };
+      Object.keys(D).forEach(k => {
+        studio[k] = D[k];
+        const sl = document.getElementById('slider-' + k);
+        const lb = document.getElementById('val-' + k);
+        if (sl) sl.value = D[k];
+        if (lb) {
+          if (k === 'blur' || k === 'globalBlur') lb.textContent = D[k].toFixed(1) + ' px';
+          else if (k === 'grainSize') lb.textContent = D[k].toFixed(1);
+          else lb.textContent = D[k].toFixed(2);
+        }
+      });
+      if (glRenderer && glRenderer.domElement) {
+        glRenderer.domElement.style.filter = 'none';
+      }
+      renderGPUFrame();
+    }
+
+    function toggleWaveformOscillation() {
+      studio.wavePlaying = !studio.wavePlaying;
+      document.getElementById('wave-icon').textContent = studio.wavePlaying ? '⏸' : '▶';
+      document.getElementById('wave-status').textContent = studio.wavePlaying ? 'BREATHING' : 'PAUSED';
+    }
+
+    function setupInteractiveCameraDrag() {
+      const wrap = document.getElementById('viewports-wrapper');
+      if (!wrap) return;
+
+      wrap.addEventListener('pointerdown', (e) => {
+        studio.dragging = true;
+        studio.lastX = e.clientX;
+        studio.lastY = e.clientY;
+      });
+
+      window.addEventListener('pointermove', (e) => {
+        if (!studio.dragging) return;
+        const dx = e.clientX - studio.lastX;
+        const dy = e.clientY - studio.lastY;
+        studio.lastX = e.clientX;
+        studio.lastY = e.clientY;
+
+        studio.azimuth = ((studio.azimuth + dx * 0.55 + 180) % 360) - 180;
+        studio.pitch = Math.max(18, Math.min(82, studio.pitch + dy * 0.45));
+
+        syncCameraSlidersUI();
+        updateWebGLCameraPose();
+        if (!studio.wavePlaying) renderGPUFrame();
+      });
+
+      window.addEventListener('pointerup', () => {
+        studio.dragging = false;
+      });
+    }
+
+    function downloadWebGLPNG() {
+      if (!glRenderer) return;
+      renderGPUFrame();
+      const dataUrl = glRenderer.domElement.toDataURL('image/png');
+      const st = EXTRUDED_STATES[studio.selectedIndex];
+      const a = document.createElement('a');
+      a.href = dataUrl;
+      a.download = `quantum_amorphous_surface_${st.n}_${st.l}_${st.m}.png`;
+      a.click();
+      showStudioToast("Saved 3D Render (.PNG)", "High-contrast GPU heightfield snapshot downloaded.");
+    }
+
+    let toastTimeout = null;
+    function showStudioToast(head, sub) {
+      const toast = document.getElementById('studio-toast');
+      document.getElementById('toast-head').textContent = head;
+      document.getElementById('toast-sub').textContent = sub;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+      }, 3000);
+    }
+
+    function handleWindowResize() {
+      const host = document.getElementById('webgl-canvas-host');
+      if (!host || !glRenderer || !glCamera) return;
+      const w = host.clientWidth || 720;
+      const h = host.clientHeight || 520;
+      glCamera.aspect = w / h;
+      glCamera.updateProjectionMatrix();
+      glRenderer.setSize(w, h);
+      renderGPUFrame();
+    }
+
+    let frameCount = 0;
+    let lastFpsCheck = performance.now();
+    function animateStudioLoop(now) {
+      frameCount++;
+      if (now - lastFpsCheck >= 600) {
+        const fps = Math.min(120, Math.round((frameCount * 1000) / (now - lastFpsCheck)));
+        const fpsEl = document.getElementById('fps-telemetry');
+        if (fpsEl) fpsEl.textContent = `GPU: ${fps} FPS`;
+        frameCount = 0;
+        lastFpsCheck = now;
+      }
+
+      if (studio.wavePlaying || studio.puddleEmergence < 0.999) {
+        if (studio.wavePlaying) {
+          studio.time += 0.016 * studio.waveSpeed;
+        }
+        renderGPUFrame();
+      }
+      requestAnimationFrame(animateStudioLoop);
+    }
+
+    window.addEventListener('resize', handleWindowResize);
+
+    window.onload = function () {
+      applyModeProfile(studio.theme, MODE_DEFAULTS[studio.theme]);
+      renderGradientPickerUI();
+      renderStatesCatalog();
+      updateHeaderTelemetry();
+      studio.puddleEmergence = 0.0;
+      initWebGLHeightmap();
+      if (glRenderer && glRenderer.domElement) {
+        glRenderer.domElement.style.filter = studio.globalBlur > 0.1
+          ? `blur(${studio.globalBlur.toFixed(1)}px)`
+          : 'none';
+      }
+      setupInteractiveCameraDrag();
+      requestAnimationFrame(animateStudioLoop);
+      if (typeof gsap !== 'undefined') {
+        gsap.to(studio, {
+          puddleEmergence: 1.0,
+          duration: 1.15,
+          delay: 0.12,
+          ease: "power2.out",
+          onUpdate: () => {
+            if (!studio.wavePlaying) renderGPUFrame();
+          }
+        });
+      } else {
+        studio.puddleEmergence = 1.0;
+        renderGPUFrame();
+      }
+    };
+  </script>
+</body>
+</html>

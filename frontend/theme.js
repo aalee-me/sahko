@@ -1,0 +1,10 @@
+(() => {
+ const root=document.documentElement;let preference='dark',mix=0,target=0,frame=0,cue=null,jolted=false,joltTimer=null,prompt=false,setupOverride=null;
+ try{preference=localStorage.getItem('sahko-theme-v1')||'dark'}catch{}
+ const paper=typeof getComputedStyle==='function'?getComputedStyle(root).getPropertyValue('--light-paper').trim()||'#fffef7':'#fffef7',lightRGB=paper.match(/^#([a-f0-9]{6})$/i)?[1,3,5].map(i=>parseInt(paper.slice(i,i+2),16)):[255,254,247];
+ const resolved=()=>preference==='system'?(matchMedia('(prefers-color-scheme: light)').matches?1:0):preference==='light'?1:0;
+ function paint(){root.style.setProperty('--theme-mix',mix.toFixed(5));root.dataset.theme=mix>.5?'light':'dark';config.themeMix=mix;config.background='rgb('+[0,0,0].map((v,i)=>Math.round(v+(lightRGB[i]-v)*mix)).join(',')+')';if(mix===0||mix===1)root.style.colorScheme=mix===1?'light':'dark';}
+ function apply(instant=false,duration=700){target=setupOverride!==null?Number(setupOverride):jolted?1:cue!==null?cue:prompt?1:resolved();cancelAnimationFrame(frame);if(instant||config.reduced){mix=target;paint();return}const from=mix,start=performance.now();function tick(now){const t=Math.min(1,(now-start)/duration),e=t*t*(3-2*t);mix=from+(target-from)*e;paint();if(t<1)frame=requestAnimationFrame(tick)}frame=requestAnimationFrame(tick)}
+ window.sahkoTheme={setup(value){const next=value===null?null:!!value;if(next===setupOverride)return;setupOverride=next;apply()},set(value){preference=['dark','light','system'].includes(value)?value:'dark';try{localStorage.setItem('sahko-theme-v1',preference)}catch{}apply()},get:()=>preference,jolt(){clearTimeout(joltTimer);if(!jolted){jolted=true;apply()}joltTimer=setTimeout(()=>{jolted=false;apply()},2000)},prompt(value){if(prompt===!!value)return;prompt=!!value;apply()},cue(value){const next=value===false||value===null?null:Number(value);if(cue===next)return;cue=next;apply(false,1400)},get mix(){return mix}};
+ matchMedia('(prefers-color-scheme: light)').addEventListener('change',()=>{if(preference==='system')apply()});apply(true);
+})();

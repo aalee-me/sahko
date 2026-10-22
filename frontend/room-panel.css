@@ -1,0 +1,49 @@
+/* Session tools and capture stay on the focus surface. */
+body .workspace{position:relative;padding-bottom:28px!important}
+body .void-dock,body.compact .void-dock{position:relative!important;inset:auto!important;width:auto!important;align-self:stretch;order:20;margin:22px 0 0!important;padding:0!important;z-index:25;flex-shrink:0}
+body #voidForm.inline-thought-form{background:var(--surface)!important;border:1px solid var(--line);box-shadow:none;min-height:66px;padding:13px 18px;border-radius:38px}
+body #voidComposer #voidForm{background:var(--surface-raised)!important}
+#voidComposer{margin:0!important}
+body #sessionTitle,.session-info .progress,.people-chevron,.person-row-chevron{display:none!important}
+#sessionMeta{font-size:15px;line-height:1.4}
+.room-action-rail{position:absolute;right:20px;top:270px;display:flex;flex-direction:column;gap:8px;padding:6px;border:1px solid var(--line);border-radius:999px;background:var(--surface-raised);z-index:35}
+body .room-action-rail button{position:static!important;inset:auto!important;display:grid!important;place-items:center;width:42px!important;height:42px!important;min-width:42px;padding:10px!important;border:0;border-radius:50%;background:transparent;color:var(--muted);margin:0!important;box-shadow:none;font-size:0;transition:background .18s,color .18s,transform .18s}
+body .room-action-rail button:hover,body .room-action-rail button:focus-visible{background:var(--surface-hover);color:var(--text);transform:translateY(-1px)}
+.room-action-rail button svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.room-action-rail .control-caption{display:none!important}.room-action-rail button[aria-pressed=true]{color:var(--accent)}
+.night-progress{position:relative;margin:32px -30px -35px;order:3;pointer-events:none;color:var(--text);z-index:5;min-height:134px;flex-shrink:0}
+.night-progress-label{display:flex;flex-direction:column;gap:8px;padding:0 30px;margin-bottom:-6px}.night-progress-label>span{font-size:17px}.night-progress-label small{font-size:14px;color:var(--muted)}
+.night-progress svg{display:block;width:100%;height:104px;overflow:hidden}.night-progress path{fill:none;stroke:currentColor;vector-effect:non-scaling-stroke}.night-progress-track{stroke-width:1;stroke-dasharray:3 5;opacity:.8}.night-progress-fill{stroke-width:3.5;stroke-linecap:round;}.night-progress-marker{fill:currentColor}
+body .scene{aspect-ratio:1.6;min-height:300px;max-height:570px;order:4}
+body.compact .scene{aspect-ratio:1.25;min-height:250px;max-height:460px}
+body .session{order:1}body .night-progress{order:3}body .thought-feed{order:2}
+body .session-tasks-panel,body .room-window{position:fixed;inset:var(--room-window-top,160px) var(--room-window-right,80px) auto auto!important;margin:0;width:340px;max-width:calc(100vw - 40px);max-height:min(590px,calc(100dvh - var(--room-window-top,160px) - 24px));padding:22px;background:var(--surface-raised);color:var(--text);border:1px solid var(--line);border-radius:24px;box-shadow:0 16px 60px #0003;z-index:95;overflow:auto}
+body .huddle-window{width:380px}.huddle-controls{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}.huddle-controls button,.exit-actions button{padding:10px 15px;border-radius:24px;background:var(--surface-hover);border:0;color:var(--text);font-size:14px}.huddle-controls .huddle-join,.exit-actions .leave-confirm{background:var(--action-green,#47734f);color:white}.huddle-controls [hidden]{display:none!important}.huddle-status{color:var(--muted);font-size:13px;line-height:1.5}.huddle-participants{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:16px}.huddle-person{display:flex;align-items:center;flex-direction:column;gap:6px;padding:12px 4px;border-radius:16px;background:var(--surface)}.huddle-person>img,.huddle-person>.portrait-fallback,.huddle-initial{width:42px;height:42px;flex-basis:42px;object-fit:cover;border-radius:50%}.huddle-initial{display:grid;place-items:center;background:var(--surface-hover)}.huddle-person strong{font-size:13px;font-weight:400;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.huddle-person small{font-size:11px;color:var(--muted)}.huddle-empty{grid-column:1/-1;color:var(--muted);font-size:14px}
+.room-chat{border-top:1px solid var(--line);margin-top:20px;padding-top:8px;max-height:230px;min-height:100px;overflow:auto;overscroll-behavior:contain}.room-chat article{padding:10px 0;font-size:14px;overflow-wrap:anywhere}.room-chat article strong{font-weight:500}.room-chat article time{font-size:11px;color:var(--muted);margin-left:10px}.room-chat article p{margin:5px 0;white-space:pre-wrap;line-height:1.45}.chat-empty{font-size:13px;color:var(--muted)}.room-chat-form{display:flex;gap:8px;align-items:center;background:var(--surface);border-radius:22px;padding:10px 12px;margin-top:12px}.room-chat-form textarea{font:inherit;font-size:14px;resize:vertical;min-width:0;flex:1;border:0;background:transparent;color:var(--text);padding:0}.room-chat-form button{background:transparent;color:var(--text);border:0;padding:6px;font-size:24px}.room-chat-form button:disabled{opacity:.35}
+.exit-session-window{background:var(--surface-raised);color:var(--text);border:1px solid var(--line);border-radius:26px;padding:26px;width:400px;max-width:calc(100vw - 32px)}.exit-session-window::backdrop{background:#0005;backdrop-filter:blur(8px)}.exit-session-window p{color:var(--muted);font-size:15px;line-height:1.5}.exit-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:24px}
+@media(max-width:759px){.room-action-rail{right:12px;top:240px;gap:8px}body .room-action-rail button{width:38px!important;height:38px!important;min-width:38px;padding:8px!important}.night-progress{margin-left:-20px;margin-right:-20px;min-height:112px;margin-top:22px}.night-progress-label{padding-left:20px}.night-progress svg{height:85px}body .scene{min-height:260px;aspect-ratio:1.2}body .session-tasks-panel,body .room-window{inset:auto auto var(--room-drawer-bottom,110px) var(--room-drawer-left,16px)!important;width:var(--room-drawer-width,calc(100vw - 32px));max-width:calc(100vw - 24px);max-height:60dvh;padding:20px}body #voidForm.inline-thought-form{min-height:62px;padding:12px}}
+body.compact .session-tasks-panel,body.compact .room-window{inset:auto auto var(--room-drawer-bottom,110px) var(--room-drawer-left,16px)!important;width:var(--room-drawer-width,calc(100vw - 32px));max-height:60dvh}
+@media(prefers-reduced-motion:reduce){.night-progress-fill,.room-action-rail button{transition:none}}
+
+body .space-tabs{position:relative!important;inset:auto!important;transform:none!important;order:18;align-self:center;margin:0 auto 4px;z-index:25}body #sessionMeta{font-size:15px!important}body #voidThought{font-size:16px!important;line-height:1.5}body #voidForm .void-mark{flex:0 0 28px}body.compact .layout[data-sized] .workspace{padding-bottom:24px!important}
+
+.workspace>.room-info{display:none}.workspace>.thought-feed.is-empty{display:none!important}
+@media(min-width:1101px){body:not(.compact) .layout{padding-right:32px}body:not(.compact) .workspace>.thought-feed{position:relative;inset:auto;width:calc(100% - 70px);margin:14px 0 0;min-height:0;max-height:140px}body:not(.compact) .thought-one{max-width:calc(100% - 45px)}body:not(.compact) .scene{aspect-ratio:2.05;max-height:510px}}
+
+/* The space switcher belongs below the session surface. */
+.layout>.space-tabs{grid-column:1/-1;justify-self:center;display:grid;grid-template-columns:repeat(3,1fr);width:240px;max-width:calc(100% - 24px);padding:5px;gap:0;margin:18px auto 8px!important;border:1px solid var(--line);border-radius:999px;background:var(--surface-raised);isolation:isolate}
+.layout>.space-tabs:before{content:'';position:absolute;left:5px;top:5px;bottom:5px;width:calc((100% - 10px)/3);border-radius:999px;background:var(--surface-selected);transform:translateX(calc(var(--space-index,2)*100%));transition:transform .36s cubic-bezier(.22,.75,.2,1);z-index:-1}
+.layout>.space-tabs button{min-height:36px;padding:8px 14px;background:transparent!important;font-size:13px}
+body:has(#onboarding[open]) .layout>.space-tabs,body.in-void .layout>.space-tabs{visibility:hidden;pointer-events:none}
+.timer-context{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:15px;line-height:1.5;max-width:220px}
+.timer-context svg{width:19px;height:19px;flex:0 0 19px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+body #sessionMeta{display:none!important}
+@media(max-width:759px){.timer-context{font-size:13px;gap:6px}.timer-context svg{width:17px;height:17px;flex-basis:17px}.compact .layout>.space-tabs{margin-top:16px!important}}
+@media(prefers-reduced-motion:reduce){.layout>.space-tabs:before{transition:none}}
+
+/* One shared rail surface; individual tools have no filled backgrounds. */
+body .room-action-rail #sessionTasks,body .room-action-rail #roomVoice,body .room-action-rail #exitSession{background:transparent!important;box-shadow:none!important}
+body .room-action-rail button:hover,body .room-action-rail button:focus-visible{color:var(--text)}
+.night-progress{margin-bottom:8px;min-height:0}
+.night-progress-label{margin:10px 0 0;padding-bottom:6px}
+@media(max-width:759px){.night-progress{margin-bottom:4px;min-height:0}.night-progress-label{margin-top:8px}}

@@ -1,0 +1,33 @@
+/* One palette drives the entire interface and the renderer. --theme-mix is
+   animated once by theme.js, so no component can finish its fade early. */
+:root{
+ --theme-mix:0;
+ --light-paper:#fffef7;--light-card:#f5f5f3;--light-ink:#243047;
+ --reference-coral:#ff969f;--reference-yellow:#ffe13d;--reference-peach:#ffbf9f;--reference-lavender:#b9a6ed;--reference-teal:#a1dfd5;
+ --canvas:color-mix(in srgb,#08090a,var(--light-paper) calc(var(--theme-mix)*100%));
+ --surface:color-mix(in srgb,#000000,var(--light-paper) calc(var(--theme-mix)*100%));
+ --surface-raised:color-mix(in srgb,#17191b,var(--light-card) calc(var(--theme-mix)*100%));
+ --surface-hover:color-mix(in srgb,#292c2e,#ebece9 calc(var(--theme-mix)*100%));
+ --surface-selected:color-mix(in srgb,#34433f,#e0e5dc calc(var(--theme-mix)*100%));
+ --neutral-surface:color-mix(in srgb,#2d343e,var(--light-card) calc(var(--theme-mix)*100%));
+ --text:color-mix(in srgb,#eeeae1,var(--light-ink) calc(var(--theme-mix)*100%));
+ --muted:color-mix(in srgb,#98a8b8,#566b62 calc(var(--theme-mix)*100%));
+ --line:color-mix(in srgb,#47576b,#c4cbc1 calc(var(--theme-mix)*100%));
+ --accent:color-mix(in srgb,#d2ddb3,#496b3c calc(var(--theme-mix)*100%));
+ --accent-muted:color-mix(in srgb,#8fa78c,#5d7a54 calc(var(--theme-mix)*100%));
+ --on-accent:color-mix(in srgb,#24332b,#f3f5e8 calc(var(--theme-mix)*100%));
+ --warning:color-mix(in srgb,#d9b590,#8e572d calc(var(--theme-mix)*100%));
+ --shadow:#030a1728;--scrim:#070d184d;
+ --nebula:color-mix(in srgb,#6b5ea52b,#b9a6ed40 calc(var(--theme-mix)*100%));
+ --ink:var(--text);--paper:var(--surface);--green:var(--accent);--warm:var(--text);--quiet:var(--muted);
+}
+html,body{background:var(--canvas);color:var(--text)}body{padding-bottom:25px}body,.workspace,.scene,header,button,input,textarea,dialog,.onboard-copy,#onboarding{transition-property:transform,opacity,scale,box-shadow!important}#onboarding,#checkin{background:var(--surface);color:var(--text)}#onboarding::backdrop{background:var(--surface)}.workspace,.scene{background:var(--surface);border-color:var(--line)}.clock,.onboard-copy h1,#onboarding button,.session-title,#checkin h2{color:var(--text)}.primary,.onboard-primary,.room-join,#releaseThought:not(:disabled),.break-presets button.selected{background:var(--accent)!important;color:var(--on-accent)!important}.settings summary,.settings h3{color:var(--muted)}.people-menu .people-list,.people-menu .profile-card{background:var(--surface-raised);color:var(--text)}.person-row:hover,.person-actions button:hover{background:var(--surface-hover)}.avatar .label{background:var(--accent);color:var(--on-accent)}.avatar{border-color:var(--text)}.avatar .status-dot{border-color:var(--surface);background:var(--accent-muted)}.profile-card h3,.person-identity strong,.thought-one p{color:var(--text)}.thought-one small,.people-count,.people-chevron,.person-row-chevron,.action-icon{color:var(--muted)}.inline-thought-form #voidThought,#onboarding .task-input,#checkin .task-input{color:var(--text)!important}.inline-thought-form #voidThought::placeholder{color:var(--muted)}.room-description{color:var(--muted)!important}.task-row{border-bottom-color:var(--line)!important}.knob .number-value,dialog input,select{background:var(--surface-raised);color:var(--text);border-color:var(--line)}.rhythm-direct-value,.clock-time-input{color:var(--text)!important}.rhythm-card,.rhythm-card.settled{background:var(--surface-raised)}.rhythm-card.editing{background:var(--surface-hover)}.snap-dial,.clock-wheel .snap-dial{background:var(--surface)}.snap-tick i{background:var(--accent-muted)}.snap-tick.major i,.snap-pointer{background:var(--accent);color:var(--accent)}.snap-pointer{background:none}.room-listing{background:var(--surface-raised)!important}.room-listing:hover{background:var(--surface-hover)!important}.plan-listing{background:var(--neutral-surface)!important}.room-blocks{color:var(--accent)!important}.room-time{color:var(--warning)!important}.finish-mode{background:var(--surface-raised)}.finish-mode button.selected{background:var(--surface-selected)!important;color:var(--text)!important}.onboard-segment.done{stroke:var(--accent-muted)}.onboard-segment.current{stroke:var(--accent)}.onboard-segment.future{stroke:var(--line)}.timeline-focus{background:var(--accent);color:var(--on-accent)}.timeline-break{background:var(--accent-muted)}.view-modes>.active{color:var(--text)!important}dialog::backdrop{background:var(--scrim)}.app-settings,.drift-popup{background:var(--surface);color:var(--text)}.app-settings p,.drift-popup p{color:var(--muted)}#checkin.attention{animation:none}.return-island{background:var(--surface-raised);color:var(--text)}.return-island small{color:var(--muted)}
+.clock-time-input{border:0!important;text-align:center!important}.stop-estimate{border:0!important}.clock-head{justify-content:center}.app-settings .settings-grid input[type=number]{max-width:100%}.people-menu .profile-card{background:var(--surface-raised)}
+:root{--label-color:var(--accent);--label-text:var(--on-accent);--outline-color:var(--text)}.avatar .label{background:var(--label-color);color:var(--label-text)}.avatar,.avatar.drifting{border-color:var(--outline-color)}
+@media(max-width:1100px){.workspace .title-row{display:block}.workspace .title-row>div:first-child{width:100%;min-width:0}.workspace .title-row h1{width:calc(100% - 120px);max-width:none;margin-bottom:8px}.workspace .title-row .space-tabs{width:100%;margin:8px 0 12px!important}.workspace .title-row .space-tabs button{flex:none}}
+/* Palette values already interpolate on the shared theme clock. Independent
+   color transitions otherwise trail it and reverse at different times. */
+*,*::before,*::after{transition-property:transform,translate,scale,opacity,box-shadow,grid-template-rows,rotate,clip-path!important}
+html{scrollbar-color:var(--line) var(--surface)}input,textarea,select{accent-color:var(--accent)}
+
+:root{--task-add-accent:color-mix(in srgb,var(--muted),#b8b1ff calc(var(--theme-mix)*100%));--task-placeholder:color-mix(in srgb,var(--muted),#8996af calc(var(--theme-mix)*100%))}

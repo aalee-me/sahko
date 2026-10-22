@@ -62,3 +62,13 @@ The tools share one rounded background wrap, the space navigation sits below the
 ## Reference light palette
 
 `--light-paper: #FFFEF7` now drives the light canvas, full-page surfaces, setup screens, check-in, profile, recap and PNG recap background. Light cards use `#F5F5F3`, primary text uses navy `#243047`, and secondary text remains muted green. Coral, yellow, peach, lavender and teal reference accents are shared by the recap UI and its exported image. Empty task rows use a lavender add icon and a subdued blue-gray placeholder. The orbital renderer derives its light RGB endpoint from the same paper token, so theme fades and jolt/drift reminders remain synchronized. This changes the UI palette without overwriting a baked orbital preset.
+
+## Mobile presentation demo
+
+Open `/mobile.html` for the phone-sized clickable prototype. On a desktop browser, the external checkpoint buttons skip between Landing, Tasks, Rhythm, Rooms, Focus, Break, Check-in and Recap without waiting through a full timer. On a phone the presentation frame disappears and the app fills the viewport. The mobile route runs the same frontend and backend as the desktop app, with a mobile layout, persistent tasks and working room, thought, check-in and recap flows. Demo phase shortcuts are blocked in shared live rooms so they cannot alter other users' timers. Use `npm start`, then open `http://localhost:8000/mobile.html`; the desktop app remains at `http://localhost:8000/`.
+
+The visual references are the mobile screens supplied in the conversation. The linked Figma file was inaccessible in this session; exact parity with any additional frames in that file is not verified.
+
+## Final demo validation
+
+Two local browser accounts exercised room creation, invalid room codes, password rejection and successful joining with goals, task completion, icon tooltips, shared chat, a remote jolt with recipient light transition, temporary drift slowdown, delayed reminders, refocus and leaving. The Void composer stays near the viewport bottom, including compact view; timestamps remain attached to thoughts, chronological lines connect the actual dots and update when dragged, and the newest line animates outward. The global progress label is below the arc. Each tool icon has a transparent individual background inside the shared pill. Separate mobile checks cover the full demo checkpoints, task persistence, Void entry/exit, break, check-in, recap and responsive phone sizing. WebRTC audio still has the previously documented managed-network verification limit.

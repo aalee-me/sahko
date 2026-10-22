@@ -1,0 +1,4 @@
+self.addEventListener('install',()=>self.skipWaiting());
+self.addEventListener('activate',event=>event.waitUntil(self.clients.claim()));
+self.addEventListener('notificationclick',event=>{event.notification.close();event.waitUntil((async()=>{const windows=await self.clients.matchAll({type:'window',includeUncontrolled:true});const client=windows.find(c=>new URL(c.url).origin===self.location.origin);if(client){await client.focus();client.postMessage({type:'return-to-focus'})}else await self.clients.openWindow('/');})());});
+self.addEventListener('push',event=>{let data={title:'Time to come back',body:'Your next focus block has started.'};try{data={...data,...event.data.json()}}catch{}event.waitUntil(self.registration.showNotification(data.title,{body:data.body,tag:'sahko-return',data:{url:'/'}}));});

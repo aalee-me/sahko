@@ -1,0 +1,6 @@
+ALTER TABLE rooms ADD COLUMN focus_seconds INTEGER NOT NULL DEFAULT 1500;
+--> statement-breakpoint
+ALTER TABLE rooms ADD COLUMN break_seconds INTEGER NOT NULL DEFAULT 300;
+--> statement-breakpoint
+ALTER TABLE rooms ADD COLUMN total_sprints INTEGER NOT NULL DEFAULT 4;
+
