@@ -241,5 +241,3 @@ body #voidComposer{bottom:20px;margin:0!important;max-width:calc(100vw - 32px)}
 @media(prefers-reduced-motion:reduce){.activity-choice .room-arrow{transition:none;transform:none}}
 .void-mark:hover .riant-o-svg,.void-mark:focus-visible .riant-o-svg{transform:scale(1.24) rotate(360deg)}.void-mark:active .riant-o-svg{transform:scale(1.4) rotate(360deg)}.brand:hover .riant-o-svg,.onboard-wordmark:hover .riant-o-svg{transform:rotate(360deg) scale(1.08)}
 @media(prefers-reduced-motion:reduce){.void-mark:hover .riant-o-svg,.void-mark:focus-visible .riant-o-svg,.void-mark:active .riant-o-svg,.brand:hover .riant-o-svg,.onboard-wordmark:hover .riant-o-svg{transform:none}}
-/* Eight outer Lewis dots, paired above, below and to either side of ö. */
-.lewis-dot{fill:currentColor;stroke:none}.brand .mark,.riant-brand-mark{width:36px;height:36px;flex-basis:36px}.brand .mark svg,.riant-brand-mark svg{width:36px;height:36px}.inline-thought-form .void-mark{width:34px;height:34px;flex-basis:34px}.void-mark .riant-o-svg{width:32px;height:32px}#sessionBottomDock .space-tabs button .riant-o-svg{width:22px;height:22px}

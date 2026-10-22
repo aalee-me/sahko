@@ -10,10 +10,11 @@ function appearancePreset(input){
  if(input.orbitalState!=null&&![7,9,13].includes(input.orbitalState))fail('Invalid orbital map');
  if(input.orbitalPalette!==undefined&&!['pastel','original','aurora','ember','tide','mono'].includes(input.orbitalPalette))fail('Invalid orbital palette');
  if(input.avatarStroke!==undefined&&!['surface','custom'].includes(input.avatarStroke))fail('Invalid avatar border style');
+ if(input.renderQualityRevision!==undefined&&![0,1].includes(input.renderQualityRevision))fail('Invalid render quality revision');
  if(input.paletteRevision!==undefined&&![1,2].includes(input.paletteRevision))fail('Invalid palette revision');
  if(input.iconOnlyControls!==undefined&&typeof input.iconOnlyControls!=='boolean')fail('Invalid icon controls');
  let driftReminder={enabled:true,interval:15};if(input.driftReminder){if(typeof input.driftReminder.enabled!=='boolean'||!Number.isFinite(input.driftReminder.interval)||input.driftReminder.interval<.5||input.driftReminder.interval>60)fail('Invalid drift reminder');driftReminder={enabled:input.driftReminder.enabled,interval:input.driftReminder.interval}}
- return {version:1,iconOnlyControls:input.iconOnlyControls===true,driftReminder,paletteRevision:input.paletteRevision===2?2:1,avatarStroke:input.avatarStroke||'surface',orbitalPalette:input.orbitalPalette||'original',values,easing,voidEasing,colors,compactSize,labelSide:input.labelSide==='above'?'above':'below',theme:['dark','light','system'].includes(input.theme)?input.theme:'dark',orbitalState:input.orbitalState??null};
+ return {version:1,iconOnlyControls:input.iconOnlyControls===true,driftReminder,paletteRevision:input.paletteRevision===2?2:1,renderQualityRevision:input.renderQualityRevision===1?1:0,avatarStroke:input.avatarStroke||'surface',orbitalPalette:input.orbitalPalette||'original',values,easing,voidEasing,colors,compactSize,labelSide:input.labelSide==='above'?'above':'below',theme:['dark','light','system'].includes(input.theme)?input.theme:'dark',orbitalState:input.orbitalState??null};
 }
 const json=(value,status=200)=>new Response(JSON.stringify(value),{status,headers:{'content-type':'application/json; charset=utf-8','cache-control':'no-store'}});
 const fail=(message,status=400)=>{const e=new Error(message);e.status=status;throw e};
