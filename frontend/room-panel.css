@@ -47,3 +47,50 @@ body .room-action-rail button:hover,body .room-action-rail button:focus-visible{
 .night-progress{margin-bottom:8px;min-height:0}
 .night-progress-label{margin:10px 0 0;padding-bottom:6px}
 @media(max-width:759px){.night-progress{margin-bottom:4px;min-height:0}.night-progress-label{margin-top:8px}}
+
+/* The timer is an icon beside the digits, without a visible phase caption. */
+body .timer-context{color:color-mix(in srgb,#ffffff,var(--light-ink) calc(var(--theme-mix)*100%));max-width:none}
+body .timer-context svg,.mobile-demo .timer-context svg{width:28px;height:28px;flex:0 0 28px;stroke-width:1.8}
+.riant-o-svg{display:block;overflow:visible;fill:currentColor;transform-origin:center;transition:transform .6s cubic-bezier(.22,.75,.2,1)}
+.riant-o-shape{fill:currentColor;stroke:none}.riant-o-svg .void-mark-fill{fill:currentColor;stroke:none;opacity:0;transition:opacity .3s}
+.brand .mark,.riant-brand-mark{display:inline-grid;place-items:center;color:var(--accent);width:30px;height:30px;flex:0 0 30px;line-height:1}
+.brand .mark svg,.riant-brand-mark svg{width:28px;height:28px}.onboard-wordmark{display:flex;align-items:center;gap:9px}
+.brand:hover .riant-o-svg,.onboard-wordmark:hover .riant-o-svg{transform:rotate(180deg) scale(1.08)}
+.brand:hover .void-mark-fill,.onboard-wordmark:hover .void-mark-fill{opacity:.25}
+.void-mark .riant-o-svg{width:25px;height:25px}.void-portal-mark .riant-o-svg{width:100%;height:100%}
+@media(prefers-reduced-motion:reduce){.riant-o-svg,.riant-o-svg .void-mark-fill{transition:none!important}.brand:hover .riant-o-svg,.onboard-wordmark:hover .riant-o-svg{transform:none}}
+
+/* A shared bottom anchor keeps the composer and space pill in separate rows. */
+body .session-bottom-dock{position:fixed;bottom:18px;left:16px;width:calc(100vw - 32px);display:flex;flex-direction:column;align-items:stretch;gap:12px;z-index:80;pointer-events:none}
+body #sessionBottomDock .void-dock{position:relative!important;inset:auto!important;order:0;margin:0!important;width:100%!important;z-index:0;pointer-events:auto}
+body #sessionBottomDock #voidForm{background:var(--surface-raised)!important;box-shadow:0 8px 35px #0002}
+body #sessionBottomDock .space-tabs{position:relative!important;inset:auto!important;transform:none!important;translate:none!important;display:grid;grid-template-columns:repeat(3,1fr);width:294px;max-width:100%;padding:5px;gap:0;margin:0 auto!important;align-self:center;border:1px solid var(--line);border-radius:999px;background:var(--surface-raised);isolation:isolate;order:1;pointer-events:auto;visibility:visible}
+#sessionBottomDock .space-tabs:before{content:'';position:absolute;left:5px;top:5px;bottom:5px;width:calc((100% - 10px)/3);border-radius:999px;background:var(--surface-selected);transform:translateX(calc(var(--space-index,2)*100%));transition:transform .36s cubic-bezier(.22,.75,.2,1);z-index:-1}
+#sessionBottomDock .space-tabs button{display:flex;align-items:center;justify-content:center;gap:7px;min-height:38px;padding:8px 10px;border:0;background:transparent!important;font-size:13px}
+#sessionBottomDock .space-tabs button svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+#sessionBottomDock .space-tabs button .riant-o-svg{fill:currentColor;stroke:none;width:15px;height:15px}
+#sessionBottomDock .space-tabs button.active{color:var(--text)}
+body .workspace,body.compact .workspace,body.compact .layout[data-sized] .workspace{padding-bottom:170px!important}
+body:has(#onboarding[open]) #sessionBottomDock,body:has(#checkin[open]) #sessionBottomDock,body:has(#sessionRecap[open]) #sessionBottomDock,body:has(#myProfile[open]) #sessionBottomDock{display:none}
+@media(max-width:759px){body .session-bottom-dock{gap:10px}#sessionBottomDock .space-tabs button{min-height:34px;font-size:12px;padding:7px 9px}}
+@media(prefers-reduced-motion:reduce){#sessionBottomDock .space-tabs:before{transition:none}}
+
+body .room-action-rail #roomVoice[hidden],body .solo-dashboard .people-menu{display:none!important}
+body.solo-dashboard #peopleMenu,body.solo-dashboard #profileCard{display:none!important}
+body .room-action-rail button,body .room-action-rail button:hover,body .room-action-rail button:focus,body .room-action-rail button:active,body .room-action-rail button[aria-pressed=true]{background:transparent!important;box-shadow:none!important}
+body #thoughtMic,body #thoughtMic:hover,body #thoughtMic:focus{background:transparent!important;box-shadow:none!important}
+.simulate-session-trigger{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px!important;padding:9px 13px!important;border:1px solid var(--line)!important;background:var(--surface-raised)!important;color:var(--text)!important;font-size:12px!important;white-space:nowrap}.simulate-session-trigger svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.simulate-session-trigger[aria-pressed=true]{border-color:var(--accent)!important;color:var(--accent)!important}.simulate-session-trigger:disabled{opacity:.4;cursor:default}
+#simulateOnboarding{margin-left:auto;margin-right:14px}.onboard-header #onboardExplore{margin-left:0!important}
+@media(max-width:759px){.simulate-session-trigger{padding:8px!important;width:34px;height:34px;flex:0 0 34px}.simulate-session-trigger span{display:none}.simulate-session-trigger svg{width:17px;height:17px}#simulateOnboarding{margin-right:8px}}
+
+/* Center whole thoughts in one native scrolling viewport. */
+body .workspace>.thought-feed{height:200px;max-height:200px;min-height:0;align-items:stretch;overflow:hidden}
+body .thought-one{position:relative;height:200px;max-height:200px;padding:90px 0!important;overflow-y:auto;overflow-x:hidden;scroll-behavior:auto!important;transform:none!important;scrollbar-width:none;mask-image:linear-gradient(transparent,#000 25%,#000 78%,transparent);opacity:.55;touch-action:pan-y}
+body .thought-one.show{opacity:1}body .thought-trail-item{min-height:100px;padding:12px 0 16px}
+body .thought-trail-item p{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;opacity:1;filter:none;font-size:16px!important;line-height:1.5!important;margin:6px 0 0!important;color:var(--text)}
+body .thought-trail-item small{display:block;font-size:12px;line-height:1.4;color:var(--muted)}
+body .thought-trail-item[data-active=true]{opacity:1!important;filter:none!important}
+body .thought-rail{max-height:200px;padding-block:6px;touch-action:pan-y}
+@media(max-width:759px){body .workspace>.thought-feed,body .thought-one{height:170px;max-height:170px}body .thought-rail{max-height:170px}}
+.claim-focus-button{position:fixed;top:92px;left:50%;translate:-50% 0;z-index:95;display:flex;align-items:center;gap:9px;border:1px solid var(--accent);border-radius:999px;padding:11px 18px;background:var(--surface-raised);color:var(--text);font-size:15px;box-shadow:0 6px 30px #0003}.claim-focus-button[hidden]{display:none}.claim-focus-button svg{width:19px;height:19px;fill:none;stroke:var(--accent);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:759px){.claim-focus-button{top:76px;font-size:14px}}
