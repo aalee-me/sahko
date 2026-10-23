@@ -199,3 +199,30 @@ body #onboarding .invite-friend-list{padding-top:12px;max-height:300px}
 body.mobile-demo #onboarding[data-mobile-screen=tasks] .onboard-visual{position:relative;inset:auto;order:0;width:100%;max-width:420px;opacity:1;margin:0 auto}
 body.mobile-demo #onboarding[data-mobile-screen=tasks] .onboard-copy{padding-top:50px!important}
 .invite-avatar{overflow:hidden;flex-shrink:0}.invite-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+
+/* Profile opens as a compact drawer, leaving the app visible beside it. */
+body .my-profile{position:fixed;inset:0 0 0 auto;margin:0;width:min(420px,calc(100vw - 24px));height:100dvh;max-height:100dvh;max-width:none;box-sizing:border-box;border-radius:24px 0 0 24px;border-width:0 0 0 1px;overflow:auto;box-shadow:-12px 0 48px #0002}
+body .my-profile::backdrop{background:#0003;backdrop-filter:blur(2px)}
+body .my-profile .profile-shell{padding:28px 24px;min-width:0}
+body .my-profile .my-profile-header{gap:12px;align-items:center}
+body .my-profile .my-profile-avatar{width:44px;height:44px;flex-basis:44px}
+body .my-profile .my-profile-identity{gap:12px;min-width:0}
+body .my-profile .my-profile-identity h1{font-size:24px;line-height:1.25;margin-bottom:4px}
+body .my-profile .my-profile-tabs{gap:16px;overflow-x:auto;margin:24px 0;scrollbar-width:thin}
+body .my-profile .my-profile-tabs button{font-size:13px;white-space:nowrap}
+body .my-profile-trigger{width:28px;height:28px;flex:0 0 28px;border:0!important;background:var(--neutral-surface)!important}
+body .my-profile-trigger .profile-initial{font-size:13px;font-weight:500;line-height:1}
+.profile-initial.default-initial{color:#92958f;background:var(--neutral-surface)}
+.profile-initial.named-initial{color:var(--on-action);background:var(--action-accent)}
+.profile-insight-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.profile-insight-stat{padding:18px 14px;border-radius:18px;background:var(--surface-raised)}
+.profile-insight-stat strong{display:block;font-size:28px;font-weight:500;line-height:1.2;font-variant-numeric:tabular-nums}
+.profile-insight-stat span{display:block;font-size:13px;color:var(--muted);margin-top:10px;line-height:1.4}
+.profile-latest-insight{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;text-align:left;padding:16px;margin:20px 0 0;border:1px solid var(--line);background:transparent;border-radius:18px}
+.profile-latest-insight strong{font-size:16px;font-weight:500}.profile-latest-insight small{display:block;margin-top:6px;font-size:13px;color:var(--muted)}
+.profile-insights-sessions{padding:10px 16px;border-radius:999px;font-size:13px;margin-top:20px}
+body .my-profile .profile-friend{min-width:0;gap:10px}
+body .my-profile .profile-friend>span:nth-child(2){min-width:0;overflow-wrap:anywhere}
+body .my-profile .profile-friend strong{font-size:16px}body .my-profile .profile-friend small{font-size:13px}
+@media(prefers-reduced-motion:reduce){body .my-profile{animation:none!important}}
+body .my-profile{animation:none!important}
