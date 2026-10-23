@@ -26,7 +26,8 @@ import SahkoCore
  var onShowPanel:(()->Void)?
  private var classifier=Classifier(),ticker:Timer?,probeBusy=false,publishBusy=false,host:String?,spotifyPlaying=false
  private var observedBundle="",lastProbe=Date.distantPast,lastPublish=Date.distantPast,lastJolt:String?,ack:String?
- init(){if let data=UserDefaults.standard.data(forKey:"policy"),let saved=try? JSONDecoder().decode(Policy.self,from:data){policy=saved};credentials=PairKeychain.load();if credentials != nil {pairStatus="Phone pairing saved"};ticker=Timer.scheduledTimer(withTimeInterval:1,repeats:true){[weak self] _ in Task{@MainActor in self?.tick()}}}
+ init(){if let data=UserDefaults.standard.data(forKey:"policy"),let saved=try? JSONDecoder().decode(Policy.self,from:data){policy=saved};credentials=PairKeychain.load();if credentials != nil {pairStatus="Phone pairing saved"};ticker=Timer.scheduledTimer(timeInterval:1,target:self,selector:#selector(timerTick(_:)),userInfo:nil,repeats:true)}
+ @objc private func timerTick(_ timer:Timer){tick()}
  func savePolicy(){if let data=try? JSONEncoder().encode(policy){UserDefaults.standard.set(data,forKey:"policy")}}
  func setMonitoring(_ value:Bool){monitoring=value;classifier.reset();host=nil;result=Classification(.focused,value ? "Local monitoring enabled" : "Monitoring is off");if(!value){currentApp="Monitoring is off"};tick()}
  func markBack(){classifier.reset();result=Classification(.focused,"You checked back in");snapshot.state = .focused;onSnapshot?(snapshot,monitoring)}
