@@ -1,0 +1,26 @@
+name: Build macOS companion
+on:
+  push:
+    branches: [main]
+    paths: ['desktop/**', '.github/workflows/desktop.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: macos-14
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test classifier and build Apple Silicon + Intel app
+        run: bash desktop/build-app.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Sahko-macOS
+          path: desktop/output/*
+      - name: Publish downloadable demo
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view desktop-latest >/dev/null 2>&1 || gh release create desktop-latest --title "Sähkö macOS companion · demo" --prerelease --notes-file desktop/RELEASE.md
+          gh release upload desktop-latest desktop/output/Sahko-macOS.zip desktop/output/SHA256SUMS.txt --clobber
