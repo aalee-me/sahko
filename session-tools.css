@@ -107,3 +107,4 @@ body #onboarding.entry-step .entry-go{flex:0 0 auto;width:auto!important;min-wid
 body #onboarding.entry-step .entry-action input{flex:1;min-width:0;width:0}
 body #onboarding.entry-step .entry-browse{margin:12px 0 0 auto;padding:8px 0;line-height:24px}
 @media(max-width:759px){body #onboarding.entry-step .onboard-copy{max-width:none;padding-inline:0}body #onboarding.entry-step .onboard-copy h1{font-size:32px!important;margin-bottom:24px}body #onboarding.entry-step .entry-action{flex-wrap:nowrap}body #onboarding.entry-step .entry-go{min-width:104px;padding-inline:20px!important}}
+body #onboarding.entry-step :is(.entry-switch button,.entry-go){margin:0!important}
