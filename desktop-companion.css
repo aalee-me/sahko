@@ -125,7 +125,8 @@ body #onboarding .session-tasks-heading{font-size:.875rem;font-weight:500;color:
 body #onboarding .current-session-tasks>.task-group-label{text-align:left;font-size:1rem!important;color:var(--text);margin-bottom:.75rem}
 body .night-progress .timeline-segment:not(.elapsed){stroke:var(--action-accent);stroke-dasharray:1 6;stroke-linecap:round;opacity:.5}
 body .night-progress .timeline-segment.elapsed{stroke:var(--action-accent);stroke-dasharray:none;opacity:1}
-body #clock{color:var(--action-accent)}
+body #clock{color:var(--text)}
+body.onbreak #clock{color:var(--action-accent)}
 .map-scale-settings{border-top:1px solid var(--line);padding-top:1rem;margin-top:1rem}
 .map-scale-settings input[type=range]{width:100%;accent-color:var(--action-accent)}
 .map-scale-settings button{font-size:.8125rem;padding:.5rem .75rem;border-radius:999px}
