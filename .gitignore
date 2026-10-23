@@ -7,3 +7,6 @@ deploy/
 .sahko-photos/
 
 /pages/
+
+/desktop/.build/
+/desktop/output/

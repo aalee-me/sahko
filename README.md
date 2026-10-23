@@ -2,6 +2,10 @@
 
 Frontend and authenticated room backend for a small coworking room. Demo mode is browser-local; **Live room** connects presence, focus state, timer and jolts through the API.
 
+## Download the Mac companion
+
+[Download for macOS 13+](https://github.com/aalee-me/sahko/releases/download/desktop-latest/Sahko-macOS.zip) · Apple Silicon and Intel. The app provides an opt-in local activity classifier and a movable, always-on-top menu-bar panel. See [desktop setup, privacy and build instructions](desktop/README.md). Internet pairing is tested locally; production API deployment is pending hosting/cost approval.
+
 ## Edit the public demo
 
 The shared website is https://aalee-me.github.io/sahko/. Its published files live on the `gh-pages` branch. For a quick browser edit, open https://github.dev/aalee-me/sahko/tree/gh-pages (or select `gh-pages` on GitHub and press `.`), edit a file, and commit it in Source Control. GitHub Pages publishes that branch automatically. Files there are at the root: `index.html`, `onboarding.js`, `experience.js`, `session-tools.css`, etc.

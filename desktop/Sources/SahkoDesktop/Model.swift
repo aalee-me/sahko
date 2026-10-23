@@ -38,7 +38,7 @@ import SahkoCore
    if bundle != observedBundle {host=nil;observedBundle=bundle}
    if !probeBusy && Date().timeIntervalSince(lastProbe)>=3 && (browserContext || spotifyContext) {
     probeBusy=true;lastProbe=Date();let browser=browserContext,music=spotifyContext
-    DispatchQueue.global(qos:.utility).async{let nextHost=browser ? BrowserProbe.host(bundleID:bundle):nil,nextMusic=music && BrowserProbe.spotifyPlaying();Task{@MainActor in self.host=nextHost;self.spotifyPlaying=nextMusic;self.probeBusy=false}}
+    DispatchQueue.global(qos:.utility).async{let nextHost=browser ? BrowserProbe.host(bundleID:bundle):nil,nextMusic=music && BrowserProbe.spotifyPlaying();Task{@MainActor in if self.observedBundle==bundle {self.host=nextHost};self.spotifyPlaying=nextMusic;self.probeBusy=false}}
    }
    var selected=policy;if readingMode {selected.idleSeconds=max(selected.idleSeconds,900)}
    let audio=(bundle=="com.spotify.client" && spotifyPlaying)||(youtubeAudio && (host=="youtube.com" || host?.hasSuffix(".youtube.com")==true))

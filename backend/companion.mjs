@@ -1,0 +1,40 @@
+const companionVibes=new Set(['Figma','VS Code','Cursor','Blender','Notion','Reading','Onshape','Terminal','Deep work','Now Playing']);
+const companionStates=new Set(['focused','resting','drifting']);
+const companionOrigins=new Set(['https://aalee-me.github.io','https://sahko-focus-studio.sleeksmile12.chatgpt.site']);
+function companionRandom(bytes=32){const b=crypto.getRandomValues(new Uint8Array(bytes));return Array.from(b,n=>n.toString(16).padStart(2,'0')).join('')}
+async function companionHash(value){return Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(value))),n=>n.toString(16).padStart(2,'0')).join('')}
+function companionEqual(a,b){if(typeof a!=='string'||typeof b!=='string'||a.length!==b.length)return false;let value=0;for(let i=0;i<a.length;i++)value|=a.charCodeAt(i)^b.charCodeAt(i);return value===0}
+export async function companionAPI(request,env){
+ const url=new URL(request.url),origin=request.headers.get('origin'),local=origin&&/^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin),allowed=!origin||companionOrigins.has(origin)||local,headers={'content-type':'application/json','cache-control':'no-store','referrer-policy':'no-referrer','vary':'Origin'};
+ if(origin&&allowed)headers['access-control-allow-origin']=origin;
+ const json=(value,status=200)=>new Response(JSON.stringify(value),{status,headers});
+ if(!allowed)return json({error:'Origin not allowed'},403);
+ if(request.method==='OPTIONS')return new Response(null,{status:204,headers:{...headers,'access-control-allow-methods':'GET,POST,PUT,DELETE,OPTIONS','access-control-allow-headers':'Content-Type,Authorization','access-control-max-age':'600'}});
+ const reject=(message,status=400)=>{throw Object.assign(Error(message),{status})};
+ async function body(){const text=await request.text();if(text.length>10000)reject('Payload too large',413);try{return JSON.parse(text)}catch{reject('Invalid JSON')}}
+ function only(value,keys){if(!value||Array.isArray(value)||typeof value!=='object'||Object.keys(value).some(k=>!keys.includes(k)))reject('Unexpected field. Only processed status and room display data are accepted.');}
+ function text(value,max){if(typeof value!=='string'||value.length>max)reject('Invalid display value');return value}
+ function integer(value,min,max){if(!Number.isInteger(value)||value<min||value>max)reject('Invalid timer');return value}
+ function snapshot(input){only(input,['state','vibe','roomTitle','roomCode','members','remaining','block','blocks','onBreak','paused','progress']);if(!companionStates.has(input.state))reject('Invalid state');if(input.vibe!=null&&!companionVibes.has(input.vibe))reject('Invalid optional vibe');if(!Array.isArray(input.members)||input.members.length>8)reject('Invalid room members');if(typeof input.onBreak!=='boolean'||typeof input.paused!=='boolean'||!Number.isFinite(input.progress)||input.progress<0||input.progress>1)reject('Invalid progress');return {state:input.state,vibe:input.vibe??null,roomTitle:text(input.roomTitle,80),roomCode:text(input.roomCode,40).toUpperCase(),members:input.members.map(m=>{only(m,['id','name','initial','state','isSelf']);if(!companionStates.has(m.state)||typeof m.isSelf!=='boolean')reject('Invalid member state');return{id:text(m.id,100),name:text(m.name,40),initial:text(m.initial,2),state:m.state,isSelf:m.isSelf}}),remaining:integer(input.remaining,0,604800),block:integer(input.block,1,1440),blocks:integer(input.blocks,1,1440),onBreak:input.onBreak,paused:input.paused,progress:input.progress}}
+ try{
+  const db=env.DB,now=Date.now(),base='/api/companion/pairs';
+  if(url.pathname===base&&request.method==='POST'){
+   const input=await body();only(input,[]);const ipHash=await companionHash(request.headers.get('cf-connecting-ip')||'local');
+   const count=await db.prepare('SELECT COUNT(*) AS n FROM companion_pairs WHERE ip_hash=? AND created_at>?').bind(ipHash,now-3600000).first();if(count.n>=20)reject('Too many pairing requests. Try again later.',429);
+   await db.prepare('DELETE FROM companion_pairs WHERE expires<?').bind(now-86400000).run();
+   const id=companionRandom(16),writerToken=companionRandom(),joinCode=companionRandom(5).toUpperCase();await db.prepare('INSERT INTO companion_pairs(id,join_hash,writer_hash,join_expires,expires,updated_at,created_at,ip_hash) VALUES(?,?,?,?,?,?,?,?)').bind(id,await companionHash(joinCode),await companionHash(writerToken),now+600000,now+86400000,now,now,ipHash).run();return json({id,writerToken,joinCode,joinExpiresAt:now+600000},201);
+  }
+  if(url.pathname===base+'/join'&&request.method==='POST'){
+   const input=await body();only(input,['code']);const code=text(input.code,20).trim().toUpperCase();if(!/^[0-9A-F]{10}$/.test(code))reject('Invalid pairing code',404);
+   const pair=await db.prepare('SELECT * FROM companion_pairs WHERE join_hash=? AND join_expires>? AND expires>?').bind(await companionHash(code),now,now).first();if(!pair)reject('Pairing code expired or not found',404);const viewerToken=companionRandom();await db.prepare('UPDATE companion_pairs SET viewer_hash=?,join_expires=0 WHERE id=?').bind(await companionHash(viewerToken),pair.id).run();return json({id:pair.id,viewerToken});
+  }
+  const match=url.pathname.match(/^\/api\/companion\/pairs\/([a-f0-9]{32})(?:\/(state|jolt|code))?$/);if(!match)return json({error:'Not found'},404);const pair=await db.prepare('SELECT * FROM companion_pairs WHERE id=? AND expires>?').bind(match[1],now).first();if(!pair)reject('Pairing expired',404);
+  const token=request.headers.get('authorization')?.match(/^Bearer ([a-f0-9]{64})$/)?.[1];if(!token)reject('Pairing token required',401);const tokenHash=await companionHash(token),writer=companionEqual(tokenHash,pair.writer_hash),viewer=companionEqual(tokenHash,pair.viewer_hash);if(!writer&&!viewer)reject('Invalid pairing token',403);
+  if(request.method==='DELETE'&&!match[2]){if(!writer)reject('Desktop permission required',403);await db.prepare('DELETE FROM companion_pairs WHERE id=?').bind(pair.id).run();return json({ok:true})}
+  if(match[2]==='code'&&request.method==='POST'){if(!writer)reject('Desktop permission required',403);only(await body(),[]);const joinCode=companionRandom(5).toUpperCase();await db.prepare('UPDATE companion_pairs SET join_hash=?,join_expires=? WHERE id=?').bind(await companionHash(joinCode),now+600000,pair.id).run();return json({joinCode,joinExpiresAt:now+600000})}
+  if(match[2]==='state'&&request.method==='PUT'){if(!writer)reject('Desktop permission required',403);const input=await body();only(input,['snapshot','ackJolt']);const safe=snapshot(input.snapshot);await db.prepare('UPDATE companion_pairs SET snapshot=?,updated_at=?,expires=? WHERE id=?').bind(JSON.stringify(safe),now,now+86400000,pair.id).run();if(input.ackJolt){const pending=JSON.parse(pair.pending_jolt||'null');if(pending?.id===input.ackJolt)await db.prepare('UPDATE companion_pairs SET pending_jolt=NULL WHERE id=? AND pending_jolt=?').bind(pair.id,pair.pending_jolt).run()}return json({ok:true})}
+  if(match[2]==='state'&&request.method==='GET')return json({snapshot:JSON.parse(pair.snapshot),updatedAt:pair.updated_at,online:now-pair.updated_at<20000,...(writer?{jolt:JSON.parse(pair.pending_jolt||'null')}: {})});
+  if(match[2]==='jolt'&&request.method==='POST'){if(!viewer)reject('Paired phone permission required',403);const input=await body();only(input,['target']);const safe=JSON.parse(pair.snapshot);const member=safe.members?.find(m=>m.id===input.target);if(!member||member.state!=='drifting')reject('Only drifting people can be jolted');const pending=JSON.parse(pair.pending_jolt||'null');if(pending&&now-pending.at<3000)reject('Wait a moment before another jolt',429);await db.prepare('UPDATE companion_pairs SET pending_jolt=? WHERE id=?').bind(JSON.stringify({id:companionRandom(8),target:member.id,at:now}),pair.id).run();return json({ok:true})}
+  return json({error:'Not found'},404);
+ }catch(error){return json({error:error.status?error.message:'Companion service unavailable'},error.status||500)}
+}
