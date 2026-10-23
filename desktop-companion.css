@@ -29,3 +29,61 @@ body #onboarding [data-access=open]{color:var(--action-accent)!important}
 #avatars .avatar.drifting img,#avatars .avatar.drifting .portrait-fallback,#onboarding .preview-person.is-drifting img,#onboarding .preview-person.is-drifting .preview-fallback,#onboarding .preview-person.is-drifting .portrait-fallback{filter:grayscale(1) saturate(0)!important;opacity:.55!important;background:#b8b8b3!important;color:#62625f!important}
 #avatars .avatar.drifting,#onboarding .preview-person.is-drifting{border-color:#b8b8b3!important}
 body #onboarding#onboarding .entry-switch.room-access-options>button{display:flex;align-items:center;justify-content:center;white-space:nowrap;font-size:clamp(12px,3.4vw,16px)!important;line-height:1.2!important;padding:0 8px!important}
+/* Compact controls share a centered hit area; white is an enabled hover treatment. */
+body .clock-controls{display:inline-flex;align-items:center;gap:.25rem;padding:.25rem;border:1px solid var(--line);border-radius:999px;background:transparent}
+body .clock-controls button,body .clock-controls.owner-controls button{display:grid;place-items:center;align-self:center;width:2.375rem;height:2.375rem;min-width:2.375rem;flex:0 0 2.375rem;padding:.5625rem!important;margin:0!important;border:0!important;border-radius:50%;background:transparent!important;color:var(--text)!important}
+body .clock-controls.owner-controls button:is(:hover,:focus-visible){background:#fff!important;color:#684b20!important}
+body .clock-controls button:disabled,body .clock-controls button:disabled:hover{background:transparent!important;color:#898984!important;opacity:.4!important;cursor:not-allowed}
+.room-action-rail button{display:grid!important;place-items:center!important;align-items:center;justify-content:center}
+.room-action-rail button svg,.clock-controls button svg{display:block;flex-shrink:0;margin:auto}
+body .inline-thought-form textarea{font-size:1rem!important;line-height:1.4!important}
+body.compact #voidForm.inline-thought-form{min-height:3.25rem!important;padding:.625rem .875rem!important}
+body.compact #voidThought{font-size:.875rem!important;min-height:1.25rem!important;height:1.25rem;max-height:4.5rem}
+.header-pair{display:inline-flex;align-items:center;justify-content:center;gap:.4rem}
+.header-pair svg,.room-field-caption svg{width:1rem;height:1rem;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.room-field-caption{display:inline-flex;align-items:center;gap:.4rem}
+#onboardExplore[hidden]{display:none!important}
+body #onboarding .room-code-tools:not(:hover):not(:has(button:focus-visible)) button,body .session-room-code:not(:hover):not(:has(button:focus-visible)) button{opacity:0!important;pointer-events:none!important;transform:translateX(-10px)!important}
+.drift-popup-symbol svg,.drift-popup-actions svg{width:1.125rem;height:1.125rem;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.drift-popup-actions button{display:inline-flex;align-items:center;justify-content:center;gap:.4375rem}
+body .drift-popup .pulse-timer-row select{padding-right:2.25rem!important;font-size:.875rem!important}
+body.popup-align-left dialog:not(#onboarding){text-align:left!important}
+body.popup-align-left dialog :is(h1,h2,h3,p,.pulse-subtitle){text-align:left!important}
+body.popup-align-left :is(.drift-popup-actions,.timer-window-actions,.home-confirm-actions,.exit-actions){justify-content:flex-start!important}
+body.popup-align-left .drift-popup-symbol{margin-left:0!important;margin-right:auto!important}
+/* Duration-weighted session segments and a live countdown on hover/focus. */
+body .night-progress{pointer-events:auto;z-index:6}
+body .night-progress>svg>.night-progress-track,body .night-progress>svg>.night-progress-fill{opacity:0;pointer-events:none}
+.night-progress .timeline-segment{stroke:var(--text);stroke-width:2.5;stroke-linecap:round;opacity:.24}
+.night-progress .timeline-segment.break{stroke:var(--action-accent);stroke-width:3;opacity:.5}
+.night-progress .timeline-segment.elapsed{opacity:1}
+body .night-progress .night-progress-label{gap:.1875rem;pointer-events:none}
+body .night-progress-label>.block-eyebrow{font-size:.75rem;line-height:1.4;color:#999990;letter-spacing:.04em}
+body .night-progress-label>.block-count{font-size:1.5rem;line-height:1.2;font-weight:500;color:var(--text)}
+.progress-hover-hint{position:absolute;right:1rem;top:0;padding:.5rem .75rem;border:1px solid var(--line);border-radius:999px;background:var(--surface-raised);font-size:.75rem;color:var(--text);opacity:0;transform:translateY(.25rem);transition:opacity .2s,transform .2s;pointer-events:none}
+.night-progress:is(:hover,:focus-visible) .progress-hover-hint{opacity:1;transform:none}
+/* Dock activity has its own row, so short windows cannot push it over the timer. */
+body .dock-activity-row{display:flex;align-items:center;justify-content:space-between;gap:.5rem;min-height:4.5rem;order:-1;pointer-events:none}
+body .dock-activity-row>.room-action-rail{position:relative!important;inset:auto!important;flex-direction:row!important;width:max-content;flex-shrink:0;margin-left:auto;pointer-events:auto;gap:.375rem;padding:.5rem;border-radius:999px}
+body .dock-activity-row>.thought-feed{position:relative!important;inset:auto!important;flex:1 1 0;min-width:0;width:auto!important;max-width:22rem;height:4.5rem!important;min-height:0!important;max-height:4.5rem!important;visibility:visible!important;gap:.5rem;align-items:center}
+body .dock-activity-row .thought-one{height:4.5rem!important;max-height:4.5rem!important;padding:0!important;max-width:calc(100% - 2rem);mask-image:linear-gradient(transparent,#000 15%,#000 85%,transparent)}
+body .dock-activity-row .thought-rail{max-height:4rem!important;flex-basis:1.5rem}
+body .dock-activity-row .thought-trail-item{min-height:3.5rem;padding:.375rem 0!important}
+body .dock-activity-row .thought-trail-item p{font-size:.8125rem!important;line-height:1.4}
+body .dock-activity-row .thought-trail-item small{font-size:.6875rem!important}
+body .session-bottom-dock{gap:.5rem}
+body.compact .dock-activity-row{min-height:3.5rem}
+body.compact .dock-activity-row>.thought-feed,body.compact .dock-activity-row .thought-one{height:3.5rem!important;max-height:3.5rem!important}
+body .workspace>.scene{margin-top:-2rem!important;overflow:visible!important}
+body.compact .layout[data-sized] .workspace>.scene{min-height:13rem;flex:1 1 15rem}
+@media(max-height:600px){body .dock-activity-row{min-height:3rem}body .dock-activity-row>.thought-feed,body .dock-activity-row .thought-one{height:3rem!important;max-height:3rem!important}body #voidForm.inline-thought-form{min-height:3rem!important;padding:.5rem .75rem!important}body #voidThought{font-size:.875rem!important}.progress-hover-hint{top:-.5rem}}
+@media(prefers-reduced-motion:reduce){.progress-hover-hint{transition:none}}
+body .dock-activity-row>.thought-feed{order:0}
+body .dock-activity-row>.room-action-rail{order:1}
+body.compact .layout{max-height:calc(100dvh - var(--session-viewport-space,260px))!important;overflow-y:auto!important;overscroll-behavior:contain;scrollbar-width:thin}
+body.compact .layout .workspace,body.compact .layout[data-sized] .workspace{padding-bottom:1rem!important}
+@media(max-height:600px){body .layout{max-height:calc(100dvh - var(--session-viewport-space,260px))!important;overflow-y:auto!important;overscroll-behavior:contain;scrollbar-width:thin}body .layout .workspace{padding-bottom:1rem!important}}
+.claim-focus-button svg{stroke-linecap:round;stroke-linejoin:round}
+body.compact .layout{min-height:0!important}
+@media(max-height:600px){body .layout{min-height:0!important}}
+@media(max-width:600px){.onboard-header .header-pair{font-size:0!important;width:2.25rem;height:2.25rem;min-width:2.25rem;padding:.5rem!important;gap:0}.onboard-header .header-pair svg{width:1rem;height:1rem}}
