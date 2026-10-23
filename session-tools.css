@@ -156,3 +156,18 @@ body .workspace>.scene{margin-top:0;flex-shrink:0}
 /* Keep session tools anchored directly above the fixed thought composer. */
 body .workspace>.room-action-rail{position:fixed;top:auto!important;z-index:35;transition:bottom .2s ease,right .2s ease}
 @media(prefers-reduced-motion:reduce){body .workspace>.room-action-rail{transition:none}}
+
+/* A miniature of the whole-night arc makes each room's progress visible. */
+body #onboarding .room-card-progress{display:block;width:100%;margin:0 0 8px;line-height:0}
+.room-card-progress svg{display:block;width:100%;height:auto;max-height:46px;overflow:visible}
+.room-card-progress path{fill:none;vector-effect:non-scaling-stroke;stroke-linecap:round}
+.room-card-progress-track{stroke:var(--line);stroke-width:1.5}
+.room-card-progress-fill{stroke:var(--action-accent);stroke-width:3;transition:stroke-dasharray .4s ease}
+.room-card-progress-marker{fill:var(--text);stroke:var(--surface-raised);stroke-width:2}
+body #onboarding .room-card-content .room-description{margin:8px 0 12px!important}
+body #onboarding .room-card-content .room-session-meta{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;font-size:13px!important;margin:0}
+body #onboarding .room-card-content .room-session-meta .meta-divider{display:none}
+body #onboarding .room-card-content .room-session-meta .room-blocks{color:var(--text)!important}
+body #onboarding .room-card-footer{border:0;margin-top:12px;padding-top:0}
+body #onboarding .room-card-footer .room-presence{font-size:13px!important;text-align:left}
+@media(prefers-reduced-motion:reduce){.room-card-progress-fill{transition:none}}
