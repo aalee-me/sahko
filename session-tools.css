@@ -226,3 +226,49 @@ body .my-profile .profile-friend>span:nth-child(2){min-width:0;overflow-wrap:any
 body .my-profile .profile-friend strong{font-size:16px}body .my-profile .profile-friend small{font-size:13px}
 @media(prefers-reduced-motion:reduce){body .my-profile{animation:none!important}}
 body .my-profile{animation:none!important}
+
+/* Pulse status stays with its return action in normal document flow. */
+.return-status{display:flex;align-items:center;gap:12px;flex-wrap:wrap;order:2;margin:14px 0 0;max-width:100%;flex-shrink:0}
+.return-status[hidden]{display:none!important}
+body .return-status .claim-focus-button{position:static;inset:auto;translate:none;z-index:auto;margin:0;box-shadow:none;flex-shrink:0;font-size:14px;padding:10px 15px}
+body .return-status .drift-countdown{position:static;inset:auto;margin:0;padding:0;border:0;border-radius:0;background:none;max-width:none;font-size:13px;color:var(--muted);line-height:1.4;font-variant-numeric:tabular-nums}
+body .drift-popup h2{font-size:26px;line-height:1.2;margin:14px 0 8px}
+body .drift-popup .pulse-subtitle{font-size:16px;margin:0 0 24px;color:#806d4c}
+.pulse-timer-row{display:flex;align-items:center;justify-content:space-between;gap:16px;text-align:left;font-size:16px;color:#684b20}
+.pulse-timer-row select{min-width:140px;max-width:60%;padding:12px 14px;border:1px solid #d8d9d1;border-radius:14px;background:#f5f5f1;color:#684b20;font-size:16px}
+body .drift-popup-actions{gap:12px;margin-top:24px;justify-content:flex-end}
+body .drift-popup-actions button{margin:0;min-height:44px;padding:11px 18px;font-size:16px}
+body .drift-popup-actions button:disabled{opacity:.5;cursor:default}
+body .layout .workspace,body.compact .layout[data-sized] .workspace{padding-bottom:var(--session-dock-space,180px)!important}
+body .workspace>.night-progress{order:3!important}
+body .workspace>.scene{order:4!important}
+body .session-room-code{display:flex;align-items:center;gap:6px;margin-top:8px;max-width:100%;min-width:0}
+body .session-room-code[hidden]{display:none!important}
+.session-room-code>span{font-size:16px;letter-spacing:.12em;line-height:1.4;white-space:nowrap;overflow-x:auto;min-width:0;color:var(--muted)}
+body .session-room-code button{display:grid;place-items:center;flex:0 0 32px;width:32px;height:32px;margin:0;padding:7px;border:0;border-radius:50%;background:none;color:var(--text)}
+.session-room-code button:hover,.session-room-code button:focus-visible{background:var(--surface-hover)!important}
+.session-room-code svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+body .workspace .title-row>div:first-child{max-width:calc(100% - 160px);min-width:0}
+body .workspace .title-row h1{max-width:100%!important;width:auto!important}
+body.compact .workspace>.room-action-rail{flex-direction:row;width:max-content;border-radius:999px}
+body.compact .layout[data-sized] .workspace>.scene{flex:1 1 200px;min-height:160px}
+@media(max-width:759px){body .workspace>.room-action-rail{flex-direction:row;width:max-content;border-radius:999px}body .workspace .title-row>div:first-child{max-width:calc(100% - 120px)}body .return-status .claim-focus-button{font-size:14px;padding:9px 12px}.return-status{gap:8px;margin-top:12px}.session-room-code>span{font-size:13px}.session-room-code button{flex-basis:30px;width:30px;height:30px}}
+body .workspace .title-row>div:first-child>h1{width:100%!important;max-width:100%!important;margin:0 0 6px;line-height:1.25}
+body.solo-dashboard .workspace .title-row>div:first-child{max-width:100%}
+
+/* Room counts belong with their avatar stack, not in a separate footer. */
+body #onboarding .directory-people-wrap{position:absolute;top:18px;right:18px;display:flex;flex-direction:column;align-items:center;gap:6px;max-width:var(--roster-width,135px)}
+body #onboarding .directory-people-wrap .directory-people{position:relative!important;inset:auto!important;margin:0}
+body #onboarding .directory-presence{font-size:13px;line-height:18px;color:var(--muted);white-space:nowrap}
+body #onboarding .room-title-line{min-height:54px;align-content:flex-start}
+body #onboarding .room-card-content .room-description{margin-top:8px!important}
+body .anonymous-portrait{font-size:22px;font-weight:400;line-height:1}
+body :is(.directory-avatar,.people-stack,.people-list,.room-person-picture,.tag-avatar) .anonymous-portrait{font-size:14px}
+body #onboarding:not(.landing-step) .onboard-layout{align-items:start;align-content:start;justify-content:flex-start}
+body #onboarding:not(.landing-step) .onboard-copy{align-self:start;position:relative;z-index:2}
+body #onboarding:not(.landing-step) .onboard-visual{align-self:start}
+body #onboarding .entry-rooms-inner .room-directory{max-height:min(480px,60dvh);overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:var(--line) transparent;scroll-padding:12px;padding:2px 4px 12px 2px}
+@media(max-width:999px){body #onboarding:not(.landing-step)[open] .onboard-layout{gap:0;justify-content:flex-start}body #onboarding:not(.landing-step)[open] .onboard-copy{margin-top:-76px;align-self:stretch}body #onboarding:not(.landing-step)[open] .onboard-visual{position:relative;inset:auto;align-self:center}body #onboarding .directory-people-wrap{top:18px;right:18px}}
+/* Room switches use the same sliding pill as the session-plan tabs. */
+#onboarding .room-access-options{position:relative;isolation:isolate;display:flex;gap:0;padding:4px;height:48px;min-height:48px;border:1px solid var(--line);border-radius:999px;background:var(--neutral-surface);margin:0 0 22px}#onboarding .room-access-options:before{content:'';position:absolute;z-index:-1;left:4px;top:4px;bottom:4px;width:calc(50% - 4px);background:var(--surface-selected);border-radius:999px;transition:transform .35s cubic-bezier(.22,1,.36,1)}#onboarding .room-access-options[data-selected="1"]:before{transform:translateX(100%)}#onboarding .room-access-options>button{flex:1;min-width:0;min-height:0;margin:0;padding:0 10px!important;border:0!important;border-radius:999px;background:transparent!important;font-size:15px!important;color:var(--muted)!important;line-height:1.2}#onboarding .room-access-options>button.selected{color:var(--text)!important;font-weight:600}.friends-preview{padding:20px!important;border:1px solid var(--line)!important;border-radius:24px;background:var(--neutral-surface);margin-top:24px}.friends-preview-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}.friends-preview h3{font-size:16px;margin:0;font-weight:500}#onboarding .friends-preview .manage-friends{display:flex;align-items:center;gap:8px;font-size:13px!important;text-decoration:none!important;padding:8px 13px!important;border:1px solid var(--line)!important;background:var(--surface)!important;border-radius:22px;margin:0!important}.friends-preview .invite-friend-list{max-height:230px;overflow:auto;scrollbar-width:thin}.friends-preview .invite-friend{padding:12px 2px!important}.friends-preview .invite-friend small{font-size:12px}.friends-preview .friend-search{margin-bottom:8px;font-size:14px!important}.friends-preview [hidden]{display:none!important}@media(max-width:480px){.friends-preview{padding:16px!important}#onboarding .room-access-options>button{font-size:13px!important}}@media(prefers-reduced-motion:reduce){#onboarding .room-access-options:before{transition:none}}
+.friends-preview .manage-friends svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
