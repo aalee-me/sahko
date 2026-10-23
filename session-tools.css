@@ -59,3 +59,33 @@ body #onboarding .break-presets button.selected{background:var(--action-accent)!
 body #onboarding .rhythm-card-label{font-size:14px!important}
 body #onboarding .rhythm-direct-value{font-size:24px!important}
 @media(max-width:759px){body #onboarding .onboard-actions{max-width:none}}
+
+/* One label scale and spacing system for session entry. */
+body #onboarding .entry-switch{height:48px;padding:4px;margin-top:24px;background:var(--neutral-surface);border:1px solid var(--line);box-sizing:border-box}
+body #onboarding .entry-switch:before{background:color-mix(in srgb,var(--text) 16%,var(--canvas));box-shadow:none}
+body #onboarding .entry-switch button,body #onboarding .entry-switch button[aria-selected=true],body #onboarding .entry-go{font-size:16px!important;line-height:24px!important;font-weight:500!important;color:var(--text)!important}
+body #onboarding .entry-switch button{padding:7px 16px!important}
+body #onboarding .entry-switch button[aria-selected=true]{font-weight:600!important}
+body #onboarding .entry-bottom{margin-top:24px}
+body #onboarding .entry-go{min-height:48px;padding:12px 20px!important}
+body #onboarding .entry-action input{height:48px;padding:12px 20px;font-size:16px}
+body #onboarding .onboard-actions .onboard-primary{min-height:48px;font-size:16px!important;padding:12px 20px!important}
+
+body .room-feed-event p{font-size:15px!important;font-weight:400;color:var(--muted);cursor:default}body .room-feed-event small{font-size:12px}body .room-feed-event{border:0;background:none}
+
+.entry-rooms-reveal{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows .35s cubic-bezier(.22,1,.36,1),opacity .25s ease,margin .35s;margin-top:0}
+.entry-rooms-reveal.open{grid-template-rows:1fr;opacity:1;margin-top:20px}
+.entry-rooms-inner{min-height:0;overflow:hidden}.entry-rooms-inner .directory-tabs{margin:0 0 16px}.entry-rooms-inner .room-directory{max-height:440px;overflow-y:auto;padding:2px}
+body #onboarding :is(.entry-go,.onboard-primary,.join-code-form>button):disabled,body #onboarding :is(.entry-go,.onboard-primary,.join-code-form>button):disabled:hover{opacity:1!important;visibility:visible!important;background:var(--neutral-surface)!important;color:var(--muted)!important;filter:none!important;transform:none!important;box-shadow:none!important;cursor:default}
+body #onboarding button:disabled:before,body #onboarding button:disabled:after{opacity:0!important}
+body #onboarding :is(.entry-go,.onboard-primary,.entry-switch button,.finish-mode button,.entry-browse){transition:background-color .22s ease,color .22s ease,box-shadow .22s ease,opacity .22s ease!important}
+body #onboarding .entry-switch:before,body #onboarding .finish-mode:before{transition:transform .35s cubic-bezier(.22,1,.36,1),background-color .22s ease!important}
+@media(prefers-reduced-motion:reduce){.entry-rooms-reveal,body #onboarding button,body #onboarding .entry-switch:before,body #onboarding .finish-mode:before{transition:none!important}}
+
+/* Setup type scale: heading / numeric value / interface / supporting text. */
+#onboarding{--setup-heading:40px;--setup-value:28px;--setup-label:16px;--setup-meta:13px}
+body #onboarding .onboard-copy h1{font-size:var(--setup-heading)!important;line-height:1.15}
+body #onboarding :is(.entry-switch button,.entry-go,.onboard-primary,.entry-browse,.finish-mode button,.rhythm-card-label,.rhythm-confirm,.break-presets button,.alert-preferences>summary,.alert-choice,.setting-line,.company-row strong,.room-listing strong,.room-card-open,.room-join,.join-code-form input,.join-code-form>button,.room-field,.room-field input,.task-input,.task-group-label,.outstanding-header,.enable-notifications){font-size:var(--setup-label)!important;line-height:1.45}
+body #onboarding :is(.rhythm-direct-value,.clock-time-input,.stop-estimate strong){font-size:var(--setup-value)!important;line-height:1.2}
+body #onboarding :is(.rhythm-unit,.snap-tick small,.timeline-label,.timeline-times,.room-description,.room-session-meta,.room-presence,.room-access-inline,.notification-help,.stop-estimate>span,.stop-estimate small,.room-listing small,.directory-empty,.entry-error,.room-help,.task-group-note){font-size:var(--setup-meta)!important;line-height:1.45}
+@media(max-width:759px){#onboarding{--setup-heading:32px}}
