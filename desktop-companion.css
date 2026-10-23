@@ -249,3 +249,18 @@ body .room-action-rail .tool-label{display:none}
 body #checkin #sessionBottomDock.checkin-dock{display:flex!important}
 body #checkin .checkin-dock .thought-feed:not(.is-empty){display:flex!important}
 body #checkin #checkinThoughtSlot .void-dock,body #checkin #checkinThoughtSlot #voidForm{box-sizing:border-box;width:100%!important;max-width:none!important}
+/* The setup arc and WebGL preview share the same viewport at every phone size. */
+body #onboarding .orbit-preview>.orbit-progress{position:absolute;inset:0;width:100%;height:100%;max-height:none;max-width:none;box-sizing:border-box;transform:none}
+@media(max-width:759px){body #onboarding .onboard-visual{min-height:0;padding-top:0}body #onboarding .orbit-preview{min-height:0;max-height:none!important;aspect-ratio:1.3}body #onboarding:not(.landing-step)[open] .orbit-preview{aspect-ratio:1.3}}
+#checkin .checkin-actions{display:flex;align-items:center;gap:.75rem;width:100%;margin:0 0 1.25rem}
+#checkin .checkin-actions>button{box-sizing:border-box;display:flex;align-items:center;justify-content:center;gap:.625rem;min-height:3rem;margin:0;padding:.875rem 1.25rem;border-radius:999px;font:500 1rem/1.3 Manrope,sans-serif}
+#checkin .checkin-actions>button[hidden]{display:none!important}
+#checkin .checkin-actions>#readyFocus{flex:1;background:var(--action-accent)!important;color:var(--on-action)!important;border:0;box-shadow:none}
+#checkin .checkin-actions>#readyFocus:hover{filter:brightness(1.07)}
+#checkin .checkin-actions>#readyFocus:focus-visible{outline:2px solid var(--action-accent);outline-offset:4px}
+#checkin .checkin-action-icon,#checkin .dismiss{display:grid;place-items:center;flex-shrink:0}
+#checkin .checkin-action-icon svg,#checkin .dismiss svg{display:block;width:1.25rem;height:1.25rem;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+#checkin .dismiss{width:2.75rem;height:2.75rem;padding:.625rem;border-radius:50%;background:var(--neutral-surface);border:1px solid var(--line);opacity:1;color:var(--text)}
+#checkin .dismiss:hover{background:var(--surface-hover)}
+#checkin .checkin-shell{padding-bottom:2rem}
+#checkin .checkin-dock .space-tabs{flex-shrink:0;max-width:100%;box-sizing:border-box}
