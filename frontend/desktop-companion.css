@@ -13,3 +13,19 @@ body #onboarding .task-created-date{display:block;font-size:11px;line-height:1.5
 .outstanding-task-list .task-row{min-height:62px}
 
 .snap-dial{touch-action:pan-y!important}
+
+body #onboarding .company-row strong{display:flex;align-items:baseline;gap:5px}
+body #onboarding .company-private{font-size:.75em!important;line-height:1.4;font-weight:400;color:var(--muted)}
+body #onboarding .entry-switch.room-access-options{width:100%;margin:0 0 22px;height:48px;box-sizing:border-box}
+body #onboarding .entry-switch.room-access-options:before{background:var(--action-accent);box-shadow:0 1px 3px #0001}
+body #onboarding .entry-switch.room-access-options>button{font-size:var(--setup-label)!important}
+body #onboarding .entry-switch.room-access-options>button[aria-selected=true]{color:var(--on-action)!important;font-weight:600!important}
+.room-access-inline,.room-detail-footer .room-access{display:inline-flex;align-items:center;gap:5px}
+.room-access-inline svg,.room-access svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+body #onboarding [data-access=open]{color:var(--action-accent)!important}
+
+/* Idle participants stay visibly muted; movement is handled smoothly in the scene. */
+#avatars .avatar img,#avatars .avatar .portrait-fallback,#onboarding .preview-person img,#onboarding .preview-person .preview-fallback,#onboarding .preview-person .portrait-fallback{transition:filter .8s ease,opacity .8s ease,background-color .8s ease}
+#avatars .avatar.drifting img,#avatars .avatar.drifting .portrait-fallback,#onboarding .preview-person.is-drifting img,#onboarding .preview-person.is-drifting .preview-fallback,#onboarding .preview-person.is-drifting .portrait-fallback{filter:grayscale(1) saturate(0)!important;opacity:.55!important;background:#b8b8b3!important;color:#62625f!important}
+#avatars .avatar.drifting,#onboarding .preview-person.is-drifting{border-color:#b8b8b3!important}
+body #onboarding#onboarding .entry-switch.room-access-options>button{display:flex;align-items:center;justify-content:center;white-space:nowrap;font-size:clamp(12px,3.4vw,16px)!important;line-height:1.2!important;padding:0 8px!important}
