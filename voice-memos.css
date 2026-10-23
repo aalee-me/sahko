@@ -5,3 +5,26 @@
 .recap-reduced .recap-blob,.recap-reduced .recap-blob canvas{animation:none}.void-space .voice-thought{box-sizing:border-box}.voice-thought .memo-wave{min-width:30px}
 .recap-plan-track{display:flex;gap:3px;height:18px;margin-top:18px;border-radius:8px;overflow:hidden}.recap-plan-track>span{min-width:1px;display:grid;place-items:center;font-size:10px;color:#684b20}.recap-planned-focus{background:#eeb32b}.recap-planned-break{background:#94bfb1}
 @media(max-width:600px){.space-header{column-gap:8px;padding-inline:18px}.organize-thoughts{padding:8px 11px!important}}@media(max-width:359px){.organize-thoughts>span{display:none}.organize-thoughts{padding:8px!important;width:34px;height:34px;justify-content:center}}
+
+/* Compact memos remain grab targets except for their playback and editing controls. */
+.constellation-thought.voice-thought{width:min(190px,80vw)}
+.constellation-thought.voice-thought .void-voice-controls{width:100%;cursor:grab;touch-action:none;user-select:none}
+.constellation-thought.voice-thought.dragging,.constellation-thought.voice-thought.dragging .void-voice-controls{cursor:grabbing}
+.voice-thought .memo-playback{width:100%;gap:7px;padding:5px 7px;cursor:grab}
+.voice-thought .memo-wave-seek{flex:0 0 56px;min-width:0;max-width:56px;cursor:grab;outline:none!important}
+.voice-thought .memo-wave-seek:focus-within{outline:none!important}
+.voice-thought .memo-length{margin-left:auto;min-width:0;text-align:right}
+.constellation-thought.voice-thought>.constellation-time{align-self:flex-end;margin-right:7px;line-height:1.4}
+.voice-thought .memo-transcript-preview{max-width:145px}
+.memo-capture>.memo-length{margin-right:auto;text-align:left}
+.memo-capture .memo-wave{margin-right:4px}
+.memo-capture .memo-cancel,.memo-capture .memo-stop{flex-shrink:0}
+.undo-thoughts{display:inline-flex;align-items:center;justify-content:center;gap:7px;line-height:1.2}
+.undo-thoughts svg{display:block;width:16px;height:16px;flex:0 0 16px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.feed-mic-icon .filled-icon{fill:currentColor;stroke:none}
+.night-progress-label small{display:inline-flex;align-items:center;gap:7px}
+.night-progress-label small svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+body .clock-controls{border:0;padding:0;gap:8px;background:transparent}
+body .clock-controls.owner-controls button{background:#fff!important;color:#684b20!important;border:1px solid #e1e0d8!important}
+body .clock-controls.owner-controls button:hover{background:#f2f1eb!important}
+body .clock-controls button:disabled,body .clock-controls button:disabled:hover{display:grid!important;background:rgba(128,128,128,.12)!important;color:#898984!important;opacity:.4!important;cursor:not-allowed}
