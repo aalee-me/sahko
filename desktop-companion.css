@@ -264,3 +264,18 @@ body #onboarding .orbit-preview>.orbit-progress{position:absolute;inset:0;width:
 #checkin .dismiss:hover{background:var(--surface-hover)}
 #checkin .checkin-shell{padding-bottom:2rem}
 #checkin .checkin-dock .space-tabs{flex-shrink:0;max-width:100%;box-sizing:border-box}
+body #onboarding .room-code-tools output{width:max-content}
+body #onboarding .room-code-tools>button{box-sizing:border-box;display:flex;align-items:center;justify-content:center;gap:.375rem;left:calc(var(--code-text-width,6rem) + .375rem)!important;top:-.0625rem!important;width:2rem!important;height:2rem!important;min-width:2rem;padding:.4375rem!important;margin:0!important;border:1px solid var(--line)!important;border-radius:999px!important;background:var(--surface-raised)!important;line-height:1.2}
+body #onboarding .room-code-tools>button:last-of-type{left:calc(var(--code-text-width,6rem) + 2.625rem)!important}
+body :is(.room-code-tools,.session-room-code,.room-code-row,.recap-room-code)>button.copied{display:flex!important;align-items:center;justify-content:center;gap:.375rem;width:auto!important;min-width:5.25rem!important;padding:.375rem .625rem!important;border:1px solid var(--action-accent)!important;border-radius:999px!important;background:var(--surface-raised)!important;color:var(--text)!important;opacity:1!important;pointer-events:auto!important;transform:none!important;white-space:nowrap;font-size:.8125rem!important;line-height:1.2}
+body :is(.room-code-tools,.session-room-code,.room-code-row,.recap-room-code)>button.copied svg{width:1rem;height:1rem;flex:0 0 1rem;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+body :is(.room-code-tools,.session-room-code):has(>button.copied)>button:not(.copied){opacity:0!important;pointer-events:none!important}
+body #onboarding .room-code-row{display:flex;align-items:center;gap:.75rem;min-width:0}
+body #onboarding .room-code-row>.room-code-value{box-sizing:border-box;flex:1;min-width:0;width:0!important}
+body #onboarding .room-code-row>.copy-room-code{display:flex;align-items:center;justify-content:center;flex:0 0 auto;width:2.75rem;height:2.75rem;margin:0!important;padding:.75rem!important;border-radius:999px!important}
+@media(max-width:480px){body #onboarding .room-code-tools>button{left:var(--code-actions-left)!important;top:2.125rem!important}body #onboarding .room-code-tools>button:last-of-type{left:calc(var(--code-actions-left) + 2.25rem)!important}body #onboarding .room-code-tools>button.copied{left:calc(var(--code-actions-left) - 1rem)!important}}
+body #onboarding#onboarding .room-code-tools>button.copied,body #sessionRoomCode>button.copied{opacity:1!important;pointer-events:auto!important;transform:none!important}
+body #onboarding .room-code-tools:before{content:'';position:absolute;left:0;top:-.25rem;width:max(100%,calc(var(--code-actions-left,0px) + 4.25rem));height:calc(100% + 1rem);pointer-events:auto;z-index:0}
+body #onboarding .room-code-tools>output,body #onboarding .room-code-tools>.room-availability{position:relative;z-index:1;pointer-events:none}
+body #onboarding .room-code-tools>button{z-index:2}
+body #onboarding#onboarding .room-code-tools:has(>button.copied)>button:not(.copied),body #sessionRoomCode:has(>button.copied)>button:not(.copied){opacity:0!important;pointer-events:none!important}
