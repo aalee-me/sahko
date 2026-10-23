@@ -309,3 +309,8 @@ body #onboarding .room-detail-footer .room-join{display:flex;align-items:center;
 .room-detail-footer .room-join svg{display:block;flex:0 0 1.125rem;width:1.125rem;height:1.125rem;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 body #onboarding .room-detail-footer .room-join:disabled{background:var(--neutral-surface)!important;color:var(--muted)!important;border:1px solid var(--line);opacity:.5;cursor:not-allowed;box-shadow:none;filter:none}
 body #onboarding .room-detail-footer .room-join:not(:disabled):hover{filter:brightness(.96);box-shadow:0 0 0 2px color-mix(in srgb,var(--action-accent) 25%,transparent)}
+body .session-tools-menu>.room-action-rail{position:absolute!important;left:auto!important;right:0!important;top:auto!important;bottom:calc(100% + .625rem)!important;display:flex!important;flex-direction:column!important;align-items:center!important;width:3.5rem!important;min-width:0;max-width:none;padding:.375rem!important;gap:.25rem;box-sizing:border-box;border:1px solid var(--line)!important;border-radius:999px!important;background:var(--surface)!important;transform-origin:bottom center;box-shadow:0 .5rem 1.5rem var(--shadow);animation:none!important;z-index:3}
+body .session-tools-menu>.room-action-rail>button{width:2.625rem!important;height:2.625rem!important;min-width:0;padding:.625rem!important;margin:0!important;flex-shrink:0}
+body .session-tools-menu .room-action-rail .tool-label{display:none!important}
+body .dock-activity-row>.session-tools-menu{width:2.875rem;min-width:2.875rem;height:2.875rem;flex:0 0 2.875rem;padding:0}
+body .session-tools-menu>.session-tools-toggle{width:100%;height:100%;flex:1;min-width:0}
