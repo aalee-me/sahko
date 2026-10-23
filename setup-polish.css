@@ -261,7 +261,7 @@ body #voidComposer{bottom:20px;margin:0!important;max-width:calc(100vw - 32px)}
 @media(prefers-reduced-motion:reduce){.entry-switch:before{transition:none}}
 
 /* Uploaded vector wordmark follows the shared light/dark text color. */
-.sahko-wordmark{display:block;width:112px;height:auto;flex-shrink:0;color:var(--text);overflow:visible}
-.brand .sahko-wordmark,.onboard-wordmark .sahko-wordmark{width:112px;height:auto;max-height:none}
+.sahko-wordmark{display:block;width:92px;height:auto;flex-shrink:0;color:var(--text);overflow:visible}
+.brand .sahko-wordmark,.onboard-wordmark .sahko-wordmark{width:92px;height:auto;max-height:none}
 .recap-brand .sahko-wordmark{width:104px;color:var(--light-ink)}
-@media(max-width:759px){.brand .sahko-wordmark,.onboard-wordmark .sahko-wordmark{width:96px}}
+@media(max-width:759px){.brand .sahko-wordmark,.onboard-wordmark .sahko-wordmark{width:80px}}
