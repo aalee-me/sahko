@@ -1,6 +1,6 @@
 (() => {
  const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
- function computeSchedule(plan,nowMs=Date.now()){
+ function computeSchedule(plan,nowMs=window.sahkoNow?.()??Date.now()){
   const focus=Math.round(clamp(+plan.focus||25,1,120)*60),rest=Math.round(clamp(+plan.break||5,1,60)*60);let blocks=Math.round(clamp(+plan.blocks||2,1,1440)),first=focus,firstBreak=rest,total,alignedEnd;
   if(plan.sync){const [h,m]=String(plan.stop||'06:00').split(':').map(Number),end=new Date(nowMs);end.setHours(clamp(h||0,0,23),clamp(m||0,0,59),0,0);if(+end<=nowMs)end.setDate(end.getDate()+1);alignedEnd=+end;total=Math.max(1,Math.ceil((+end-nowMs)/1000));blocks=Math.ceil((total+rest)/(focus+rest));first=total-(blocks-1)*(focus+rest);if(first<=0){const available=first+rest;first=Math.min(60,available);firstBreak=Math.max(0,available-first);}}
   else total=focus*blocks+rest*Math.max(0,blocks-1);
