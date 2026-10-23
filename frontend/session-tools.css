@@ -93,3 +93,17 @@ body #onboarding#onboarding :is(.rhythm-unit,.snap-tick small,.timeline-label,.t
 /* Warm ink for the cream setup screens. */
 body #onboarding:not(.landing-step){--text:#684b20;--muted:#806d4c;--on-action:#67420c;--on-accent:#67420c}
 body #onboarding:not(.landing-step) :is(.entry-go,.onboard-primary,.rhythm-confirm,.room-join){color:var(--on-action)!important}
+
+/* Entry layout: heading, choice, then a distinct next action. */
+body #onboarding.entry-step .onboard-copy{width:100%;max-width:520px;min-width:0}
+body #onboarding.entry-step .onboard-copy h1{max-width:520px;margin:0 0 28px;letter-spacing:-1.2px;font-size:36px!important}
+body #onboarding.entry-step #onboardPanel{display:flex;flex-direction:column;gap:0;width:100%;max-width:520px}
+body #onboarding.entry-step .entry-switch{width:100%;margin:0;height:48px;flex-shrink:0}
+body #onboarding.entry-step .entry-switch button{font-weight:400!important;padding:7px 12px!important}
+body #onboarding.entry-step .entry-switch button[aria-selected=true]{font-weight:600!important}
+body #onboarding.entry-step .entry-bottom{margin:24px 0 0;width:100%}
+body #onboarding.entry-step .entry-action{display:flex;justify-content:flex-end;gap:12px;width:100%;align-items:center}
+body #onboarding.entry-step .entry-go{flex:0 0 auto;width:auto!important;min-width:136px;min-height:48px;padding:12px 24px!important;font-weight:600!important}
+body #onboarding.entry-step .entry-action input{flex:1;min-width:0;width:0}
+body #onboarding.entry-step .entry-browse{margin:12px 0 0 auto;padding:8px 0;line-height:24px}
+@media(max-width:759px){body #onboarding.entry-step .onboard-copy{max-width:none;padding-inline:0}body #onboarding.entry-step .onboard-copy h1{font-size:32px!important;margin-bottom:24px}body #onboarding.entry-step .entry-action{flex-wrap:nowrap}body #onboarding.entry-step .entry-go{min-width:104px;padding-inline:20px!important}}
