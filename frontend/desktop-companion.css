@@ -210,3 +210,42 @@ body #onboarding .room-detail>.room-plan-duration{margin-bottom:1.25rem}
 @media(max-width:600px){body #onboarding .room-navigation-card>.directory-people-wrap{right:1.125rem}.room-detail-footer{flex-wrap:wrap}.room-entry-code{max-width:none}}
 body #onboarding .room-detail-heading>.room-code-tools button{position:absolute;left:calc(100% + .25rem);top:0}
 body #onboarding .room-detail-heading>.room-code-tools button:last-of-type{left:calc(100% + 2rem)}
+/* Edit this gap to change the space between a room title and its code. */
+.room-navigation-card,.room-detail-heading{--room-code-gap:12px}
+body #onboarding .room-detail-title-line h2{font-weight:650!important}
+.room-detail-footer{display:grid!important;grid-template-columns:minmax(0,1fr);gap:.75rem}
+.room-detail-footer .room-entry-code,.room-detail-footer .room-join{box-sizing:border-box;width:100%;max-width:none;min-width:0;margin:0!important}
+.room-entry-code[aria-invalid=true]{border-color:var(--action-accent);box-shadow:0 0 0 2px color-mix(in srgb,var(--action-accent) 20%,transparent)}
+.room-entry-error{color:var(--text);font-size:.875rem;line-height:1.5;margin:.75rem 0 0;padding:.75rem 1rem;border-left:2px solid var(--action-accent);background:color-mix(in srgb,var(--action-accent) 9%,transparent);border-radius:.75rem}
+.room-entry-error:empty{display:none}
+.session-task-heading{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:.75rem}
+body :is(#checkin,#onboarding) .session-task-heading :is(.task-group-label,.session-tasks-heading){font:500 .875rem/1.4 Manrope,sans-serif!important;margin:0!important;color:var(--muted);letter-spacing:0}
+body :is(#checkin,#onboarding) .session-task-heading .task-group-label{color:var(--text)}
+body .disregard-all{display:inline-flex!important;align-items:center;justify-content:center;gap:.375rem;padding:.5rem .75rem!important;line-height:1.4!important;color:var(--muted)}
+body .disregard-all svg{display:block;flex:0 0 1rem;width:1rem;height:1rem}
+.task-row .task-add-circle{display:grid;place-items:center;align-self:center}.task-row .task-add-circle svg{display:block}
+body .night-progress-label>.block-eyebrow{display:flex;align-items:center;gap:.375rem}
+.block-eyebrow svg{display:block;width:1rem;height:1rem;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+body .room-feed-event :is(p,small){color:var(--action-accent)!important}
+body .room-feed-event{padding:0;border-radius:0!important;background:transparent!important}
+body .room-action-rail .tool-label{display:none}
+#checkin .checkin-shell{box-sizing:border-box;max-width:100%;padding-top:var(--break-clock-top,5rem);min-height:100dvh}
+#checkin .checkin-top{align-items:baseline;flex-wrap:wrap;gap:1.25rem}
+#checkin .checkin-top #checkinClock{font-size:max(3rem,var(--break-clock-size,6rem));font-weight:600;line-height:1.05;letter-spacing:-.045em;color:var(--action-accent)}
+#checkin .checkin-top>span:last-child{font-size:1rem;color:var(--muted)}
+#checkin #checkinTitle{font-size:clamp(1.5rem,3vw,2.5rem);line-height:1.2;margin:2.5rem 0 2rem}
+#checkinTasks{width:100%;max-width:none}
+#checkin .current-session-tasks{padding:1.25rem;border-radius:1.5rem;background:var(--neutral-surface)}
+#checkin .task-entry{min-width:0}.task-created-date{color:var(--muted)}
+#checkinThoughtSlot{padding-top:1.5rem}
+#checkin .checkin-dock{position:relative!important;inset:auto!important;width:100%!important;max-width:none!important;transform:none!important;margin:0;display:flex;flex-direction:column;gap:.75rem}
+#checkin .checkin-dock .void-dock{width:100%;margin:0;padding:0;position:static;transform:none}
+#checkin .checkin-dock .room-action-rail{max-width:100%;flex-wrap:wrap;justify-content:center}
+#checkin .room-action-rail>button{display:flex!important;gap:.5rem;width:auto!important;min-width:0;padding:.625rem .875rem!important}
+#checkin .room-action-rail .tool-label{display:inline;font-size:.8125rem;line-height:1.3}
+#checkin .room-action-rail>button svg{width:1.125rem;height:1.125rem;margin:0}
+#checkin .space-tabs{align-self:center;margin:0!important}
+@media(max-width:600px){#checkin .checkin-shell{margin-left:0!important;width:100%!important;padding-left:1.25rem!important;padding-right:1.25rem!important}#checkin .dock-activity-row{flex-wrap:wrap}#checkin .room-action-rail{width:100%;margin:0}#checkin .room-action-rail>button{flex:1;padding:.5rem!important}#checkin .room-action-rail .tool-label{font-size:.6875rem}}
+body #checkin #sessionBottomDock.checkin-dock{display:flex!important}
+body #checkin .checkin-dock .thought-feed:not(.is-empty){display:flex!important}
+body #checkin #checkinThoughtSlot .void-dock,body #checkin #checkinThoughtSlot #voidForm{box-sizing:border-box;width:100%!important;max-width:none!important}
