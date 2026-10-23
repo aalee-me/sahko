@@ -1713,6 +1713,9 @@
 
     function updateWebGLCameraPose() {
       if (!glCamera) return;
+      const displayZoom = glCamera.zoom;
+      glCamera.zoom = displayZoom / (latest.mapScale || 1);
+      glCamera.updateProjectionMatrix();
       const pitchRad = (studio.pitch * Math.PI) / 180;
       const azimRad = ((studio.azimuth - 90) * Math.PI) / 180;
       // Fit the full cloud envelope, including its feather, in the viewport.
@@ -1739,6 +1742,8 @@
         if (extent <= .96) break;
         dist *= Math.max(1.01, extent / .95);
       }
+      glCamera.zoom = displayZoom;
+      glCamera.updateProjectionMatrix();
     }
 
     function syncGPUUniforms() {
