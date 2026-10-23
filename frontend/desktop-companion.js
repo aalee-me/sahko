@@ -49,3 +49,6 @@
  dock.querySelector('.space-tabs').addEventListener('click',()=>{if(checkin.open)checkin.close()},{capture:true});
  const previousJolt=window.sahkoRecordJolt;window.sahkoRecordJolt=(sender,target)=>{previousJolt?.(sender,target);const from=people.find(p=>String(p.id)===String(sender)),to=people.find(p=>String(p.id)===String(target));window.sahkoRoomEvent?.((from?.name||'Someone')+' sent '+(to?.name==='You'?'you':to?.name||'someone')+' a jolt.');};
 })();
+;(() => {
+ const onboarding=document.getElementById('onboarding');onboarding.addEventListener('keydown',e=>{if(e.defaultPrevented||e.key!=='Enter'||e.isComposing||e.shiftKey||e.ctrlKey||e.metaKey||e.altKey)return;const target=e.target;if(target.closest('button,textarea,select,form,[contenteditable=true],.task-row,.room-entry-code,summary'))return;const shown=e=>e&&!e.disabled&&!e.hidden&&e.getClientRects().length;const confirm=[...onboarding.querySelectorAll('.rhythm-card.editing .rhythm-confirm')].find(shown),next=confirm||[onboarding.querySelector('.setup-review-button'),document.getElementById('onboardNext')].find(shown);if(next){e.preventDefault();next.click()}});
+})();
