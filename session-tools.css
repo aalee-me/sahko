@@ -171,3 +171,31 @@ body #onboarding .room-card-content .room-session-meta .room-blocks{color:var(--
 body #onboarding .room-card-footer{border:0;margin-top:12px;padding-top:0}
 body #onboarding .room-card-footer .room-presence{font-size:13px!important;text-align:left}
 @media(prefers-reduced-motion:reduce){.room-card-progress-fill{transition:none}}
+
+/* Planning progress remains visible; room progress lives only inside cards. */
+body #onboarding#onboarding .orbit-progress{display:block!important;visibility:visible!important}
+body #onboarding .orbit-progress .onboard-segment.current{stroke:var(--action-accent)}
+body #onboarding .room-code-block{margin:16px 0 22px;min-width:0}
+body #onboarding .room-code-label{display:block;font-size:13px;color:var(--muted);margin-bottom:8px}
+body #onboarding .room-code-row{display:flex;align-items:center;gap:12px;min-width:0}
+body #onboarding .room-code-row .room-code-value{display:block;flex:1;min-width:0;margin:0;box-sizing:border-box;font-size:28px!important;line-height:1.35;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--text);overflow-x:auto;white-space:nowrap;scrollbar-width:thin}
+body #onboarding .room-code-row input.room-code-value{width:0;padding:12px 14px;border:1px solid var(--line);border-radius:16px;background:var(--surface-raised)}
+body #onboarding .copy-room-code{display:grid;place-items:center;flex:0 0 44px;width:44px;height:44px;margin:0;padding:11px;border:0;background:transparent;border-radius:50%;color:var(--text)}
+body #onboarding .copy-room-code:hover,body #onboarding .copy-room-code:focus-visible{background:var(--neutral-surface)}
+.copy-room-code svg,.room-code-copy-icon svg{display:block;width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+body .people-room-code{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:13px}
+body #onboarding .session-review .review-room-title{font-size:28px;margin:0 0 8px;font-weight:500;line-height:1.25}
+body #onboarding .session-review>.room-code-block{margin:0 0 24px}
+body #onboarding .review-timeline{margin:16px 0 8px;padding:16px 0}
+body #onboarding .review-timeline .timeline-title{font-size:16px;gap:12px}
+body #onboarding .timeline-caption{font-size:13px;line-height:1.5;color:var(--muted);margin:10px 0 0}
+body #onboarding .manage-friends{display:block;margin:12px 0 0;padding:8px 0;font-size:13px;text-decoration:underline;text-underline-offset:4px;color:var(--text)}
+body #onboarding .invite-friend{border-radius:14px;padding:12px 10px;gap:12px}
+body #onboarding .invite-friend:hover{background:var(--surface-hover)}
+body #onboarding .invite-friend strong{font-size:16px;font-weight:400}
+body #onboarding .invite-friend small{font-size:13px}
+body #onboarding .invite-friend-list{padding-top:12px;max-height:300px}
+@media(max-width:480px){body #onboarding .room-code-row .room-code-value{font-size:24px!important;letter-spacing:.09em}body #onboarding .review-timeline .timeline-title{font-size:16px}}
+body.mobile-demo #onboarding[data-mobile-screen=tasks] .onboard-visual{position:relative;inset:auto;order:0;width:100%;max-width:420px;opacity:1;margin:0 auto}
+body.mobile-demo #onboarding[data-mobile-screen=tasks] .onboard-copy{padding-top:50px!important}
+.invite-avatar{overflow:hidden;flex-shrink:0}.invite-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}

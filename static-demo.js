@@ -10,7 +10,7 @@
   if(path==='me'&&method==='GET')value=profile();
   else if(path==='me/avatar'&&method==='POST'){const body=JSON.parse(options.body||'{}'),me=profile();me.avatar=body.image||null;try{localStorage.setItem(key,JSON.stringify(me));value={avatar:me.avatar}}catch{status=507;value={error:'This device has no space to save the photo.'}}}
   else if(path==='rooms'&&method==='GET')value={rooms:[]};
-  else if(path==='friends'&&method==='GET')value={friends:[]};
+  else if(path==='friends'&&method==='GET')value={friends:[{id:'maya',name:'Maya',handle:'@maya',relationship:'friend',online:true,avatar:'https://i.pravatar.cc/100?img=47'},{id:'eli',name:'Eli',handle:'@eli',relationship:'friend',online:true,avatar:'https://i.pravatar.cc/100?img=13'},{id:'sofia',name:'Sofia',handle:'@sofia',relationship:'friend',online:false,avatar:'https://i.pravatar.cc/100?img=44'},{id:'eecho',name:'Eecho',handle:'@eecho',relationship:'friend',online:false}]};
   else if(path==='invites'&&method==='GET')value={invites:[]};
   else if(/^rooms\/[^/]+\/preview$/.test(path)){status=404;value={error:'Invalid code'}}
   else{status=503;value={error:'Shared rooms and calls need a server. This GitHub Pages demo runs on your device.'}}
