@@ -87,3 +87,31 @@ body.compact .layout .workspace,body.compact .layout[data-sized] .workspace{padd
 body.compact .layout{min-height:0!important}
 @media(max-height:600px){body .layout{min-height:0!important}}
 @media(max-width:600px){.onboard-header .header-pair{font-size:0!important;width:2.25rem;height:2.25rem;min-width:2.25rem;padding:.5rem!important;gap:0}.onboard-header .header-pair svg{width:1rem;height:1rem}}
+/* Pairing sits immediately before Settings and uses the same icon dimensions. */
+.onboard-header .header-pair{order:0!important;margin-left:0!important;width:auto;height:auto}
+.onboard-header .header-pair svg,.onboard-header .open-settings svg{width:1.25rem!important;height:1.25rem!important;flex:0 0 1.25rem!important}
+.night-progress-marker{pointer-events:all;cursor:help}
+.night-progress.marker-hovered .progress-hover-hint{opacity:1;transform:none}
+/* Directory card: room identity / curved progress / current block / duration footer. */
+body #onboarding#onboarding .room-navigation-card{padding:1.5rem!important;border-radius:1.75rem!important}
+body #onboarding .room-navigation-card .room-card-content{min-height:0;display:flex;gap:0}
+body #onboarding .room-navigation-card .room-title-line{min-height:5rem;padding-right:var(--roster-width,135px);align-items:baseline;gap:.375rem .625rem;align-content:flex-start}
+body #onboarding#onboarding .room-navigation-card .room-title-line strong{font-size:clamp(1.125rem,1.8vw,1.5rem)!important;line-height:1.3;font-weight:600}
+body #onboarding .room-navigation-card .room-access-inline{font-size:.875rem!important}
+.room-navigation-card .room-access-inline:before{display:none}
+body #onboarding .room-navigation-card>.room-code-tools{left:1.5rem;top:3.75rem}
+body #onboarding .room-navigation-card .room-code-tools output{font-size:1rem;letter-spacing:.1em}
+body #onboarding .room-navigation-card>.directory-people-wrap{top:1.5rem;right:1.5rem;align-items:flex-end;gap:.75rem}
+body #onboarding .room-navigation-card .directory-presence{font-size:.8125rem;white-space:nowrap}
+body #onboarding .room-navigation-card .room-card-progress{margin:1rem 0 1.25rem!important;width:calc(100% - 2.5rem)}
+body #onboarding .room-navigation-card .room-timing{width:calc(100% - 2.5rem);margin:0!important;padding:0!important;gap:.75rem;font-size:.9375rem}
+body #onboarding .room-navigation-card .room-timing .room-block-label{font-size:.9375rem;line-height:1.5}
+body #onboarding .room-navigation-card .room-timing svg{width:1.25rem;height:1.25rem;flex-basis:1.25rem}
+body #onboarding .room-navigation-card .room-plan-duration{position:relative;display:flex;align-items:center;gap:.625rem;margin:1.5rem 0 0!important;padding-top:1.25rem;width:100%;font-size:.875rem!important;line-height:1.5;color:var(--muted)}
+.room-navigation-card .room-plan-duration:before{content:'';position:absolute;left:0;right:2.5rem;top:0;height:1px;background:var(--line)}
+body #onboarding .room-navigation-card .room-arrow{position:absolute;right:1.5rem;bottom:3.25rem;margin:0;align-self:auto;font-size:1.875rem;line-height:1}
+@media(max-width:480px){body #onboarding#onboarding .room-navigation-card{padding:1.125rem!important}body #onboarding .room-navigation-card .room-title-line{padding-right:0;min-height:7rem}body #onboarding .room-navigation-card>.room-code-tools{left:1.125rem;top:3.5rem}body #onboarding .room-navigation-card>.directory-people-wrap{top:3.25rem;right:1.125rem;gap:.5rem}body #onboarding .room-navigation-card .room-card-progress{width:100%;margin-top:.5rem!important}body #onboarding .room-navigation-card .room-timing{width:100%}body #onboarding .room-navigation-card .room-plan-duration{font-size:.8125rem!important}body #onboarding .room-navigation-card .room-arrow{right:1.125rem;bottom:3rem}.onboard-header .header-pair{width:2.25rem;height:2.25rem}}
+.room-card-progress{position:relative}
+.room-card-progress-marker{pointer-events:all;cursor:help}
+.card-progress-percent{position:absolute;top:0;transform:translate(-50%,-100%);padding:.375rem .625rem;border-radius:999px;background:var(--surface-raised);border:1px solid var(--line);color:var(--text);font-size:.6875rem;line-height:1.3;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .15s}
+.room-card-progress.marker-hovered .card-progress-percent{opacity:1}
