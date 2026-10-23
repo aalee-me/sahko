@@ -3,20 +3,20 @@
 :root{
  --theme-mix:0;
  --light-paper:#fffef7;--light-card:#f5f5f3;--light-ink:#243047;
- --action-accent:color-mix(in srgb,#e0a42d,#bd7c12 calc(var(--theme-mix)*100%));--on-action:#211a0e;
+ --action-accent:color-mix(in srgb,#ffc143,#f3b52e calc(var(--theme-mix)*100%));--on-action:#211a0e;
  --reference-coral:#ff969f;--reference-yellow:#ffe13d;--reference-peach:#ffbf9f;--reference-lavender:#b9a6ed;--reference-teal:#a1dfd5;
  --canvas:color-mix(in srgb,#08090a,var(--light-paper) calc(var(--theme-mix)*100%));
  --surface:color-mix(in srgb,#000000,var(--light-paper) calc(var(--theme-mix)*100%));
  --surface-raised:color-mix(in srgb,#17191b,var(--light-card) calc(var(--theme-mix)*100%));
  --surface-hover:color-mix(in srgb,#292c2e,#ebece9 calc(var(--theme-mix)*100%));
- --surface-selected:color-mix(in srgb,#463518,#f0e2c5 calc(var(--theme-mix)*100%));
+ --surface-selected:color-mix(in srgb,#40351e,#fff0ce calc(var(--theme-mix)*100%));
  --neutral-surface:color-mix(in srgb,#2d343e,var(--light-card) calc(var(--theme-mix)*100%));
  --text:color-mix(in srgb,#eeeae1,var(--light-ink) calc(var(--theme-mix)*100%));
  --muted:color-mix(in srgb,#aaa394,#746650 calc(var(--theme-mix)*100%));
- --line:color-mix(in srgb,#514b3f,#d2c9b5 calc(var(--theme-mix)*100%));
- --accent:color-mix(in srgb,#efba4b,#a86808 calc(var(--theme-mix)*100%));
- --accent-muted:color-mix(in srgb,#ba9143,#987331 calc(var(--theme-mix)*100%));
- --on-accent:color-mix(in srgb,#211a0e,#fffef7 calc(var(--theme-mix)*100%));
+ --line:color-mix(in srgb,#454744,#d8d9d1 calc(var(--theme-mix)*100%));
+ --accent:color-mix(in srgb,#ffd05c,#efb329 calc(var(--theme-mix)*100%));
+ --accent-muted:color-mix(in srgb,#e7b64c,#d79a20 calc(var(--theme-mix)*100%));
+ --on-accent:#211a0e;
  --warning:color-mix(in srgb,#d9b590,#8e572d calc(var(--theme-mix)*100%));
  --shadow:#030a1728;--scrim:#070d184d;
  --nebula:color-mix(in srgb,#6b5ea52b,#b9a6ed40 calc(var(--theme-mix)*100%));

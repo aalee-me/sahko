@@ -1,0 +1,23 @@
+/* Shared controls use the composer’s quiet, rounded treatment. */
+body .room-action-rail{padding:5px;gap:4px;top:250px;background:color-mix(in srgb,var(--surface) 82%,transparent);border-color:var(--line);border-radius:28px;box-shadow:none}
+body .room-action-rail button{width:44px!important;height:44px!important;min-width:44px;border-radius:22px;color:var(--text);padding:11px!important}
+.room-action-rail button svg{width:22px;height:22px;stroke-width:1.7}.timer-context,.timer-actions{display:none!important}
+.timer-settings-window{width:min(440px,calc(100vw - 32px));padding:28px;border-radius:28px}.timer-settings-window .session-tasks-head h2{font-size:24px}.timer-settings-window .session-tasks-head button{border:0;background:none;margin:0;padding:8px;font-size:24px}
+.timer-fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}.timer-fields label{font-size:14px}.timer-fields input{font-size:20px;width:100%;box-sizing:border-box;margin:8px 0 0;padding:12px 14px;border-radius:16px}.timer-window-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}.timer-window-actions button{padding:12px 20px;border-radius:999px;min-height:44px;margin:0;font-size:15px}.timer-pause{background:var(--neutral-surface);border:0}.timer-error{color:var(--danger)}.quiet-work-option{display:flex;gap:12px;align-items:center;margin-top:24px;font-size:15px}.quiet-work-option input{width:18px;margin:0;accent-color:var(--accent)}.quiet-work-help{font-size:12px!important}
+.ui-tooltip[data-placement=left]:after{left:100%;top:var(--tooltip-arrow-y,50%);bottom:auto;translate:0 -50%;border:6px solid transparent;border-left-color:#202020}.ui-tooltip:not([data-placement=left]):after{left:var(--tooltip-arrow-x,50%)}
+body .inline-thought-form .void-actions{gap:4px;align-items:center}body .inline-thought-form .void-actions>button{display:grid;place-items:center;width:36px;height:36px;min-width:36px;flex:0 0 36px;padding:7px!important;border-radius:50%;margin:0;box-sizing:border-box}body .inline-thought-form .void-actions>button svg{display:block;width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}body #releaseThought:disabled{display:none!important}body #releaseThought:not(:disabled){background:var(--action-accent)!important;color:var(--on-action)!important}
+body .thought-trail-item{cursor:default;scroll-snap-align:center}body .thought-trail-item p[role=button]{width:fit-content;max-width:100%;cursor:pointer;border-radius:6px}body .thought-trail-item p[role=button]:hover{text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:4px}body .thought-trail-item p[role=button]:focus-visible{outline:1px solid var(--accent);outline-offset:4px}
+body .thought-rail .thought-tick{display:block;height:4px;min-height:4px;padding:0;border:0;border-radius:999px;background:var(--text);margin:10px 0;cursor:pointer;flex-shrink:0}body .thought-rail{overflow-y:auto;scrollbar-width:none;align-self:stretch}body .thought-one{scroll-snap-type:y proximity!important;mask-image:linear-gradient(transparent,#000 30%,#000 70%,transparent)}
+#originalOrbital,#onboardOrbit{background:transparent!important;clip-path:none!important;mask-image:none!important}.scene,.orbit-preview{background:transparent!important}.timer-error:empty{display:none}
+@media(max-width:759px){body .room-action-rail{right:8px;top:230px}body .room-action-rail button{width:40px!important;height:40px!important;min-width:40px;padding:9px!important}}
+
+body .workspace{background:transparent!important}
+body .thought-rail .thought-tick{pointer-events:auto}
+body .thought-rail .thought-tick:before{content:none}
+
+#originalOrbital,#onboardOrbit{color-scheme:normal!important}
+
+body .workspace>.thought-feed,body .thought-one{height:132px;max-height:132px;min-height:0}body .thought-one{padding:56px 0!important}body .thought-trail-item{min-height:80px}
+@media(max-width:1100px){body .night-progress{min-height:105px;margin-top:22px}body .night-progress svg{height:76px}body .workspace>.thought-feed,body .thought-one{height:112px;max-height:112px}body .thought-one{padding:46px 0!important}}
+
+@media(max-width:759px){body .scene .avatar{max-width:56px;max-height:56px}}
