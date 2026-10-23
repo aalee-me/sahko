@@ -241,3 +241,31 @@ body #voidComposer{bottom:20px;margin:0!important;max-width:calc(100vw - 32px)}
 @media(prefers-reduced-motion:reduce){.activity-choice .room-arrow{transition:none;transform:none}}
 .void-mark:hover .riant-o-svg,.void-mark:focus-visible .riant-o-svg{transform:scale(1.24) rotate(360deg)}.void-mark:active .riant-o-svg{transform:scale(1.4) rotate(360deg)}.brand:hover .riant-o-svg,.onboard-wordmark:hover .riant-o-svg{transform:rotate(360deg) scale(1.08)}
 @media(prefers-reduced-motion:reduce){.void-mark:hover .riant-o-svg,.void-mark:focus-visible .riant-o-svg,.void-mark:active .riant-o-svg,.brand:hover .riant-o-svg,.onboard-wordmark:hover .riant-o-svg{transform:none}}
+/* Session entry: one sliding choice, a living orbital, then its action. */
+body #onboarding.entry-step{background:#101118!important;color:#fffef7!important}
+body #onboarding.entry-step .onboard-header,body #onboarding.entry-step .onboard-step,body #onboarding.entry-step #onboardSubtitle,body #onboarding.entry-step .onboard-actions,body #onboarding.entry-step .orbit-progress,body #onboarding.entry-step #orbitPreviewCaption{display:none!important}
+body #onboarding.entry-step .onboard-shell{max-width:1000px;padding:0 48px}
+body #onboarding.entry-step[open] .onboard-layout{display:grid!important;grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto minmax(280px,1fr) auto;gap:0!important;min-height:100dvh;padding:72px 0 48px!important;margin:0 auto;max-width:800px;position:relative;align-items:stretch;overflow:visible}
+body #onboarding.entry-step .onboard-copy,body #onboarding.entry-step #onboardPanel{display:contents!important}
+body #onboarding.entry-step #onboardBack{position:absolute;left:-12px;top:14px;color:#fffef7!important;background:none!important}
+body #onboarding.entry-step #onboardTitle{grid-row:1;font-size:30px;line-height:1.12;letter-spacing:-.6px;max-width:240px;margin:16px 0 28px;color:#fffef7!important;font-weight:400}
+.entry-switch{grid-row:2;position:relative;isolation:isolate;display:flex;width:min(100%,440px);height:48px;padding:4px;background:#62616c;border-radius:999px}
+.entry-switch:before{content:'';position:absolute;z-index:-1;left:4px;top:4px;bottom:4px;width:calc(50% - 4px);border-radius:999px;background:#a3a1ae;transition:transform .4s cubic-bezier(.22,1,.36,1)}
+[data-entry-mode=join] .entry-switch:before{transform:translateX(100%)}
+body #onboarding.entry-step .entry-switch button{flex:1;border:0!important;border-radius:999px;background:none!important;color:#fffef7!important;font-size:14px;padding:0 8px!important}
+body #onboarding.entry-step[open] .onboard-visual{grid-row:3;order:initial;position:relative!important;inset:auto!important;align-self:center;width:calc(100% + 96px)!important;max-width:none!important;margin:0 -48px!important;opacity:1;pointer-events:none}
+body #onboarding.entry-step .orbit-preview{width:100%;height:clamp(300px,47dvh,530px)!important;aspect-ratio:auto!important;max-height:none!important}
+body #onboarding.entry-step .preview-person{width:78px;height:78px;border-width:4px!important}
+.entry-bottom{grid-row:4;position:relative;z-index:2;width:min(100%,440px);padding-top:8px}
+body #onboarding.entry-step .entry-description{font-size:25px;line-height:1.16;letter-spacing:-.5px;color:#fffef7!important;max-width:300px;margin:0 0 28px}
+.entry-action{display:flex;align-items:center;justify-content:flex-end;min-height:64px;transition:background .3s,border-color .3s;border:1px solid transparent;border-radius:999px}
+body #onboarding.entry-step .entry-go{display:grid;place-items:center;width:64px;height:64px;flex:0 0 64px;padding:17px!important;border:1px solid #b6b4bf!important;border-radius:50%;background:#ffffff20!important;color:#fffef7!important;transition:background .2s,transform .2s}
+.entry-go svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}.entry-go:hover{transform:translateX(3px)}.entry-go:disabled{opacity:.5}
+[data-entry-mode=join] .entry-action{border-color:#b6b4bf;background:#ffffff20}
+body #onboarding.entry-step[data-entry-mode=join] .entry-go{border:0!important;background:none!important}
+body #onboarding.entry-step .entry-action input{flex:1;min-width:0;width:100%;margin:0;padding:16px 24px;border:0;border-radius:999px;background:transparent!important;color:#fffef7!important;font-size:15px}
+.entry-action input::placeholder{color:#fffef7b3}.entry-action.invalid{border-color:#ed8585}.entry-error{color:#ffb0a4;font-size:14px;margin:10px 20px}
+@media(min-width:1000px){body #onboarding.entry-step #onboardTitle{font-size:38px;max-width:320px}body #onboarding.entry-step .onboard-layout{padding-top:62px!important}.entry-bottom{justify-self:end}.entry-description{max-width:350px!important}}
+@media(max-width:480px){body #onboarding.entry-step .onboard-shell{padding:0 36px}body #onboarding.entry-step[open] .onboard-layout{padding-top:76px!important;padding-bottom:30px!important;grid-template-rows:auto auto minmax(280px,1fr) auto}body #onboarding.entry-step #onboardTitle{font-size:23px;max-width:190px;margin:18px 0 26px}body #onboarding.entry-step[open] .onboard-visual{width:calc(100% + 72px)!important;margin:0 -36px!important}body #onboarding.entry-step .entry-description{font-size:24px;max-width:280px;margin-bottom:24px}body #onboarding.entry-step .preview-person{width:74px;height:74px}.entry-switch{height:44px}.entry-bottom{padding-top:0}}
+@media(prefers-reduced-motion:reduce){.entry-switch:before,.entry-go{transition:none!important}}
+body.mobile-demo #onboarding.entry-step[open] .onboard-layout{min-height:calc(100dvh - 30px)}
