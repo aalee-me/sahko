@@ -446,3 +446,11 @@ body.compact .night-progress .night-progress-label{padding:0 .75rem!important;ma
 .people-menu[open] .people-list>.person:nth-child(n+3)>:first-child,.directory-people[open] .directory-roster-person:nth-of-type(n+3)>.directory-avatar{animation-delay:.05s}
 @keyframes roster-portrait-enter{from{opacity:0;transform:translateY(-.625rem) scale(.9)}to{opacity:1;transform:translateY(0) scale(1)}}
 @media(prefers-reduced-motion:reduce){.people-menu>summary .people-stack,.directory-people>summary .directory-avatar-stack,.directory-people>summary .directory-overflow{transition:none!important}.people-menu[open] .people-list>.person>:first-child,.directory-people[open] .directory-roster-person>.directory-avatar{animation:none!important}}
+/* Available rooms keep code and presence on one centered row with less dead space. */
+body #onboarding#onboarding .room-navigation-card{padding:1.25rem!important}
+body #onboarding .room-navigation-card>.room-code-tools{left:1.25rem}
+body #onboarding .room-navigation-card>.directory-people-wrap{right:1.25rem}
+body #onboarding .room-navigation-card .room-card-progress{margin:.5rem 0 .625rem!important}
+body #onboarding .room-navigation-card .room-plan-duration{margin-top:.875rem!important;padding-top:.75rem}
+body #onboarding .room-navigation-card .room-arrow{right:1.25rem;bottom:2.125rem}
+@media(max-width:600px){body #onboarding#onboarding .room-navigation-card{padding:1rem!important}body #onboarding .room-navigation-card>.room-code-tools{left:1rem}body #onboarding .room-navigation-card>.directory-people-wrap{right:1rem}body #onboarding .room-navigation-card .room-arrow{right:1rem;bottom:2rem}}
