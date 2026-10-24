@@ -506,3 +506,16 @@ body #onboarding .room-join>svg{display:block;width:1.25rem;height:1.25rem;flex:
 body.compact .workspace-resize{position:fixed!important;right:.375rem!important;bottom:.375rem!important;float:none!important;margin:0!important;width:1.5rem;height:1.5rem;padding:.125rem;background:transparent}
 body.pip-session .workspace-resize{display:none!important}
 .memo-stop .filled-icon{stroke:currentColor!important;stroke-width:1.25;stroke-linejoin:round;stroke-linecap:round}
+/* Hover continuously morphs the recording square into our thin, rounded send vector. */
+.memo-stop .memo-stop-glyph{fill:currentColor;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+/* Keep the send control in the layout so its circle and arrow can animate in. */
+body #voidForm.inline-thought-form .void-actions{gap:0!important;--void-send-size:2.25rem}
+body.compact #voidForm.inline-thought-form .void-actions{--void-send-size:2rem}
+body #voidForm.inline-thought-form .void-actions>#releaseThought{position:relative;isolation:isolate;display:grid!important;place-items:center;box-sizing:border-box;width:0!important;min-width:0!important;height:var(--void-send-size)!important;flex:0 0 0!important;margin:0!important;padding:0!important;border:0!important;border-radius:50%;background:transparent!important;color:var(--on-action)!important;overflow:hidden;opacity:0;visibility:hidden;pointer-events:none;transition:width .26s cubic-bezier(.22,1,.36,1),flex-basis .26s cubic-bezier(.22,1,.36,1),margin-left .26s cubic-bezier(.22,1,.36,1),opacity .16s ease,visibility 0s .26s!important}
+body #voidForm.inline-thought-form .void-actions>#releaseThought::before{content:'';position:absolute;left:50%;top:50%;width:var(--void-send-size);height:var(--void-send-size);border-radius:50%;background:var(--action-accent);opacity:0;transform:translate(-50%,-50%) scale(.3);transition:transform .26s cubic-bezier(.22,1,.36,1),opacity .18s ease}
+body #voidForm.inline-thought-form .void-actions>#releaseThought>svg{position:relative;z-index:1;width:1.25rem;height:1.25rem;min-width:1.25rem;opacity:0;transform:translateY(1rem) scale(.8);transition:transform .3s cubic-bezier(.16,1,.3,1),opacity .18s ease;transition-delay:0s}
+body #voidForm.inline-thought-form .void-actions>#releaseThought:not(:disabled){width:var(--void-send-size)!important;flex-basis:var(--void-send-size)!important;margin-left:.375rem!important;opacity:1;visibility:visible;pointer-events:auto;transition-delay:0s!important}
+body #voidForm.inline-thought-form .void-actions>#releaseThought:not(:disabled)::before{opacity:1;transform:translate(-50%,-50%) scale(1)}
+body #voidForm.inline-thought-form .void-actions>#releaseThought:not(:disabled)>svg{opacity:1;transform:translateY(0) scale(1);transition-delay:.035s}
+@media(prefers-reduced-motion:reduce){body #voidForm.inline-thought-form .void-actions>#releaseThought,body #voidForm.inline-thought-form .void-actions>#releaseThought::before,body #voidForm.inline-thought-form .void-actions>#releaseThought>svg{transition:none!important}}
+body.reduce-motion #voidForm.inline-thought-form .void-actions>#releaseThought,body.reduce-motion #voidForm.inline-thought-form .void-actions>#releaseThought::before,body.reduce-motion #voidForm.inline-thought-form .void-actions>#releaseThought>svg{transition:none!important}
