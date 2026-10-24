@@ -92,3 +92,8 @@ Editing source directly: open `frontend/design-overrides.css` using GitHub's pen
 **rem:** `1rem` equals the user's root text size (normally 16px). `1.5rem` normally equals 24px and scales with Settings → Text size. Border hairlines, SVG viewBox geometry and media-query thresholds may remain px/unitless; component text and spacing use rem.
 
 This is a token/style editor, not a page builder. It supports shared sizing, picking components, local persistence, breakpoint overrides and export. Freeform dragging, new sections, text content editing, multiplayer editing, and publishing directly from the panel are not included. A full Framer authoring workflow would require a separate content/layout model or rebuilding the editable pages in Framer.
+
+
+### Visible component previews
+
+Use `https://aalee-me.github.io/sahko/components.html?design=1` for the editor with a dedicated live canvas. The preview displays the selected component family and updates on every valid input. Cards shows two cards so spacing changes are visible. Phone/Desktop changes the embedded preview viewport to 390px/900px without requiring you to resize the browser. The in-app editor also opens this canvas; **Open standalone preview** opens it in a separate tab. Collapse hides the canvas while you navigate the app. Local edits sync between same-origin tabs. Out-of-range values show a message and keep the last valid preview.
