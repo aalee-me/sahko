@@ -37,8 +37,6 @@ body .clock-controls button:disabled,body .clock-controls button:disabled:hover{
 .room-action-rail button{display:grid!important;place-items:center!important;align-items:center;justify-content:center}
 .room-action-rail button svg,.clock-controls button svg{display:block;flex-shrink:0;margin:auto}
 body .inline-thought-form textarea{font-size:1rem!important;line-height:1.4!important}
-body.compact #voidForm.inline-thought-form{min-height:3.25rem!important;padding:.625rem .875rem!important}
-body.compact #voidThought{font-size:.875rem!important;min-height:1.25rem!important;height:1.25rem;max-height:4.5rem}
 .header-pair{display:inline-flex;align-items:center;justify-content:center;gap:.4rem}
 .header-pair svg,.room-field-caption svg{width:1rem;height:1rem;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
 .room-field-caption{display:inline-flex;align-items:center;gap:.4rem}
@@ -72,19 +70,13 @@ body .dock-activity-row .thought-trail-item{min-height:3.5rem;padding:.375rem 0!
 body .dock-activity-row .thought-trail-item p{font-size:.8125rem!important;line-height:1.4}
 body .dock-activity-row .thought-trail-item small{font-size:.6875rem!important}
 body .session-bottom-dock{gap:.5rem}
-body.compact .dock-activity-row{min-height:3.5rem}
-body.compact .dock-activity-row>.thought-feed,body.compact .dock-activity-row .thought-one{height:3.5rem!important;max-height:3.5rem!important}
 body .workspace>.scene{margin-top:-2rem!important;overflow:visible!important}
-body.compact .layout[data-sized] .workspace>.scene{min-height:13rem;flex:1 1 15rem}
 @media(max-height:600px){body .dock-activity-row{min-height:3rem}body .dock-activity-row>.thought-feed,body .dock-activity-row .thought-one{height:3rem!important;max-height:3rem!important}body #voidForm.inline-thought-form{min-height:3rem!important;padding:.5rem .75rem!important}body #voidThought{font-size:.875rem!important}.progress-hover-hint{top:-.5rem}}
 @media(prefers-reduced-motion:reduce){.progress-hover-hint{transition:none}}
 body .dock-activity-row>.thought-feed{order:0}
 body .dock-activity-row>.room-action-rail{order:1}
-body.compact .layout{max-height:calc(100dvh - var(--session-viewport-space,260px))!important;overflow-y:auto!important;overscroll-behavior:contain;scrollbar-width:thin}
-body.compact .layout .workspace,body.compact .layout[data-sized] .workspace{padding-bottom:1rem!important}
 @media(max-height:600px){body .layout{max-height:calc(100dvh - var(--session-viewport-space,260px))!important;overflow-y:auto!important;overscroll-behavior:contain;scrollbar-width:thin}body .layout .workspace{padding-bottom:1rem!important}}
 .claim-focus-button svg{stroke-linecap:round;stroke-linejoin:round}
-body.compact .layout{min-height:0!important}
 @media(max-height:600px){body .layout{min-height:0!important}}
 @media(max-width:600px){.onboard-header .header-pair{font-size:0!important;width:2.25rem;height:2.25rem;min-width:2.25rem;padding:.5rem!important;gap:0}.onboard-header .header-pair svg{width:1rem;height:1rem}}
 /* Pairing sits immediately before Settings and uses the same icon dimensions. */
@@ -369,13 +361,6 @@ body #onboarding#onboarding .room-code-tools:is(:hover,:focus-visible) .code-act
 body #onboarding#onboarding .code-action-pill:has(button.copied)>button:not(.copied),body #sessionRoomCode .code-action-pill:has(button.copied)>button:not(.copied){display:flex!important}
 body #onboarding#onboarding .code-action-pill>button.copied,body #sessionRoomCode .code-action-pill>button.copied{opacity:1!important;transform:none!important}
 @media(prefers-reduced-motion:reduce){body #onboarding#onboarding .room-code-tools .code-action-pill>button,body #sessionRoomCode .code-action-pill>button{transition:none!important}}
-/* Compact content scrolls above its dock instead of extending behind it. */
-body.compact .layout,body.compact .layout[data-sized]{height:calc(100dvh - var(--session-viewport-space,250px))!important;max-height:calc(100dvh - var(--session-viewport-space,250px))!important;width:min(100%,600px)!important;min-height:0!important;overflow-x:hidden!important;overflow-y:auto!important;padding:.5rem!important}
-body.compact .layout .workspace,body.compact .layout[data-sized] .workspace{display:flex!important;flex-direction:column;min-height:0!important;height:auto!important;padding:1rem!important;overflow:visible}
-body.compact .workspace>.scene,body.compact .layout[data-sized] .workspace>.scene{height:clamp(10rem,28vh,17rem)!important;min-height:10rem!important;max-height:none!important;flex:0 0 auto!important;aspect-ratio:auto!important;margin-top:.5rem!important;overflow:hidden!important}
-body.compact .workspace>.night-progress{margin-top:.75rem!important;margin-bottom:0!important;flex:0 0 auto;min-height:0!important}
-body.compact .night-progress>svg{height:clamp(3.5rem,9vh,5rem)!important}
-body.compact #sessionBottomDock:not(.checkin-dock){bottom:1rem!important}
 body .workspace .title-row>div:first-child>h1{margin-bottom:0!important}
 body #sessionRoomCode{margin-top:.25rem!important;line-height:1.4}
 body #onboarding .room-navigation-card{--room-code-gap:6px}
@@ -386,19 +371,9 @@ body .night-progress{pointer-events:none!important}
 body .night-progress .night-progress-marker{pointer-events:all!important}
 /* The timeline SVG sizing must never stretch the small Block icon. */
 body .night-progress .block-eyebrow svg{display:block;width:.875rem!important;height:.875rem!important;min-height:0!important;max-height:.875rem!important;flex:0 0 .875rem}
-body.compact .workspace>.scene,body.compact .layout[data-sized] .workspace>.scene{height:clamp(8rem,22vh,15rem)!important;min-height:8rem!important}
-@media(max-height:600px){body.compact .workspace>.night-progress{margin-top:.375rem!important}body.compact .night-progress>svg{height:2.5rem!important}body.compact .workspace>.scene,body.compact .layout[data-sized] .workspace>.scene{height:7rem!important;min-height:7rem!important}body.compact .session{padding-top:.375rem!important}}
-body.compact .layout,body.compact .layout[data-sized]{height:calc(100dvh - var(--session-viewport-space,250px) - .75rem)!important;max-height:calc(100dvh - var(--session-viewport-space,250px) - .75rem)!important}
-body.compact #sessionBottomDock:not(.checkin-dock){bottom:max(1.5rem,env(safe-area-inset-bottom))!important}
-body.compact .layout .workspace,body.compact .layout[data-sized] .workspace{height:100%!important;min-height:min-content!important}
-body.compact .workspace>.title-row,body.compact .workspace>.session,body.compact .workspace>.night-progress{flex-shrink:0!important}
-body.compact .workspace>.scene,body.compact .layout[data-sized] .workspace>.scene{flex:1 0 7rem!important;height:auto!important;min-height:7rem!important}
-@media(max-height:600px){body.compact #clock{font-size:2.5rem!important}body.compact .workspace>.scene,body.compact .layout[data-sized] .workspace>.scene{flex-basis:6rem!important;min-height:6rem!important}body.compact .night-progress>svg{height:2rem!important}}
-body.compact .layout .workspace,body.compact .layout[data-sized] .workspace{padding:.75rem!important}
-body.compact .session{padding-top:.5rem!important}
-body.compact .night-progress>svg{height:3rem!important}
-body.compact .night-progress .night-progress-label{padding:0 .75rem!important;margin:.25rem 0 0!important}
-@media(max-height:600px){body.compact .night-progress>svg{height:2rem!important}}
+@media(max-height:600px){}
+@media(max-height:600px){}
+@media(max-height:600px){}
 /* Opening a roster hands the portraits from the summary into the list. */
 .people-menu>summary .people-stack,.directory-people>summary .directory-avatar-stack,.directory-people>summary .directory-overflow{opacity:1;visibility:visible;transform:translateY(0) scale(1);transition:opacity .18s ease,transform .22s ease,visibility 0s}
 .people-menu[open]>summary .people-stack,.directory-people[open]>summary .directory-avatar-stack,.directory-people[open]>summary .directory-overflow{opacity:0;visibility:hidden;transform:translateY(.75rem) scale(.9);pointer-events:none;transition:opacity .18s ease,transform .22s ease,visibility 0s .22s}
@@ -415,15 +390,6 @@ body #onboarding .room-navigation-card .room-arrow{right:1.25rem;bottom:2.125rem
 @media(max-width:600px){body #onboarding#onboarding .room-navigation-card{padding:1rem!important}body #onboarding .room-navigation-card .room-arrow{right:1rem;bottom:2rem}}
 /* Fit the actual drawing bounds; neither the dot nor portraits may be cropped. */
 body .night-progress>svg{overflow:visible!important}
-body.compact .workspace>.night-progress{margin-inline:0!important;width:100%}
-body.compact .layout .workspace,body.compact .layout[data-sized] .workspace{min-height:0!important}
-body.compact .workspace>.scene,body.compact .layout[data-sized] .workspace>.scene{flex:1 1 0!important;min-height:6rem!important;overflow:visible!important}
-body.compact .dock-activity-row{min-height:2.5rem!important}
-body.compact .dock-activity-row>.thought-feed,body.compact .dock-activity-row .thought-one{height:2.5rem!important;max-height:2.5rem!important}
-body.compact .session-tools-toggle{width:2.25rem!important;height:2.25rem!important;min-height:2.25rem!important}
-body.compact #voidForm.inline-thought-form{min-height:3rem!important;padding:.5rem .75rem!important}
-body.compact .space-tabs{min-height:2.5rem!important;padding:.1875rem!important}
-body.compact .space-tabs>button{min-height:2rem!important;padding:.375rem .625rem!important}
 /* Available rooms use a genuinely compact inset and footer. */
 body #onboarding#onboarding .room-navigation-card{padding:.875rem!important}
 body #onboarding .room-navigation-card .room-card-progress{margin:.25rem 0 .375rem!important}
@@ -431,23 +397,7 @@ body #onboarding .room-navigation-card .room-plan-duration{margin-top:.5rem!impo
 body #onboarding .room-navigation-card .room-arrow{right:.875rem;bottom:1.625rem}
 .recap-event.taskCompleted{display:grid;place-items:center}
 .recap-event.taskCompleted svg{width:1rem;height:1rem;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-/* Compact hierarchy: utility icons, timer, room identity, then a shared orbit/timeline stage. */
-body.compact>header{height:3rem!important;min-height:3rem!important;padding:.375rem .875rem!important;margin:0!important;justify-content:flex-end}
-body.compact>header>.brand,body.compact>header>#exitCompact,body.compact>header>.compact-studio-trigger{display:none!important}
-body.compact>header>.nav{display:flex!important;align-items:center;gap:.5rem!important;width:100%;height:100%}
-body.compact>header>.nav>*{display:none!important}
-body.compact>header>.nav>.my-profile-trigger,body.compact>header>.nav>.header-pair,body.compact>header>.nav>.open-settings{display:inline-flex!important;align-items:center;justify-content:center;width:2rem!important;height:2rem!important;min-width:2rem!important;margin:0;padding:.375rem!important;border:0!important;background:transparent!important}
-body.compact>header>.nav>.my-profile-trigger{order:0;margin-right:auto}
-body.compact>header>.nav>.header-pair{order:1;font-size:0!important;gap:0!important}
-body.compact>header>.nav>.open-settings{order:2}
-body.compact>header>.nav>.header-pair svg,body.compact>header>.nav>.open-settings svg{width:1.25rem!important;height:1.25rem!important;flex:0 0 1.25rem}
-body.compact .workspace>.session{order:-3!important;padding-top:0!important;margin:0!important}
-body.compact .workspace>.title-row{order:-2!important;margin-top:.625rem!important;flex:0 0 auto}
-body.compact .workspace>.view-modes{top:var(--compact-roster-top,5.5rem)!important;right:.75rem!important}
-body.compact .workspace>.compact-orbit-stage{order:3;position:relative;isolation:isolate;flex:1 1 0;min-height:10rem;width:100%;margin-top:.75rem}
-body.compact .compact-orbit-stage>.scene{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-height:0!important;max-height:none!important;flex:none!important;margin:0!important;aspect-ratio:auto!important;overflow:visible!important;z-index:1}
-body.compact .compact-orbit-stage>.night-progress{position:relative!important;z-index:6;width:100%;min-height:0!important;margin:0!important;pointer-events:none!important}
-body.compact .compact-orbit-stage>.night-progress>svg{height:clamp(3rem,10vh,5rem)!important;overflow:visible!important}
+/* Compact hierarchy: utility icons, timer, room identity{height:3rem!important;min-height:3rem!important;padding:.375rem .875rem!important;margin:0!important;justify-content:flex-end}
 /* Status belongs in the activity feed, never in a bottom notification pill. */
 #toast{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip-path:inset(50%)!important;padding:0!important;border:0!important;white-space:nowrap}
 #messageNotice{display:none!important}
@@ -455,19 +405,14 @@ body.compact .compact-orbit-stage>.night-progress>svg{height:clamp(3rem,10vh,5re
 body #voidForm.inline-thought-form.memo-recording{display:flex!important;align-items:center!important;justify-content:center!important;min-height:3.25rem!important;padding:.375rem .625rem!important;box-sizing:border-box}
 body #voidForm.memo-recording>.memo-capture{display:flex;align-items:center!important;align-self:center!important;justify-content:center;height:2.5rem!important;min-height:2.5rem!important;margin:0!important;padding:.3125rem .4375rem!important;box-sizing:border-box}
 body #voidForm.memo-recording .memo-wave,body #voidForm.memo-recording .memo-length,body #voidForm.memo-recording .memo-cancel,body #voidForm.memo-recording .memo-stop{align-self:center!important;margin-block:0!important}
-body.compact>header>.nav>.my-profile-trigger{margin-right:auto!important;border-radius:50%!important;overflow:hidden}
-body.compact>header .my-profile-trigger>.profile-initial,body.compact>header .my-profile-trigger>img{display:grid!important;place-items:center;width:1.5rem!important;height:1.5rem!important;border-radius:50%!important;font-size:.8125rem;line-height:1;object-fit:cover}
-body.compact>header .my-profile-trigger>.default-initial{background:#c6c7c4;color:#30363f}
 body #onboarding .room-join{display:flex;align-items:center;justify-content:center;gap:.625rem}
 body #onboarding .room-join>svg{display:block;width:1.25rem;height:1.25rem;flex:0 0 1.25rem;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-body.compact .workspace-resize{position:fixed!important;right:.375rem!important;bottom:.375rem!important;float:none!important;margin:0!important;width:1.5rem;height:1.5rem;padding:.125rem;background:transparent}
 body.pip-session .workspace-resize{display:none!important}
 .memo-stop .filled-icon{stroke:currentColor!important;stroke-width:1.25;stroke-linejoin:round;stroke-linecap:round}
 /* Hover continuously morphs the recording square into our thin, rounded send vector. */
 .memo-stop .memo-stop-glyph{fill:currentColor;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 /* Keep the send control in the layout so its circle and arrow can animate in. */
 body #voidForm.inline-thought-form .void-actions{gap:0!important;--void-send-size:2.25rem}
-body.compact #voidForm.inline-thought-form .void-actions{--void-send-size:2rem}
 body #voidForm.inline-thought-form .void-actions>#releaseThought{position:relative;isolation:isolate;display:grid!important;place-items:center;box-sizing:border-box;width:0!important;min-width:0!important;height:var(--void-send-size)!important;flex:0 0 0!important;margin:0!important;padding:0!important;border:0!important;border-radius:50%;background:transparent!important;color:var(--on-action)!important;overflow:hidden;opacity:0;visibility:hidden;pointer-events:none;transition:width .26s cubic-bezier(.22,1,.36,1),flex-basis .26s cubic-bezier(.22,1,.36,1),margin-left .26s cubic-bezier(.22,1,.36,1),opacity .16s ease,visibility 0s .26s!important}
 body #voidForm.inline-thought-form .void-actions>#releaseThought::before{content:'';position:absolute;left:50%;top:50%;width:var(--void-send-size);height:var(--void-send-size);border-radius:50%;background:var(--action-accent);opacity:0;transform:translate(-50%,-50%) scale(.3);transition:transform .26s cubic-bezier(.22,1,.36,1),opacity .18s ease}
 body #voidForm.inline-thought-form .void-actions>#releaseThought>svg{position:relative;z-index:1;width:1.25rem;height:1.25rem;min-width:1.25rem;opacity:0;transform:translateY(1rem) scale(.8);transition:transform .3s cubic-bezier(.16,1,.3,1),opacity .18s ease;transition-delay:0s}

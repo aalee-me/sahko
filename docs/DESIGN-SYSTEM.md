@@ -35,7 +35,7 @@ Spacing is a 4px base: `--space-1/2/3/4/5/6/8/10/12` = 4/8/12/16/20/24/32/40/48p
 | Compact utility | `--control-compact` | 32px; keep a larger hit area where possible |
 | Icon | `--icon-size` | 20px |
 | Small icon | `--icon-small` | 16px |
-| Icon stroke | `--icon-stroke` | 1.7; rounded caps/joins |
+| Icon stroke | `--icon-stroke` | 1.5; rounded caps/joins |
 | Card corners | `--radius-card` | 24px |
 | Input/button/switcher corners | `--radius-input` | fully rounded |
 
@@ -97,3 +97,16 @@ This is a token/style editor, not a page builder. It supports shared sizing, pic
 ### Visible component previews
 
 Use `https://aalee-me.github.io/sahko/components.html?design=1` for the editor with a dedicated live canvas. The preview displays the selected component family and updates on every valid input. Cards shows two cards so spacing changes are visible. Phone/Desktop changes the embedded preview viewport to 390px/900px without requiring you to resize the browser. The in-app editor also opens this canvas; **Open standalone preview** opens it in a separate tab. Collapse hides the canvas while you navigate the app. Local edits sync between same-origin tabs. Out-of-range values show a message and keep the last valid preview.
+
+
+### Compact session layout and icons
+
+`frontend/compact-session.css` owns compact session sizing independently of setup/card overrides: display timer, small playback controls, tightly grouped title/code, an orbital stage that overlaps the timeline, and a reserved activity/composer dock. Profile and action targets use square dimensions with centered vectors. The activity rail stays visible, reveals the feed on hover/focus, and supports wheel/keyboard browsing even when messages are hidden. It shows a three-line affordance for short/empty history.
+
+`SahkoUI.iconSVG(name)` in `frontend/ui-components.js` is the common icon registry. Block, clock, lock, hourglass, person, copy, share, pause, play, skip, checklist, menu and desktop use a 24-unit viewBox and rounded 1.5-unit strokes. The metadata row uses one size for its vectors; `icon-contract.css` applies their shared stroke treatment. Branding, timeline graphics and filled memo artwork remain separate.
+
+### Room ownership
+
+The active room owner is listed first and labeled **Owner** in room lists and the participant dropdown. The owner can open **Transfer ownership** beneath the roster, select a current member, and confirm. The new owner gets timer/invitation authority immediately; the former owner stays as a member. The backend validates the caller, confirmation, target membership and current ownership; account IDs are not returned. The existing leave behavior hands ownership to a remaining active member.
+
+The GitHub Pages demo supports local role changes for rooms created in that demo. Shared transfer uses `POST /api/rooms/:code/ownership` in the updated backend and requires that backend to be running; this change does not deploy the separate internet pairing service.

@@ -10,7 +10,7 @@
   --leading-tight: 1.2; --leading-label: 1.4; --leading-body: 1.5;
   --weight-regular: 400; --weight-medium: 500; --weight-strong: 600;
   --control-height: 2.75rem; --control-compact: 2rem;
-  --icon-size: 1.25rem; --icon-small: 1rem; --icon-stroke: 1.7;
+  --icon-size: 1.25rem; --icon-small: 1rem; --icon-stroke: 1.5;
   --radius-input: 999rem; --radius-card: 1.5rem;
   --card-inset: var(--space-6); --component-gap: var(--space-4);
   --room-header-gap: var(--space-2);
@@ -77,7 +77,7 @@ body #onboarding#onboarding .ui-room-header>.room-code-tools { grid-area:2 / 1; 
 body #onboarding#onboarding .ui-room-header .room-code-line { gap:var(--space-1); }
 body #onboarding#onboarding .ui-room-header .room-code-tools output { font-size:var(--text-code)!important; line-height:var(--leading-label)!important; letter-spacing:.1em; }
 body #onboarding#onboarding .ui-room-header>.room-availability { grid-area:3 / 1 / 4 / -1; display:flex; align-items:center; gap:var(--space-2); margin:0!important; font-size:var(--text-label)!important; line-height:var(--leading-label); color:var(--muted); }
-body #onboarding#onboarding .ui-room-header .room-availability>svg { width:var(--icon-small); height:var(--icon-small); flex:0 0 var(--icon-small); fill:none; stroke:currentColor; stroke-width:var(--icon-stroke); stroke-linecap:round; stroke-linejoin:round; }
+body #onboarding#onboarding .ui-room-header .room-availability>svg { width:var(--icon-size); height:var(--icon-size); flex:0 0 var(--icon-size); fill:none; stroke:currentColor; stroke-width:var(--icon-stroke); stroke-linecap:round; stroke-linejoin:round; }
 body #onboarding#onboarding .ui-room-header>.directory-people-wrap { display:contents!important; }
 body #onboarding#onboarding .ui-room-header .directory-people { grid-area:1 / 2; position:relative!important; inset:auto!important; justify-self:end; margin:0; }
 body #onboarding#onboarding .ui-room-header .directory-people>summary { gap:var(--space-1); min-height:var(--avatar-size); padding:0; }
@@ -129,3 +129,6 @@ body #onboarding#onboarding .entry-code-field>span { display:block; margin:0 0 v
 body #onboarding#onboarding[data-entry-mode=join] .entry-go { box-sizing:border-box; display:grid; place-items:center; flex:0 0 var(--control-height); width:var(--control-height)!important; height:var(--control-height)!important; min-height:var(--control-height)!important; margin:0!important; padding:var(--space-3)!important; border-radius:var(--radius-input)!important; }
 body #onboarding#onboarding .entry-go>svg { width:var(--icon-size); height:var(--icon-size); }
 body #onboarding#onboarding .room-detail-footer>.room-join { height:var(--control-height)!important; }
+
+/* Metadata vectors share one optical box and stroke, including access labels. */
+body #onboarding#onboarding :is(.ui-room-card,.room-detail) :is(.ui-icon-label,.room-availability)>svg{display:block;box-sizing:border-box;width:var(--icon-size);height:var(--icon-size);flex:0 0 var(--icon-size);fill:none;stroke:currentColor;stroke-width:var(--icon-stroke);stroke-linecap:round;stroke-linejoin:round;vertical-align:middle}
