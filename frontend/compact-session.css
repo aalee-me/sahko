@@ -25,7 +25,7 @@ body.compact .session-info>div:last-child{max-width:none!important}
 body.compact .clock-controls{display:inline-flex;align-items:center;justify-content:center;gap:.125rem;padding:.1875rem!important;margin:0!important;border:1px solid var(--line);border-radius:999px;flex:none;height:2.25rem;min-height:0}
 body.compact .clock-controls button,body.compact .clock-controls.owner-controls button{display:grid;place-items:center;box-sizing:border-box;flex:0 0 1.75rem!important;width:1.75rem!important;min-width:1.75rem!important;max-width:1.75rem;height:1.75rem!important;min-height:0;padding:.375rem!important;margin:0!important;border:0!important;line-height:1}
 body.compact .clock-controls button svg{display:block;width:var(--compact-icon)!important;height:var(--compact-icon)!important;flex:none}
-body.compact .workspace>.title-row{order:-2!important;display:block!important;flex:0 0 auto;margin:0!important;padding:0 7.25rem 0 0!important;min-height:2.5rem}
+body.compact .workspace>.title-row{order:-2!important;display:block!important;flex:0 0 auto;margin:0!important;padding:0 8.25rem 0 0!important;min-height:2.5rem}
 body.compact .workspace>.title-row>div:first-child{display:flex;flex-direction:column;gap:.125rem;width:100%;min-width:0;margin:0;padding:0}
 body.compact .title-row h1{width:auto!important;max-width:none!important;min-width:0;margin:0!important;padding:0;font-size:1.125rem!important;line-height:1.2!important;font-weight:500;letter-spacing:-.025em}
 body.compact #sessionRoomCode{margin:0!important;min-height:0;gap:.25rem;line-height:1.2}
@@ -34,11 +34,11 @@ body.compact #sessionRoomCode .code-action-pill>button{box-sizing:border-box;wid
 body.compact #sessionRoomCode .code-action-pill>button svg{width:.875rem;height:.875rem}
 body.compact .workspace>.view-modes{position:absolute!important;top:var(--compact-roster-top,5rem)!important;right:0!important;margin:0!important;padding:0;z-index:12}
 body.compact .people-menu>summary{display:flex;align-items:center;gap:.5rem;margin:0;padding:0!important;border:0!important;background:none!important;min-height:2rem}
-body.compact .people-stack{display:flex;align-items:center;gap:0;padding:0}
+body.compact .people-stack{display:flex;align-items:center;gap:.25rem;padding:0}
 body.compact .people-stack :is(img,.portrait-fallback){box-sizing:border-box;width:1.625rem!important;height:1.625rem!important;min-width:1.625rem;flex:0 0 1.625rem!important;border-radius:50%;font-size:.75rem;margin:0!important}
-body.compact .people-stack>.people-hover-target{display:flex;align-items:center;margin:0 0 0 -.375rem}
+body.compact .people-stack>.people-hover-target{display:grid!important;place-items:center;flex:0 0 1.625rem!important;width:1.625rem!important;height:1.625rem!important;margin:0!important;padding:0}
 body.compact .people-stack>.people-hover-target:first-child{margin-left:0}
-body.compact .people-chevron{display:grid!important;place-items:center;box-sizing:border-box;width:2rem!important;min-width:2rem;height:2rem!important;padding:.4375rem!important;border-width:1px!important;border-radius:50%;margin:0!important;line-height:1}
+body.compact .people-chevron{display:grid!important;place-items:center;box-sizing:border-box;flex:0 0 1.625rem!important;width:1.625rem!important;min-width:1.625rem;max-width:1.625rem;height:1.625rem!important;padding:.3125rem!important;border:0!important;border-radius:50%;background:transparent!important;color:var(--muted);margin:0!important;line-height:1}
 body.compact .people-chevron svg{display:block;width:1rem!important;height:1rem!important;margin:0}
 body.compact .workspace>.return-status{order:-1;gap:.5rem;flex:0 0 auto;margin:0!important;padding:0;min-height:0}
 body.compact .return-status .claim-focus-button{display:inline-flex;align-items:center;justify-content:center;gap:.375rem;height:1.875rem;min-height:0;padding:.25rem .625rem!important;font-size:.75rem!important;line-height:1.2;border-width:1px}
@@ -46,7 +46,7 @@ body.compact .return-status .claim-focus-button svg{display:block;flex:0 0 .875r
 body.compact .return-status .drift-countdown{font-size:.6875rem!important;line-height:1.3;margin:0;padding:0}
 body.compact .workspace>.compact-orbit-stage{order:0;position:relative;isolation:isolate;flex:1 0 8rem;min-height:8rem;width:100%;margin:0!important;padding:0;overflow:visible}
 body.compact .compact-orbit-stage>.scene{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-height:0!important;max-height:none!important;flex:none!important;margin:0!important;aspect-ratio:auto!important;overflow:visible!important;z-index:1}
-body.compact #originalOrbital{left:0!important;top:0!important;width:100%!important;height:100%!important;max-height:none;mask-image:linear-gradient(#000 0%,#000 72%,transparent 100%)!important}
+body.compact #originalOrbital{left:0!important;top:0!important;width:100%!important;height:100%!important;max-height:none;mask-image:none!important}
 body.compact .compact-orbit-stage>.night-progress{position:relative!important;z-index:6;width:100%;min-height:0!important;margin:0!important;padding:0;pointer-events:none!important}
 body.compact .compact-orbit-stage>.night-progress>svg{display:block;width:100%;height:3rem!important;overflow:visible!important}
 body.compact .night-progress .night-progress-label{display:flex;flex-direction:column;gap:.125rem!important;padding:.125rem .25rem 0!important;margin:0!important}

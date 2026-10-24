@@ -132,3 +132,21 @@ body #onboarding#onboarding .room-detail-footer>.room-join { height:var(--contro
 
 /* Metadata vectors share one optical box and stroke, including access labels. */
 body #onboarding#onboarding :is(.ui-room-card,.room-detail) :is(.ui-icon-label,.room-availability)>svg{display:block;box-sizing:border-box;width:var(--icon-size);height:var(--icon-size);flex:0 0 var(--icon-size);fill:none;stroke:currentColor;stroke-width:var(--icon-stroke);stroke-linecap:round;stroke-linejoin:round;vertical-align:middle}
+/* Task-header actions share one role in setup and check-in. */
+body :is(#onboarding,#checkin) :is(.session-task-heading .session-tasks-heading,.outstanding-heading .disregard-all){font-size:var(--text-caption)!important;line-height:var(--leading-label)!important;font-weight:var(--weight-regular)}
+body #onboarding .room-setup-actions{position:sticky;bottom:0;z-index:5;margin-top:var(--space-6);padding-block:var(--space-3);background:var(--surface)}
+body #onboarding .room-setup-actions>.setup-review-button{display:flex;align-items:center;justify-content:center;gap:var(--space-2);width:100%;margin:0!important}
+body #onboarding .room-setup-actions .ui-arrow,body #onboarding .room-setup-actions svg{display:block;width:var(--icon-size);height:var(--icon-size);flex:0 0 var(--icon-size)}
+/* One switcher geometry and indicator inset for setup, rhythm and directory tabs. */
+body #onboarding#onboarding .unified-switcher{height:var(--control-height)!important;min-height:var(--control-height)!important;align-items:stretch!important;padding:var(--space-1)!important;box-sizing:border-box}
+body #onboarding#onboarding .unified-switcher:before{top:var(--space-1)!important;bottom:var(--space-1)!important;transition:transform .3s var(--ease-ui),width .3s var(--ease-ui)!important}
+body #onboarding#onboarding .unified-switcher>button{box-sizing:border-box;display:flex;align-items:center;justify-content:center;height:auto!important;min-height:0!important;line-height:var(--leading-label)!important;font-size:var(--text-label)!important;padding:var(--space-2) var(--space-3)!important}
+body #onboarding#onboarding :is(.entry-switch,.finish-mode,.directory-tabs){margin:0 0 var(--space-4)!important}
+body #onboarding .onboard-layout{padding-bottom:var(--space-8)!important}
+body #onboarding .ui-choice{box-sizing:border-box;display:flex;align-items:center;gap:var(--space-3);min-height:var(--control-height);margin:var(--space-2) 0;padding:var(--space-3) var(--space-4);border:1px solid var(--line);border-radius:1rem;background:var(--surface-raised);color:var(--text);font-size:var(--text-label)!important;line-height:var(--leading-label);cursor:pointer}
+body #onboarding .ui-choice>input[type=radio]{appearance:none;display:block;flex:0 0 1rem;width:1rem;height:1rem;min-height:0;margin:0;padding:0;border:1px solid currentColor;border-radius:50%;background:transparent;box-shadow:none}
+body #onboarding .ui-choice:has(input:checked){background:var(--action-accent);border-color:var(--action-accent);color:var(--on-action)}
+body #onboarding .ui-choice>input[type=radio]:checked{border-width:.3rem}
+body #onboarding .ui-choice:hover:not(:has(input:checked)){background:var(--surface-hover)}
+body #onboarding .ui-choice:has(input:focus-visible){outline:2px solid var(--action-accent);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){body #onboarding#onboarding .unified-switcher:before{transition:none!important}}

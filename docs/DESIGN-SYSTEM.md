@@ -110,3 +110,12 @@ Use `https://aalee-me.github.io/sahko/components.html?design=1` for the editor w
 The active room owner is listed first and labeled **Owner** in room lists and the participant dropdown. The owner can open **Transfer ownership** beneath the roster, select a current member, and confirm. The new owner gets timer/invitation authority immediately; the former owner stays as a member. The backend validates the caller, confirmation, target membership and current ownership; account IDs are not returned. The existing leave behavior hands ownership to a remaining active member.
 
 The GitHub Pages demo supports local role changes for rooms created in that demo. Shared transfer uses `POST /api/rooms/:code/ownership` in the updated backend and requires that backend to be running; this change does not deploy the separate internet pairing service.
+
+
+### Alignment and setup interaction details
+
+Participant portraits use square, non-shrinking targets with a small positive gap; the adjacent chevron uses the same dimensions and no outline ring. Missing dates on legacy tasks are omitted; newly entered tasks retain their recorded creation timestamps. The This session / Disregard all labels share the caption text role. The break-page action menu is positioned at the leading edge of its composer dock.
+
+The Void mark uses an explicitly centered square control. Star-marker styling targets direct children only, so it cannot add margins/glows to waveform bars. Voice playback uses twelve bars in the short preview, centered beside play and duration. The compact map has no added CSS fade mask; the reserved stage and dock handle its bounds.
+
+Room setup includes a sticky, full-width **Review session** button. Entry, rhythm and room-discovery switchers share the same height, indicator insets and spacing. Friends/Available rooms retain their DOM while changing selection so animation works both directions, with a brief content transition. Break-alert radio choices use a shared rounded option treatment and native radio keyboard behavior. `frontend/favicon.svg` uses the uploaded Ö path with a square viewport and theme-aware color.
