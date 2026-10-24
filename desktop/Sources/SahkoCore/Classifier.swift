@@ -9,7 +9,7 @@ public struct Classification: Equatable {
 }
 public struct Policy: Codable {
  public var deepWork = ["Figma", "Visual Studio Code", "Code", "Cursor", "Onshape", "Blender", "Notion", "Preview", "Terminal", "iTerm2", "Sähkö"]
- public var neutral = ["Google Chrome", "Safari", "Arc", "Spotify", "Slack", "Discord"]
+ public var neutral = ["Google Chrome", "Safari", "Arc", "Spotify", "Music", "Slack", "Discord"]
  public var distracting = [String]()
  public var offTaskHosts = ["instagram.com", "tiktok.com", "x.com", "reddit.com"]
  public var graceSeconds: Double = 120

@@ -21,4 +21,11 @@ struct BrowserProbe {
   let result=NSAppleScript(source:"tell application id \"com.spotify.client\" to get player state as string")?.executeAndReturnError(&error).stringValue
   return error == nil && result == "playing"
  }
+ static func appleMusicPlaying() -> Bool {
+  guard NSWorkspace.shared.runningApplications.contains(where:{$0.bundleIdentifier == "com.apple.Music"}) else {return false}
+  var error:NSDictionary?
+  let result=NSAppleScript(source:"tell application id \"com.apple.Music\" to get player state as string")?.executeAndReturnError(&error).stringValue
+  return error == nil && result == "playing"
+ }
+
 }
