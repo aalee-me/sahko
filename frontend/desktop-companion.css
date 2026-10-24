@@ -454,3 +454,23 @@ body #onboarding .room-navigation-card .room-card-progress{margin:.5rem 0 .625re
 body #onboarding .room-navigation-card .room-plan-duration{margin-top:.875rem!important;padding-top:.75rem}
 body #onboarding .room-navigation-card .room-arrow{right:1.25rem;bottom:2.125rem}
 @media(max-width:600px){body #onboarding#onboarding .room-navigation-card{padding:1rem!important}body #onboarding .room-navigation-card>.room-code-tools{left:1rem}body #onboarding .room-navigation-card>.directory-people-wrap{right:1rem}body #onboarding .room-navigation-card .room-arrow{right:1rem;bottom:2rem}}
+/* Fit the actual drawing bounds; neither the dot nor portraits may be cropped. */
+body .night-progress>svg{overflow:visible!important}
+body.compact .workspace>.night-progress{margin-inline:0!important;width:100%}
+body.compact .layout .workspace,body.compact .layout[data-sized] .workspace{min-height:0!important}
+body.compact .workspace>.scene,body.compact .layout[data-sized] .workspace>.scene{flex:1 1 0!important;min-height:6rem!important;overflow:visible!important}
+body.compact .dock-activity-row{min-height:2.5rem!important}
+body.compact .dock-activity-row>.thought-feed,body.compact .dock-activity-row .thought-one{height:2.5rem!important;max-height:2.5rem!important}
+body.compact .session-tools-toggle{width:2.25rem!important;height:2.25rem!important;min-height:2.25rem!important}
+body.compact #voidForm.inline-thought-form{min-height:3rem!important;padding:.5rem .75rem!important}
+body.compact .space-tabs{min-height:2.5rem!important;padding:.1875rem!important}
+body.compact .space-tabs>button{min-height:2rem!important;padding:.375rem .625rem!important}
+/* Available rooms use a genuinely compact inset and footer. */
+body #onboarding#onboarding .room-navigation-card{padding:.875rem!important}
+body #onboarding .room-navigation-card>.room-code-tools{left:.875rem}
+body #onboarding .room-navigation-card>.directory-people-wrap{right:.875rem}
+body #onboarding .room-navigation-card .room-card-progress{margin:.25rem 0 .375rem!important}
+body #onboarding .room-navigation-card .room-plan-duration{margin-top:.5rem!important;padding-top:.5rem}
+body #onboarding .room-navigation-card .room-arrow{right:.875rem;bottom:1.625rem}
+.recap-event.taskCompleted{display:grid;place-items:center}
+.recap-event.taskCompleted svg{width:1rem;height:1rem;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
