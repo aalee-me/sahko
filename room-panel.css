@@ -108,3 +108,20 @@ body .people-menu .people-chevron{display:grid!important;margin-left:0!important
 body .people-menu .people-chevron:after{display:none!important}
 body .people-menu>summary{gap:10px!important}
 body .people-menu:not([open]) .people-list,body .people-menu:not([open]) .profile-card{display:none!important}
+/* Roster geometry: each portrait and its chevron occupy the same square. */
+body #peopleMenu{--roster-avatar-size:2rem}
+body.compact #peopleMenu{--roster-avatar-size:1.625rem}
+body #peopleMenu>summary{display:flex;align-items:center;gap:.375rem!important;min-height:var(--roster-avatar-size);padding:0}
+body #peopleMenu .people-stack{display:flex;align-items:center;gap:.25rem;padding:0;margin:0}
+body #peopleMenu .people-stack>.people-hover-target{display:grid!important;place-items:center;box-sizing:border-box;flex:0 0 var(--roster-avatar-size)!important;width:var(--roster-avatar-size)!important;min-width:var(--roster-avatar-size)!important;height:var(--roster-avatar-size)!important;margin:0!important;padding:0}
+body #peopleMenu .people-stack :is(img,.portrait-fallback){display:grid;place-items:center;box-sizing:border-box;flex:none!important;width:var(--roster-avatar-size)!important;min-width:var(--roster-avatar-size)!important;max-width:var(--roster-avatar-size)!important;height:var(--roster-avatar-size)!important;min-height:var(--roster-avatar-size)!important;max-height:var(--roster-avatar-size)!important;margin:0!important;aspect-ratio:1;border-radius:50%;line-height:1;object-fit:cover}
+body #peopleMenu .people-chevron{display:grid!important;place-items:center;box-sizing:border-box;flex:0 0 var(--roster-avatar-size)!important;width:var(--roster-avatar-size)!important;min-width:var(--roster-avatar-size)!important;max-width:var(--roster-avatar-size)!important;height:var(--roster-avatar-size)!important;min-height:var(--roster-avatar-size)!important;margin:0!important;padding:.3125rem!important;border:0!important;background:transparent!important;color:var(--muted)}
+body #peopleMenu .people-chevron svg{display:block;width:1rem;height:1rem;margin:0}
+body #peopleMenu>summary:is(:hover,:focus-visible) .people-chevron{color:var(--text);background:var(--surface-hover)!important}
+/* A centered brand mark uses a square box instead of an inherited button height. */
+body #voidForm:not(.memo-recording)>.void-mark{display:grid!important;place-items:center;align-self:center;box-sizing:border-box;flex:0 0 1.5rem!important;width:1.5rem!important;min-width:1.5rem!important;max-width:1.5rem!important;height:1.5rem!important;min-height:1.5rem!important;max-height:1.5rem!important;margin:0!important;padding:0!important;line-height:1;border:0!important}
+body #voidForm>.void-mark>.riant-o-svg{display:block;width:1.5rem!important;height:1.5rem!important;margin:0;align-self:center;justify-self:center}
+/* Break tasks lead the screen; their action menu stays at the leading edge too. */
+body #checkin .checkin-dock .dock-activity-row{justify-content:flex-start!important}
+body #checkin .checkin-dock .dock-activity-row>.session-tools-menu{order:-1;margin-left:0!important;margin-right:.5rem}
+body #checkin .checkin-dock .session-tools-menu>.room-action-rail{left:0!important;right:auto!important}
