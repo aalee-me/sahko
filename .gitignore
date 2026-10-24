@@ -10,3 +10,5 @@ deploy/
 
 /desktop/.build/
 /desktop/output/
+
+/.sahko-wifi/

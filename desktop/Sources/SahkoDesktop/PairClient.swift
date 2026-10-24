@@ -10,7 +10,10 @@ struct PairPhoneEvent:Codable {let id:String;let sessionId:String;let kind:Strin
 struct PairRead: Decodable { let online: Bool; let jolt: PairJolt?;let phoneEvents:[PairPhoneEvent]? }
 struct PairWrite: Encodable { let snapshot: SharedSnapshot; let ackJolt: String? }
 struct PairService {
- static let endpoint = URL(string:"https://sahko-focus-studio.sleeksmile12.chatgpt.site/api/companion/pairs")!
+ static var localOrigin:URL? {UserDefaults.standard.string(forKey:"sahkoWifiOrigin").flatMap{RelayAddress.localOrigin($0)}}
+ static var endpoint:URL {localOrigin?.appendingPathComponent("api/companion/pairs") ?? URL(string:"https://sahko-focus-studio.sleeksmile12.chatgpt.site/api/companion/pairs")!}
+ static var workspaceURL:URL {localOrigin.map{URL(string:$0.absoluteString+"/?desktop=1")!} ?? URL(string:"https://aalee-me.github.io/sahko/?desktop=1")!}
+ static func phoneURL(code:String)->URL {var parts=URLComponents(url:localOrigin ?? URL(string:"https://aalee-me.github.io/sahko/")!,resolvingAgainstBaseURL:false)!;parts.queryItems=[URLQueryItem(name:"pair",value:code)];return parts.url!}
  static func request<T:Decodable>(_ suffix: String = "", method: String = "GET", token: String? = nil, body: Data? = nil, as: T.Type) async throws -> T {
   let url=URL(string:endpoint.absoluteString+suffix)!
   var request=URLRequest(url:url);request.httpMethod=method;request.httpBody=body;request.timeoutInterval=15;request.setValue("application/json",forHTTPHeaderField:"Content-Type");if let token=token {request.setValue("Bearer "+token,forHTTPHeaderField:"Authorization")}
@@ -25,10 +28,11 @@ struct PairService {
  static func revoke(_ c:PairCredentials) async throws { struct OK:Decodable {let ok:Bool};let _=try await request("/"+c.id,method:"DELETE",token:c.writerToken,as:OK.self) }
 }
 struct PairKeychain {
+ static var service:String {PairService.localOrigin.map{"org.sahko.desktop.pair."+$0.absoluteString} ?? "org.sahko.desktop.pair"}
  static func save(_ value:PairCredentials?) {
-  let query:[String:Any]=[kSecClass as String:kSecClassGenericPassword,kSecAttrService as String:"org.sahko.desktop.pair",kSecAttrAccount as String:"writer"]
+  let query:[String:Any]=[kSecClass as String:kSecClassGenericPassword,kSecAttrService as String:service,kSecAttrAccount as String:"writer"]
   SecItemDelete(query as CFDictionary)
   if let value=value,let data=try? JSONEncoder().encode(value){var item=query;item[kSecValueData as String]=data;item[kSecAttrAccessible as String]=kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly;SecItemAdd(item as CFDictionary,nil)}
  }
- static func load()->PairCredentials?{let query:[String:Any]=[kSecClass as String:kSecClassGenericPassword,kSecAttrService as String:"org.sahko.desktop.pair",kSecAttrAccount as String:"writer",kSecReturnData as String:true,kSecMatchLimit as String:kSecMatchLimitOne];var item:CFTypeRef?;guard SecItemCopyMatching(query as CFDictionary,&item)==errSecSuccess,let data=item as? Data else{return nil};return try? JSONDecoder().decode(PairCredentials.self,from:data)}
+ static func load()->PairCredentials?{let query:[String:Any]=[kSecClass as String:kSecClassGenericPassword,kSecAttrService as String:service,kSecAttrAccount as String:"writer",kSecReturnData as String:true,kSecMatchLimit as String:kSecMatchLimitOne];var item:CFTypeRef?;guard SecItemCopyMatching(query as CFDictionary,&item)==errSecSuccess,let data=item as? Data else{return nil};return try? JSONDecoder().decode(PairCredentials.self,from:data)}
 }

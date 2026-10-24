@@ -11,3 +11,5 @@ Internet phone pairing requires the Sähkö companion API deployment. The websit
 0.4: the compact panel remains visible above other apps and can show automatically on app switches during an active session. Pin and auto-show preferences persist. Local settings can classify the current app directly and optionally detect Apple Music as well as Spotify playback. Monitoring remains opt-in; browser domains and input idle time stay local.
 
 0.5 carries the desktop session identifier through phone pairing and forwards processed phone motion events into that same session’s recap. Phone motion is optional, foreground-only and estimated. Raw accelerometer samples remain on the phone. This requires the matching pairing API and database migration; the app does not claim pickup counts while the relay is unavailable.
+
+Version 0.6 adds selectable same-Wi-Fi HTTPS relay settings, endpoint-scoped Keychain capabilities and strict origin checks for the native bridge. A local Node relay is required separately; it is not bundled. Internet deployment is unchanged and pending.

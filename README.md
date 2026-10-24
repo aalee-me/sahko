@@ -14,6 +14,10 @@ The `main` branch contains the development source in `frontend/`, plus the API i
 
 To publish local frontend edits, run `node build-github-pages.mjs`, then copy the generated contents of `pages/` into a clean checkout of `gh-pages`, commit, and push. Keep both branches in sync when making direct browser edits. GitHub Pages is a local demo; shared rooms require the separate backend. The old ChatGPT Sites mirror is a separate deployment and is not updated by GitHub commits.
 
+## Same-Wi-Fi pairing (no hosted relay)
+
+Use the [Wi-Fi setup guide](docs/WIFI-SYNC.md) to run the local HTTPS pairing server on your Mac. Internet infrastructure is prepared in [docs/INTERNET-SYNC.md](docs/INTERNET-SYNC.md) and `infra/companion/`, with no deployment or paid plan change.
+
 ## Run frontend + backend
 
 Requires Node 22.13+ (Node 24 recommended). No dependency installation is needed.

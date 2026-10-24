@@ -6,11 +6,12 @@
 <key>CFBundleDisplayName</key><string>Sähkö</string>
 <key>CFBundleExecutable</key><string>SahkoDesktop</string>
 <key>CFBundlePackageType</key><string>APPL</string>
-<key>CFBundleShortVersionString</key><string>0.5.0</string>
-<key>CFBundleVersion</key><string>5</string>
+<key>CFBundleShortVersionString</key><string>0.6.0</string>
+<key>CFBundleVersion</key><string>6</string>
 <key>LSMinimumSystemVersion</key><string>13.0</string>
 <key>LSUIElement</key><true/>
 <key>NSAppleEventsUsageDescription</key><string>With your permission, Sähkö reads the active browser domain or Spotify/Music playback state locally to classify focus. Raw URLs and window titles are never uploaded.</string>
 <key>NSMicrophoneUsageDescription</key><string>Record a private voice memo when you press the microphone in Sähkö.</string>
+<key>NSLocalNetworkUsageDescription</key><string>Connect to your own Wi-Fi relay to sync the same session with your phone.</string>
 <key>NSHighResolutionCapable</key><true/>
 </dict></plist>

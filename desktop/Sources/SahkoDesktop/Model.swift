@@ -15,6 +15,8 @@ import SahkoCore
  @Published var lastExternalApp=""
  @Published var result=Classification(.focused,"Enable local monitoring to begin")
  @Published var policy=Policy()
+ @Published var wifiAddress=UserDefaults.standard.string(forKey:"sahkoWifiOrigin") ?? ""
+ @Published var usingWifi=PairService.localOrigin != nil
  @Published var pairCode=""
  @Published var pairStatus="Not paired"
  @Published var pairingBusy=false
@@ -27,6 +29,7 @@ import SahkoCore
  var onSnapshot:((SharedSnapshot,Bool)->Void)?
  var onJolt:((String)->Void)?
  var onShowPanel:(()->Void)?
+ var onConnectionChange:(()->Void)?
  var onPhoneEvents:(([PairPhoneEvent])->Void)?
  var onDisplayChange:((Bool)->Void)?
  private var classifier=Classifier(),ticker:Timer?,probeBusy=false,publishBusy=false,host:String?,spotifyPlaying=false,musicPlaying=false
@@ -59,6 +62,11 @@ import SahkoCore
   if credentials != nil && !publishBusy && Date().timeIntervalSince(lastPublish)>=3 {publishBusy=true;lastPublish=Date();Task{await publish()}}
  }
  func acceptRoom(_ data:Data,active:Bool=false){guard let incoming=try? JSONDecoder().decode(SharedSnapshot.self,from:data),incoming.members.count<=8 else{return};snapshot=incoming;sessionActive=active;if monitoring {snapshot.state=result.state;snapshot.vibe=shareVibe ? result.vibe:nil;for i in snapshot.members.indices where snapshot.members[i].isSelf {snapshot.members[i].state=result.state}}}
+ func useRelay(wifi:Bool){
+  guard !sessionActive,credentials==nil,!pairingBusy,!publishBusy else{pairStatus="End your session and revoke phone access before changing connection.";return}
+  if wifi {guard let origin=RelayAddress.localOrigin(wifiAddress) else{pairStatus="Enter the HTTPS Wi-Fi address printed by npm run wifi, such as https://192.168.1.20:8443";return};UserDefaults.standard.set(origin.absoluteString,forKey:"sahkoWifiOrigin");wifiAddress=origin.absoluteString}else{UserDefaults.standard.removeObject(forKey:"sahkoWifiOrigin")}
+  usingWifi=wifi;credentials=PairKeychain.load();pairCode="";pairStatus=wifi ? "Wi-Fi relay selected · keep the local server running":"Internet relay selected · deployment is pending";snapshot=SharedSnapshot();onConnectionChange?()
+ }
  func pair(){guard !pairingBusy else{return};pairingBusy=true;Task{do{if let saved=credentials {pairCode=try await PairService.code(saved)}else{let made=try await PairService.create();let c=PairCredentials(id:made.id,writerToken:made.writerToken);credentials=c;PairKeychain.save(c);pairCode=made.joinCode};pairStatus="Enter this code on your phone within 10 minutes";lastPublish = .distantPast;await publish()}catch{pairStatus=error.localizedDescription};pairingBusy=false}}
  func disconnect(){guard let c=credentials else{return};Task{do{try await PairService.revoke(c);credentials=nil;pairCode="";PairKeychain.save(nil);pairStatus="Phone access revoked"}catch{pairStatus="Couldn’t revoke while offline. Try again when connected."}}}
  private func publish() async {defer{publishBusy=false};guard let c=credentials else{return};do{try await PairService.publish(c,snapshot:snapshot,ack:ack);ack=nil;let response=try await PairService.read(c);if let events=response.phoneEvents,!events.isEmpty{onPhoneEvents?(events)};if let jolt=response.jolt,jolt.id != lastJolt,Date().timeIntervalSince1970-jolt.at/1000<30{lastJolt=jolt.id;ack=jolt.id;onJolt?(jolt.target);onShowPanel?();nudge=true;DispatchQueue.main.asyncAfter(deadline:.now()+1.5){self.nudge=false}};if pairCode.isEmpty {pairStatus="Phone link connected"}}catch{pairStatus=error.localizedDescription}}

@@ -16,3 +16,11 @@ final class DesktopContextTests:XCTestCase {
 final class SessionBridgeTests:XCTestCase {
  func testSessionIdentitySurvivesThePhoneBridge()throws{var snapshot=SharedSnapshot();snapshot.sessionId="session-123";snapshot.sessionActive=true;let encoded=try JSONEncoder().encode(snapshot),decoded=try JSONDecoder().decode(SharedSnapshot.self,from:encoded);XCTAssertEqual(decoded.sessionId,"session-123");XCTAssertEqual(decoded.sessionActive,true);let text=String(data:encoded,encoding:.utf8)!;XCTAssertFalse(text.contains("acceleration"));XCTAssertFalse(text.contains("windowTitle"))}
 }
+
+extension ClassifierTests {
+ func testLocalRelayAddressesRequirePrivateHTTPSOrigin() {
+ XCTAssertEqual(RelayAddress.localOrigin("https://192.168.1.20:8443")?.host,"192.168.1.20")
+ XCTAssertNotNil(RelayAddress.localOrigin("https://owens-mac.local:8443"))
+ for address in ["http://192.168.1.20:8443","https://evil.example","https://192.168.1.20:8443/path","https://user:secret@192.168.1.20","https://192.168.1.20?relay=other"] {XCTAssertNil(RelayAddress.localOrigin(address))}
+}
+}

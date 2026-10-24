@@ -1,0 +1,15 @@
+{
+  "$schema": "https://unpkg.com/wrangler/config-schema.json",
+  "name": "sahko-companion-relay",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-10-01",
+  "workers_dev": true,
+  "observability": { "enabled": false },
+  "triggers": { "crons": ["17 * * * *"] },
+  "d1_databases": [{
+    "binding": "DB",
+    "database_name": "sahko-companion",
+    "database_id": "REPLACE_WITH_DATABASE_ID_BEFORE_DEPLOYMENT",
+    "migrations_dir": "../../migrations"
+  }]
+}

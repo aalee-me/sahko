@@ -5,7 +5,7 @@ function companionRandom(bytes=32){const b=crypto.getRandomValues(new Uint8Array
 async function companionHash(value){return Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(value))),n=>n.toString(16).padStart(2,'0')).join('')}
 function companionEqual(a,b){if(typeof a!=='string'||typeof b!=='string'||a.length!==b.length)return false;let value=0;for(let i=0;i<a.length;i++)value|=a.charCodeAt(i)^b.charCodeAt(i);return value===0}
 export async function companionAPI(request,env){
- const url=new URL(request.url),origin=request.headers.get('origin'),local=origin&&/^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin),allowed=!origin||companionOrigins.has(origin)||local,headers={'content-type':'application/json','cache-control':'no-store','referrer-policy':'no-referrer','vary':'Origin'};
+ const url=new URL(request.url),origin=request.headers.get('origin'),local=origin&&/^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin),allowed=!origin||companionOrigins.has(origin)||origin===env.COMPANION_ALLOWED_ORIGIN||local,headers={'content-type':'application/json','cache-control':'no-store','referrer-policy':'no-referrer','vary':'Origin'};
  if(origin&&allowed)headers['access-control-allow-origin']=origin;
  const json=(value,status=200)=>new Response(JSON.stringify(value),{status,headers});
  if(!allowed)return json({error:'Origin not allowed'},403);
