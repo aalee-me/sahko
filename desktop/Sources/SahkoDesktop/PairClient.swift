@@ -6,7 +6,8 @@ struct PairCredentials: Codable { let id: String; let writerToken: String }
 struct PairCreated: Decodable { let id: String; let writerToken: String; let joinCode: String }
 struct NewCode: Decodable { let joinCode: String }
 struct PairJolt: Decodable { let id: String; let target: String; let at: Double }
-struct PairRead: Decodable { let online: Bool; let jolt: PairJolt? }
+struct PairPhoneEvent:Codable {let id:String;let sessionId:String;let kind:String;let at:Double}
+struct PairRead: Decodable { let online: Bool; let jolt: PairJolt?;let phoneEvents:[PairPhoneEvent]? }
 struct PairWrite: Encodable { let snapshot: SharedSnapshot; let ackJolt: String? }
 struct PairService {
  static let endpoint = URL(string:"https://sahko-focus-studio.sleeksmile12.chatgpt.site/api/companion/pairs")!

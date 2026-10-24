@@ -62,6 +62,8 @@ public struct SharedMember: Codable {
 // This is the complete network payload. There are deliberately no window-title,
 // URL, browsing-history, keystroke or raw-application-name fields.
 public struct SharedSnapshot: Codable {
+ public var sessionId:String? = nil
+ public var sessionActive:Bool? = nil
  public var state: FocusState = .focused
  public var vibe: String? = nil
  public var roomTitle: String = "Your orbit"

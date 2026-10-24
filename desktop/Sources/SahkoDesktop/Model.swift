@@ -27,6 +27,7 @@ import SahkoCore
  var onSnapshot:((SharedSnapshot,Bool)->Void)?
  var onJolt:((String)->Void)?
  var onShowPanel:(()->Void)?
+ var onPhoneEvents:(([PairPhoneEvent])->Void)?
  var onDisplayChange:((Bool)->Void)?
  private var classifier=Classifier(),ticker:Timer?,probeBusy=false,publishBusy=false,host:String?,spotifyPlaying=false,musicPlaying=false
  private var observedBundle="",lastProbe=Date.distantPast,lastPublish=Date.distantPast,lastJolt:String?,ack:String?
@@ -60,6 +61,6 @@ import SahkoCore
  func acceptRoom(_ data:Data,active:Bool=false){guard let incoming=try? JSONDecoder().decode(SharedSnapshot.self,from:data),incoming.members.count<=8 else{return};snapshot=incoming;sessionActive=active;if monitoring {snapshot.state=result.state;snapshot.vibe=shareVibe ? result.vibe:nil;for i in snapshot.members.indices where snapshot.members[i].isSelf {snapshot.members[i].state=result.state}}}
  func pair(){guard !pairingBusy else{return};pairingBusy=true;Task{do{if let saved=credentials {pairCode=try await PairService.code(saved)}else{let made=try await PairService.create();let c=PairCredentials(id:made.id,writerToken:made.writerToken);credentials=c;PairKeychain.save(c);pairCode=made.joinCode};pairStatus="Enter this code on your phone within 10 minutes";lastPublish = .distantPast;await publish()}catch{pairStatus=error.localizedDescription};pairingBusy=false}}
  func disconnect(){guard let c=credentials else{return};Task{do{try await PairService.revoke(c);credentials=nil;pairCode="";PairKeychain.save(nil);pairStatus="Phone access revoked"}catch{pairStatus="Couldn’t revoke while offline. Try again when connected."}}}
- private func publish() async {defer{publishBusy=false};guard let c=credentials else{return};do{try await PairService.publish(c,snapshot:snapshot,ack:ack);ack=nil;let response=try await PairService.read(c);if let jolt=response.jolt,jolt.id != lastJolt,Date().timeIntervalSince1970-jolt.at/1000<30{lastJolt=jolt.id;ack=jolt.id;onJolt?(jolt.target);onShowPanel?();nudge=true;DispatchQueue.main.asyncAfter(deadline:.now()+1.5){self.nudge=false}};if pairCode.isEmpty {pairStatus="Phone link connected"}}catch{pairStatus=error.localizedDescription}}
+ private func publish() async {defer{publishBusy=false};guard let c=credentials else{return};do{try await PairService.publish(c,snapshot:snapshot,ack:ack);ack=nil;let response=try await PairService.read(c);if let events=response.phoneEvents,!events.isEmpty{onPhoneEvents?(events)};if let jolt=response.jolt,jolt.id != lastJolt,Date().timeIntervalSince1970-jolt.at/1000<30{lastJolt=jolt.id;ack=jolt.id;onJolt?(jolt.target);onShowPanel?();nudge=true;DispatchQueue.main.asyncAfter(deadline:.now()+1.5){self.nudge=false}};if pairCode.isEmpty {pairStatus="Phone link connected"}}catch{pairStatus=error.localizedDescription}}
  var timeLabel:String {String(format:"%d:%02d",snapshot.remaining/60,snapshot.remaining%60)}
 }
