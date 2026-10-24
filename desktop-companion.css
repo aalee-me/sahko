@@ -367,7 +367,7 @@ body #onboarding#onboarding .code-action-pill>button,body #sessionRoomCode .code
 body #onboarding#onboarding .code-action-pill>button:hover svg,body #sessionRoomCode .code-action-pill>button:hover svg{stroke:var(--action-accent)}
 body .session-tools-toggle[aria-expanded=false] svg path:last-child{transform:none;stroke-dasharray:11;stroke-dashoffset:4;transition:stroke-dashoffset .2s ease}
 body .session-tools-toggle[aria-expanded=false]:hover svg path:last-child{transform:none;stroke-dashoffset:0}
-body #avatars .avatar:hover{border-color:var(--action-accent)!important}
+
 /* Code actions are inline glyphs, with no floating container or circular buttons. */
 body #onboarding .room-code-tools:before,.session-room-code:before{content:none!important}
 .room-code-line{display:flex;align-items:center;gap:.375rem;width:max-content;max-width:100%;position:relative}
@@ -380,7 +380,8 @@ body #onboarding .room-code-row>button.copied,.recap-room-code>button.copied{bor
 @media(max-width:359px){body #onboarding .room-code-tools output{font-size:1.125rem!important}body #onboarding .directory-people-wrap>.directory-presence{font-size:.75rem!important}}
 
 /* The timer is primary; both numeric displays use the same readable figures. */
-body #clock,body .night-progress-label>.block-count{font-family:'DM Sans',sans-serif!important;font-weight:500!important;font-variant-numeric:tabular-nums!important;font-feature-settings:"tnum"!important;letter-spacing:0!important;font-kerning:normal}
+body #clock{font-variant-numeric:tabular-nums;min-inline-size:5ch;white-space:nowrap}
+@media(max-width:600px){body #clock{letter-spacing:.015em!important}}
 body .night-progress .night-progress-label{display:grid!important;grid-template-rows:auto auto;align-content:start!important;justify-content:start!important;row-gap:.25rem!important;height:auto!important;min-height:0!important}
 body .night-progress .night-progress-label>.block-eyebrow,body .night-progress .night-progress-label>.block-count{height:auto!important;min-height:0!important;margin:0!important;padding:0!important;line-height:1.15!important;align-self:start}
 body .night-progress .night-progress-label>.block-eyebrow{font-size:.75rem!important}
@@ -399,3 +400,49 @@ body .voice-thought .memo-transcript-preview{max-width:7.25rem!important}
 body .voice-thought>.constellation-time{margin:.25rem .5rem 0 0!important;align-self:flex-end}
 body .memo-capture{gap:.5rem;align-items:center;height:2.75rem;padding:.3125rem .4375rem}
 body .memo-capture>.memo-length{display:flex;align-items:center;align-self:center;min-height:1.875rem;height:auto;padding:0 .375rem;margin:0 .25rem 0 0;line-height:1}
+
+/* The glyphs themselves slide beside the code; there is no floating container. */
+body #onboarding#onboarding .room-code-tools .code-action-pill,body #sessionRoomCode .code-action-pill{opacity:1!important;transform:none!important;pointer-events:none!important;overflow:visible}
+body #onboarding#onboarding .room-code-tools .code-action-pill>button,body #sessionRoomCode .code-action-pill>button{opacity:0!important;transform:translateX(-.625rem)!important;pointer-events:none!important;transition:opacity .18s ease,transform .22s ease!important;background:none!important;border:0!important;box-shadow:none!important}
+body #onboarding#onboarding .room-code-tools:is(:hover,:focus-visible) .code-action-pill>button,body #onboarding#onboarding .room-code-tools:has(button:focus-visible) .code-action-pill>button,body #sessionRoomCode:is(:hover,:focus-visible) .code-action-pill>button,body #sessionRoomCode:has(button:focus-visible) .code-action-pill>button{opacity:1!important;transform:translateX(0)!important;pointer-events:auto!important}
+body #onboarding#onboarding .code-action-pill:has(button.copied)>button:not(.copied),body #sessionRoomCode .code-action-pill:has(button.copied)>button:not(.copied){display:flex!important}
+body #onboarding#onboarding .code-action-pill>button.copied,body #sessionRoomCode .code-action-pill>button.copied{opacity:1!important;transform:none!important}
+@media(prefers-reduced-motion:reduce){body #onboarding#onboarding .room-code-tools .code-action-pill>button,body #sessionRoomCode .code-action-pill>button{transition:none!important}}
+/* Compact content scrolls above its dock instead of extending behind it. */
+body.compact .layout,body.compact .layout[data-sized]{height:calc(100dvh - var(--session-viewport-space,250px))!important;max-height:calc(100dvh - var(--session-viewport-space,250px))!important;width:min(100%,600px)!important;min-height:0!important;overflow-x:hidden!important;overflow-y:auto!important;padding:.5rem!important}
+body.compact .layout .workspace,body.compact .layout[data-sized] .workspace{display:flex!important;flex-direction:column;min-height:0!important;height:auto!important;padding:1rem!important;overflow:visible}
+body.compact .workspace>.scene,body.compact .layout[data-sized] .workspace>.scene{height:clamp(10rem,28vh,17rem)!important;min-height:10rem!important;max-height:none!important;flex:0 0 auto!important;aspect-ratio:auto!important;margin-top:.5rem!important;overflow:hidden!important}
+body.compact .workspace>.night-progress{margin-top:.75rem!important;margin-bottom:0!important;flex:0 0 auto;min-height:0!important}
+body.compact .night-progress>svg{height:clamp(3.5rem,9vh,5rem)!important}
+body.compact #sessionBottomDock:not(.checkin-dock){bottom:1rem!important}
+body .workspace .title-row>div:first-child>h1{margin-bottom:0!important}
+body #sessionRoomCode{margin-top:.25rem!important;line-height:1.4}
+body #onboarding .room-navigation-card,body #onboarding .room-detail-title-line{--room-code-gap:6px}
+body #pulseInterval{appearance:none;-webkit-appearance:none;padding-right:2.75rem!important;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23806d4c' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m7 10 5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .875rem center;background-size:1rem}
+body .drift-popup-symbol svg,body .drift-popup-symbol svg path,body #claimFocus svg,body #claimFocus svg path{stroke-linecap:round!important;stroke-linejoin:round!important}
+@media(max-width:359px){body #onboarding .room-code-line{gap:.125rem}body #onboarding#onboarding .room-code-tools .code-action-pill{gap:0}body #onboarding#onboarding .room-code-tools .code-action-pill>button{width:1.125rem!important;min-width:1.125rem!important;padding:0!important}body #onboarding .code-action-pill>button svg{width:1rem;height:1rem}}
+body .night-progress{pointer-events:none!important}
+body .night-progress .night-progress-marker{pointer-events:all!important}
+/* The timeline SVG sizing must never stretch the small Block icon. */
+body .night-progress .block-eyebrow svg{display:block;width:.875rem!important;height:.875rem!important;min-height:0!important;max-height:.875rem!important;flex:0 0 .875rem}
+body.compact .workspace>.scene,body.compact .layout[data-sized] .workspace>.scene{height:clamp(8rem,22vh,15rem)!important;min-height:8rem!important}
+@media(max-height:600px){body.compact .workspace>.night-progress{margin-top:.375rem!important}body.compact .night-progress>svg{height:2.5rem!important}body.compact .workspace>.scene,body.compact .layout[data-sized] .workspace>.scene{height:7rem!important;min-height:7rem!important}body.compact .session{padding-top:.375rem!important}}
+body.compact .layout,body.compact .layout[data-sized]{height:calc(100dvh - var(--session-viewport-space,250px) - .75rem)!important;max-height:calc(100dvh - var(--session-viewport-space,250px) - .75rem)!important}
+body.compact #sessionBottomDock:not(.checkin-dock){bottom:max(1.5rem,env(safe-area-inset-bottom))!important}
+body.compact .layout .workspace,body.compact .layout[data-sized] .workspace{height:100%!important;min-height:min-content!important}
+body.compact .workspace>.title-row,body.compact .workspace>.session,body.compact .workspace>.night-progress{flex-shrink:0!important}
+body.compact .workspace>.scene,body.compact .layout[data-sized] .workspace>.scene{flex:1 0 7rem!important;height:auto!important;min-height:7rem!important}
+@media(max-height:600px){body.compact #clock{font-size:2.5rem!important}body.compact .workspace>.scene,body.compact .layout[data-sized] .workspace>.scene{flex-basis:6rem!important;min-height:6rem!important}body.compact .night-progress>svg{height:2rem!important}}
+body.compact .layout .workspace,body.compact .layout[data-sized] .workspace{padding:.75rem!important}
+body.compact .session{padding-top:.5rem!important}
+body.compact .night-progress>svg{height:3rem!important}
+body.compact .night-progress .night-progress-label{padding:0 .75rem!important;margin:.25rem 0 0!important}
+@media(max-height:600px){body.compact .night-progress>svg{height:2rem!important}}
+/* Opening a roster hands the portraits from the summary into the list. */
+.people-menu>summary .people-stack,.directory-people>summary .directory-avatar-stack,.directory-people>summary .directory-overflow{opacity:1;visibility:visible;transform:translateY(0) scale(1);transition:opacity .18s ease,transform .22s ease,visibility 0s}
+.people-menu[open]>summary .people-stack,.directory-people[open]>summary .directory-avatar-stack,.directory-people[open]>summary .directory-overflow{opacity:0;visibility:hidden;transform:translateY(.75rem) scale(.9);pointer-events:none;transition:opacity .18s ease,transform .22s ease,visibility 0s .22s}
+.people-menu[open] .people-list>.person>img,.people-menu[open] .people-list>.person>.portrait-fallback,.directory-people[open] .directory-roster-person>.directory-avatar{animation:roster-portrait-enter .25s ease-out both}
+.people-menu[open] .people-list>.person:nth-child(2)>:first-child,.directory-people[open] .directory-roster-person:nth-of-type(2)>.directory-avatar{animation-delay:.025s}
+.people-menu[open] .people-list>.person:nth-child(n+3)>:first-child,.directory-people[open] .directory-roster-person:nth-of-type(n+3)>.directory-avatar{animation-delay:.05s}
+@keyframes roster-portrait-enter{from{opacity:0;transform:translateY(-.625rem) scale(.9)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media(prefers-reduced-motion:reduce){.people-menu>summary .people-stack,.directory-people>summary .directory-avatar-stack,.directory-people>summary .directory-overflow{transition:none!important}.people-menu[open] .people-list>.person>:first-child,.directory-people[open] .directory-roster-person>.directory-avatar{animation:none!important}}
