@@ -1,0 +1,29 @@
+// Run: PLAYWRIGHT_MODULE=/path/to/playwright node tests/ui-components.cjs
+const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+(async()=>{const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',headless:true,args:['--no-sandbox']});try{
+ const page=await browser.newPage({viewport:{width:1280,height:1000}}),errors=[];
+ page.on('pageerror',e=>errors.push(e.message));
+ await page.route('https://sahko.test/**',async route=>{const url=new URL(route.request().url());if(url.pathname==='/orbital-engine.html')return route.fulfill({contentType:'text/html',body:'<body><script>orbital={ready:true,active(){},set(){},points(){return[]},contourPoint(){return{x:.5,y:.5}},progressArcPoint(){return{x:.5,y:.5}}}</script>'});try{const file=path.join(__dirname,'../pages',url.pathname==='/'?'index.html':url.pathname);await route.fulfill({body:fs.readFileSync(file),contentType:file.endsWith('.css')?'text/css':file.endsWith('.js')?'application/javascript':'text/html'})}catch{await route.abort()}});
+ await page.goto('https://sahko.test');await page.evaluate(()=>{config.reduced=true;config.soundVolume=0});
+ await page.locator('#onboardNext').click();await page.getByRole('tab',{name:'Join existing room',exact:true}).click();await page.getByRole('tab',{name:'Available rooms',exact:true}).click();
+ const card=page.locator('.ui-room-card').first();await card.waitFor();
+ const controls=await page.evaluate(()=>({input:document.querySelector('.entry-code-field input').getBoundingClientRect().height,button:document.querySelector('.entry-go').getBoundingClientRect().height}));assert.equal(controls.input,controls.button,'Search input and action share control height');
+ for(const width of [1440,768,390,320])for(const scale of [100,125]){
+  await page.setViewportSize({width,height:1000});await page.evaluate(scale=>document.documentElement.style.fontSize=scale+'%',scale);await page.waitForTimeout(120);
+  const metrics=await card.evaluate(card=>{const r=e=>{const b=e.getBoundingClientRect();return{x:b.x,y:b.y,w:b.width,h:b.height,right:b.right,bottom:b.bottom,cy:b.y+b.height/2}};const header=card.querySelector('.ui-room-header');return{card:r(card),header:r(header),code:r(header.querySelector('output')),count:r(header.querySelector('.directory-presence')),title:r(header.querySelector('.ui-room-title')),summary:r(header.querySelector('summary')),timing:r(card.querySelector('.room-timing')),duration:r(card.querySelector('.room-plan-duration')),progress:r(card.querySelector('.room-card-progress')),padding:parseFloat(getComputedStyle(card).paddingLeft),blockFont:getComputedStyle(card.querySelector('.room-block-label')).fontSize,timeFont:getComputedStyle(card.querySelector('.room-time')).fontSize,bodyOverflow:document.querySelector('#onboarding').scrollWidth>document.querySelector('#onboarding').clientWidth+1}});
+  assert(Math.abs(metrics.code.cy-metrics.count.cy)<1,`Code/presence centers: ${width}/${scale} ${JSON.stringify(metrics)}`);
+  for(const key of ['header','code','count','summary','timing','duration','progress'])assert(metrics[key].x>=metrics.card.x-1&&metrics[key].right<=metrics.card.right+1,`${key} overflow ${width}/${scale}: ${JSON.stringify(metrics)}`);
+  assert.equal(metrics.blockFont,metrics.timeFont);if(metrics.bodyOverflow){console.log(await page.locator('#onboarding').evaluate(root=>[...root.querySelectorAll('*')].filter(e=>e.getBoundingClientRect().right>root.clientWidth+1).map(e=>({tag:e.tagName,cls:e.className,right:e.getBoundingClientRect().right,width:e.getBoundingClientRect().width})).slice(0,20)));await page.screenshot({path:'/tmp/sahko-overflow.png'})}assert(!metrics.bodyOverflow,'Page overflow');assert(metrics.timing.y>=metrics.progress.bottom-1,'Timing must follow progress');
+  assert(Math.abs(metrics.header.x-metrics.card.x-metrics.padding)<1,'Header matches card inset');
+  console.log(`PASS room grid ${width}px / text ${scale}%`);
+ }
+ await page.setViewportSize({width:1280,height:1000});await page.evaluate(()=>document.documentElement.style.fontSize='100%');
+ await card.locator('.room-card-open').click();await page.locator('.room-detail .ui-room-header').waitFor();
+ const detail=page.locator('.room-detail');assert.equal(await detail.locator('.ui-room-title').count(),1);
+ const input=detail.locator('.room-entry-code');if(await input.count()){const button=detail.getByRole('button',{name:'Join',exact:true});assert(await button.isDisabled());await input.fill('wrong');assert(await button.isEnabled());await button.click();await page.getByText('Incorrect password',{exact:true}).waitFor();}
+ await page.screenshot({path:'/tmp/sahko-system-desktop.png'});await page.setViewportSize({width:390,height:844});await page.screenshot({path:'/tmp/sahko-system-mobile.png'});
+ await page.evaluate(()=>Sahko.open(1));await page.getByRole('heading',{name:'Who’s around?',exact:true}).waitFor();assert.equal(await page.locator('.ui-room-card').first().locator('.ui-room-header').count(),1);await page.locator('.ui-room-card').first().screenshot({path:'/tmp/sahko-system-card.png'});
+ await page.goto('https://sahko.test/components.html');await page.locator('.ui-room-header').waitFor();await page.locator('#scale').selectOption('125%');await page.locator('#theme').selectOption('0');await page.getByRole('tab',{name:'Join existing room',exact:true}).click();assert.equal(await page.getByRole('tab',{name:'Join existing room',exact:true}).getAttribute('aria-selected'),'true');assert.equal(await page.locator('.ui-room-title').innerText(),'The late shift');
+ assert.deepEqual(errors,[]);console.log('PASS search sizing, expanded room, join validation, Who’s around and component reference');
+}finally{await browser.close()}})().catch(error=>{console.error(error);process.exit(1)});

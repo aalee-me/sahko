@@ -200,3 +200,5 @@ Browser checks cover complete long thoughts, wheel/rail/keyboard history navigat
 Settings → Demo time → Simulate time lets you choose 3 AM or enter an exact local time. The simulated clock keeps advancing. Planning and new thought timestamps use it; elapsed focus/break countdowns and shared room timers use the real clock. Turn it off to restore device time. The setting stays on this browser until changed.
 
 Click the plan preview in room setup to review it; “Review session” is a caption beneath the preview. Past-session cards also open their recap directly. Recaps show recorded focus/break/idle/paused periods and private-thought markers when available. Older records without activity events show a clearly labelled planned focus/break timeline.
+
+UI handoff: [component and sizing contract](docs/DESIGN-SYSTEM.md). Visual reference: open `/components.html` or [the published reference](https://aalee-me.github.io/sahko/components.html).

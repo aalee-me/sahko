@@ -95,13 +95,9 @@ body.compact .layout{min-height:0!important}
 /* Directory card: room identity / curved progress / current block / duration footer. */
 body #onboarding#onboarding .room-navigation-card{padding:1.5rem!important;border-radius:1.75rem!important}
 body #onboarding .room-navigation-card .room-card-content{min-height:0;display:flex;gap:0}
-body #onboarding .room-navigation-card .room-title-line{min-height:5rem;padding-right:var(--roster-width,135px);align-items:baseline;gap:.375rem .625rem;align-content:flex-start}
-body #onboarding#onboarding .room-navigation-card .room-title-line strong{font-size:clamp(1.125rem,1.8vw,1.5rem)!important;line-height:1.3;font-weight:600}
 body #onboarding .room-navigation-card .room-access-inline{font-size:.875rem!important}
 .room-navigation-card .room-access-inline:before{display:none}
-body #onboarding .room-navigation-card>.room-code-tools{left:1.5rem;top:3.75rem}
 body #onboarding .room-navigation-card .room-code-tools output{font-size:1rem;letter-spacing:.1em}
-body #onboarding .room-navigation-card>.directory-people-wrap{top:1.5rem;right:1.5rem;align-items:flex-end;gap:.75rem}
 body #onboarding .room-navigation-card .directory-presence{font-size:.8125rem;white-space:nowrap}
 body #onboarding .room-navigation-card .room-card-progress{margin:1rem 0 1.25rem!important;width:calc(100% - 2.5rem)}
 body #onboarding .room-navigation-card .room-timing{width:calc(100% - 2.5rem);margin:0!important;padding:0!important;gap:.75rem;font-size:.9375rem}
@@ -110,14 +106,12 @@ body #onboarding .room-navigation-card .room-timing svg{width:1.25rem;height:1.2
 body #onboarding .room-navigation-card .room-plan-duration{position:relative;display:flex;align-items:center;gap:.625rem;margin:1.5rem 0 0!important;padding-top:1.25rem;width:100%;font-size:.875rem!important;line-height:1.5;color:var(--muted)}
 .room-navigation-card .room-plan-duration:before{content:'';position:absolute;left:0;right:2.5rem;top:0;height:1px;background:var(--line)}
 body #onboarding .room-navigation-card .room-arrow{position:absolute;right:1.5rem;bottom:3.25rem;margin:0;align-self:auto;font-size:1.875rem;line-height:1}
-@media(max-width:480px){body #onboarding#onboarding .room-navigation-card{padding:1.125rem!important}body #onboarding .room-navigation-card .room-title-line{padding-right:0;min-height:7rem}body #onboarding .room-navigation-card>.room-code-tools{left:1.125rem;top:3.5rem}body #onboarding .room-navigation-card>.directory-people-wrap{top:3.25rem;right:1.125rem;gap:.5rem}body #onboarding .room-navigation-card .room-card-progress{width:100%;margin-top:.5rem!important}body #onboarding .room-navigation-card .room-timing{width:100%}body #onboarding .room-navigation-card .room-plan-duration{font-size:.8125rem!important}body #onboarding .room-navigation-card .room-arrow{right:1.125rem;bottom:3rem}.onboard-header .header-pair{width:2.25rem;height:2.25rem}}
+@media(max-width:480px){body #onboarding#onboarding .room-navigation-card{padding:1.125rem!important}body #onboarding .room-navigation-card .room-card-progress{width:100%;margin-top:.5rem!important}body #onboarding .room-navigation-card .room-timing{width:100%}body #onboarding .room-navigation-card .room-plan-duration{font-size:.8125rem!important}body #onboarding .room-navigation-card .room-arrow{right:1.125rem;bottom:3rem}.onboard-header .header-pair{width:2.25rem;height:2.25rem}}
 .room-card-progress{position:relative}
 .room-card-progress-marker{pointer-events:all;cursor:help}
 .card-progress-percent{position:absolute;top:0;transform:translate(-50%,-100%);padding:.375rem .625rem;border-radius:999px;background:var(--surface-raised);border:1px solid var(--line);color:var(--text);font-size:.6875rem;line-height:1.3;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .15s}
 .room-card-progress.marker-hovered .card-progress-percent{opacity:1}
-/* Room details and recap retain the same identity, arc, facts, divider and duration hierarchy. */
-.room-detail-title-line{display:flex;align-items:baseline;flex-wrap:wrap;gap:.625rem}
-.room-detail-title-line .room-access-inline:before{display:none}
+/* Room details and recap retain the same identity, arc, facts{display:flex;align-items:baseline;flex-wrap:wrap;gap:.625rem}
 body #onboarding .room-detail>.room-plan-duration{margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--line);font-size:.875rem}
 body #onboarding .room-detail .room-timing{margin-bottom:1.25rem!important}
 body #onboarding .room-detail .room-card-progress{margin-top:1.25rem!important}
@@ -159,61 +153,28 @@ body #onboarding button:not(:disabled):not(.room-card-open):is(:hover,:focus-vis
 .recap-session-arc .recap-arc-track{stroke-dasharray:1 6}
 .recap-task-progress{--action-accent:#eeb32b}
 .session-recap .recap-footer button:not(:disabled):is(:hover,:focus-visible){background:#ffe6a1!important;color:#684b20!important}
-/* One pill component and one animated selection treatment across the app. */
-body .unified-switcher,body #onboarding .unified-switcher,body #sessionBottomDock .unified-switcher{position:relative!important;isolation:isolate;display:flex!important;align-items:stretch;gap:0!important;box-sizing:border-box;min-height:2.75rem!important;height:auto!important;padding:.25rem!important;border:1px solid var(--line)!important;border-radius:999px!important;background:var(--neutral-surface)!important;overflow:visible}
-body .unified-switcher:before,body #onboarding .unified-switcher:before,body #sessionBottomDock .unified-switcher:before{content:''!important;position:absolute!important;left:0!important;top:.25rem!important;bottom:.25rem!important;width:var(--pill-width,0px)!important;transform:translateX(var(--pill-left,0px))!important;border-radius:999px!important;background:color-mix(in srgb,var(--text) 16%,var(--canvas))!important;box-shadow:none!important;z-index:0!important;transition:transform .3s cubic-bezier(.22,1,.36,1),width .3s cubic-bezier(.22,1,.36,1),background-color .2s!important}
-body .unified-switcher>button,body #onboarding#onboarding .unified-switcher>button,body #sessionBottomDock .unified-switcher>button{position:relative!important;z-index:1;display:flex;align-items:center;justify-content:center;flex:1 1 0;min-width:0;min-height:2.125rem!important;height:auto!important;padding:.4375rem .5rem!important;margin:0!important;border:0!important;border-bottom:0!important;border-radius:999px!important;background:transparent!important;color:var(--text)!important;font-size:.9375rem!important;line-height:1.3!important;font-weight:500!important;white-space:nowrap;transition:color .2s,box-shadow .2s!important}
-body .unified-switcher>button.pill-current,body #onboarding#onboarding .unified-switcher>button.pill-current{font-weight:600!important}
-body .unified-switcher>button:after{display:none!important}
-body .unified-switcher>button:not(:disabled):hover{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--text) 12%,transparent)!important;filter:none!important}
-body .unified-switcher>button:focus-visible{outline:2px solid var(--action-accent);outline-offset:1px}
-/* Presence shares the room-title baseline; code and portraits share the next row. */
-body #onboarding .room-navigation-card .room-title-line,body #onboarding .room-detail-title-line{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:baseline;align-content:start;gap:.5rem;padding-right:0;min-height:7rem}
-body #onboarding .room-title-line .directory-presence,body #onboarding .room-detail-title-line .directory-presence{position:static;align-self:baseline;font-size:.8125rem;line-height:1.4;white-space:nowrap}
-body #onboarding .room-navigation-card>.directory-people-wrap{top:3.75rem;right:1.5rem;align-items:flex-end;gap:0}
-body #onboarding .room-navigation-card>.room-code-tools{left:1.5rem;top:3.75rem;display:block;max-width:calc(100% - var(--roster-width,135px) - 3rem)}
-body #onboarding .room-navigation-card>.room-code-tools output{display:block;line-height:1.75rem}
-body #onboarding .room-navigation-card>.room-code-tools button{position:absolute;left:calc(100% + .25rem);top:0}
-body #onboarding .room-navigation-card>.room-code-tools button:last-of-type{left:calc(100% + 2rem)}
 .room-availability{display:flex;align-items:center;gap:.375rem;margin-top:.375rem;font-size:.8125rem;line-height:1.4;color:var(--muted);white-space:nowrap}
 .room-availability svg{width:.9375rem;height:.9375rem;flex:0 0 .9375rem;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .room-availability[data-availability=full]{color:#8a8273}
 body #onboarding .room-full .room-card-open:disabled{opacity:.55;cursor:not-allowed}
 body #onboarding .room-full:hover{background:var(--neutral-surface)!important}
 body #onboarding .room-detail-heading{padding-right:0;min-height:7.5rem}
-body #onboarding .room-detail-title-line{min-height:2rem}
-body #onboarding .room-detail-heading>.room-code-tools{margin-top:.5rem;max-width:calc(100% - 9rem)}
-body #onboarding .room-detail-heading>.directory-people-wrap{top:3rem}
 body #onboarding .room-detail-footer{justify-content:flex-end}
 body #onboarding .room-detail-footer .room-join:disabled{background:var(--neutral-surface)!important;color:#898984!important;opacity:.55;cursor:not-allowed}
-@media(max-width:600px){body .unified-switcher>button,body #onboarding#onboarding .unified-switcher>button,body #sessionBottomDock .unified-switcher>button{font-size:.8125rem!important}body #onboarding#onboarding .room-navigation-card .room-title-line strong{font-size:1.125rem!important}body #onboarding .room-navigation-card .room-title-line{min-height:7.25rem}body #onboarding .room-navigation-card>.room-code-tools{left:1.125rem;top:3.75rem}body #onboarding .room-navigation-card>.directory-people-wrap{right:1.125rem;top:3.75rem}body #onboarding .room-timing .room-block-label,body #onboarding .room-timing .room-time{font-size:.875rem!important;line-height:1.5!important}body #onboarding .room-title-line .directory-presence,body #onboarding .room-detail-title-line .directory-presence{font-size:.75rem!important}body #clock,body .night-progress-label>.block-count{font-size:clamp(1.5rem,8vw,2rem)!important;line-height:1.2!important}}
+@media(max-width:600px){body .unified-switcher>button,body #onboarding#onboarding .unified-switcher>button,body #sessionBottomDock .unified-switcher>button{font-size:.8125rem!important}body #onboarding .room-timing .room-block-label,body #onboarding .room-timing .room-time{font-size:.875rem!important;line-height:1.5!important}body #clock,body .night-progress-label>.block-count{font-size:clamp(1.5rem,8vw,2rem)!important;line-height:1.2!important}}
 @media(prefers-reduced-motion:reduce){body .unified-switcher:before{transition:none!important}}
 body #onboarding .setup-review-button{display:block;width:100%;margin:1.5rem 0 0;padding:.875rem 1.25rem!important;min-height:3rem;background:var(--action-accent)!important;color:var(--on-action)!important;border:0!important;border-radius:999px;font-size:1rem!important;font-weight:500;text-align:center}
 body #onboarding .setup-review-button:hover{filter:brightness(.96)}
 body #onboarding .company-row:after,body #onboarding .company-row.selected:after{content:'→'!important;opacity:1!important;transition:transform .2s ease}
 body #onboarding .company-row:hover:after{transform:translateX(4px)}
 .time-wheel-track span{line-height:38px}
-body #onboarding .room-navigation-card .room-title-line,body #onboarding .room-detail-title-line{align-items:end}
-body #onboarding .room-title-line .directory-presence,body #onboarding .room-detail-title-line .directory-presence{align-self:end}
-body #onboarding .room-navigation-card>.room-code-tools{width:max-content;max-width:none}
-body #onboarding .room-navigation-card>.room-code-tools output{white-space:nowrap}
-/* Portraits accompany the title; presence accompanies the larger room code. */
-body #onboarding .room-navigation-card .room-title-line,body #onboarding .room-detail-title-line{display:block;box-sizing:border-box}
-body #onboarding .room-navigation-card>.directory-people-wrap,body #onboarding .room-detail-heading>.directory-people-wrap{position:absolute;right:1.5rem;gap:0}
 body #onboarding .directory-people-wrap>.directory-presence{position:absolute;right:0;white-space:nowrap;font-size:.8125rem}
-body #onboarding .room-navigation-card>.room-code-tools output,body #onboarding .room-detail-heading>.room-code-tools output{font-size:1.25rem!important;line-height:1.5;white-space:nowrap}
-body #onboarding .room-detail-heading>.room-code-tools{position:absolute;left:0;margin:0;max-width:none;width:max-content;display:block}
-body #onboarding .room-detail-heading>.directory-people-wrap{right:0}
 body #onboarding .room-detail-heading{min-height:0;padding:0}
-body #onboarding .room-detail-title-line{min-height:0}
 body #onboarding .room-detail>.room-plan-duration{margin-bottom:1.25rem}
 .room-entry-code{min-width:0;flex:1;max-width:16rem;padding:.875rem 1rem;border:1px solid var(--line);border-radius:999px;font-size:1rem;background:var(--surface-raised);color:var(--text)}
-@media(max-width:600px){body #onboarding .room-navigation-card>.directory-people-wrap{right:1.125rem}.room-detail-footer{flex-wrap:wrap}.room-entry-code{max-width:none}}
-body #onboarding .room-detail-heading>.room-code-tools button{position:absolute;left:calc(100% + .25rem);top:0}
-body #onboarding .room-detail-heading>.room-code-tools button:last-of-type{left:calc(100% + 2rem)}
+@media(max-width:600px){.room-detail-footer{flex-wrap:wrap}.room-entry-code{max-width:none}}
 /* Edit this gap to change the space between a room title and its code. */
 .room-navigation-card,.room-detail-heading{--room-code-gap:12px}
-body #onboarding .room-detail-title-line h2{font-weight:650!important}
 .room-detail-footer{display:grid!important;grid-template-columns:minmax(0,1fr);gap:.75rem}
 .room-detail-footer .room-entry-code,.room-detail-footer .room-join{box-sizing:border-box;width:100%;max-width:none;min-width:0;margin:0!important}
 .room-entry-code[aria-invalid=true]{border-color:var(--action-accent);box-shadow:0 0 0 2px color-mix(in srgb,var(--action-accent) 20%,transparent)}
@@ -417,7 +378,7 @@ body.compact .night-progress>svg{height:clamp(3.5rem,9vh,5rem)!important}
 body.compact #sessionBottomDock:not(.checkin-dock){bottom:1rem!important}
 body .workspace .title-row>div:first-child>h1{margin-bottom:0!important}
 body #sessionRoomCode{margin-top:.25rem!important;line-height:1.4}
-body #onboarding .room-navigation-card,body #onboarding .room-detail-title-line{--room-code-gap:6px}
+body #onboarding .room-navigation-card{--room-code-gap:6px}
 body #pulseInterval{appearance:none;-webkit-appearance:none;padding-right:2.75rem!important;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23806d4c' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m7 10 5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .875rem center;background-size:1rem}
 body .drift-popup-symbol svg,body .drift-popup-symbol svg path,body #claimFocus svg,body #claimFocus svg path{stroke-linecap:round!important;stroke-linejoin:round!important}
 @media(max-width:359px){body #onboarding .room-code-line{gap:.125rem}body #onboarding#onboarding .room-code-tools .code-action-pill{gap:0}body #onboarding#onboarding .room-code-tools .code-action-pill>button{width:1.125rem!important;min-width:1.125rem!important;padding:0!important}body #onboarding .code-action-pill>button svg{width:1rem;height:1rem}}
@@ -448,12 +409,10 @@ body.compact .night-progress .night-progress-label{padding:0 .75rem!important;ma
 @media(prefers-reduced-motion:reduce){.people-menu>summary .people-stack,.directory-people>summary .directory-avatar-stack,.directory-people>summary .directory-overflow{transition:none!important}.people-menu[open] .people-list>.person>:first-child,.directory-people[open] .directory-roster-person>.directory-avatar{animation:none!important}}
 /* Available rooms keep code and presence on one centered row with less dead space. */
 body #onboarding#onboarding .room-navigation-card{padding:1.25rem!important}
-body #onboarding .room-navigation-card>.room-code-tools{left:1.25rem}
-body #onboarding .room-navigation-card>.directory-people-wrap{right:1.25rem}
 body #onboarding .room-navigation-card .room-card-progress{margin:.5rem 0 .625rem!important}
 body #onboarding .room-navigation-card .room-plan-duration{margin-top:.875rem!important;padding-top:.75rem}
 body #onboarding .room-navigation-card .room-arrow{right:1.25rem;bottom:2.125rem}
-@media(max-width:600px){body #onboarding#onboarding .room-navigation-card{padding:1rem!important}body #onboarding .room-navigation-card>.room-code-tools{left:1rem}body #onboarding .room-navigation-card>.directory-people-wrap{right:1rem}body #onboarding .room-navigation-card .room-arrow{right:1rem;bottom:2rem}}
+@media(max-width:600px){body #onboarding#onboarding .room-navigation-card{padding:1rem!important}body #onboarding .room-navigation-card .room-arrow{right:1rem;bottom:2rem}}
 /* Fit the actual drawing bounds; neither the dot nor portraits may be cropped. */
 body .night-progress>svg{overflow:visible!important}
 body.compact .workspace>.night-progress{margin-inline:0!important;width:100%}
@@ -467,8 +426,6 @@ body.compact .space-tabs{min-height:2.5rem!important;padding:.1875rem!important}
 body.compact .space-tabs>button{min-height:2rem!important;padding:.375rem .625rem!important}
 /* Available rooms use a genuinely compact inset and footer. */
 body #onboarding#onboarding .room-navigation-card{padding:.875rem!important}
-body #onboarding .room-navigation-card>.room-code-tools{left:.875rem}
-body #onboarding .room-navigation-card>.directory-people-wrap{right:.875rem}
 body #onboarding .room-navigation-card .room-card-progress{margin:.25rem 0 .375rem!important}
 body #onboarding .room-navigation-card .room-plan-duration{margin-top:.5rem!important;padding-top:.5rem}
 body #onboarding .room-navigation-card .room-arrow{right:.875rem;bottom:1.625rem}
