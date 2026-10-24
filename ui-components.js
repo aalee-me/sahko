@@ -13,5 +13,12 @@
     for(const slot of [code,availability,people])if(slot)root.append(slot);
     return root;
   }
-  window.SahkoUI={iconLabel,roomHeader};
+  function rosterOverflow(summary,total){
+    summary.querySelector('.directory-overflow:not(.directory-overflow--two):not(.directory-overflow--one)')?.classList.add('directory-overflow--regular');
+    for(const [visible,variant]of [[2,'two'],[1,'one']])if(total>visible&&!summary.querySelector('.directory-overflow--'+variant)){
+      const extra=node('span','directory-overflow directory-overflow--'+variant,'+'+(total-visible));
+      extra.setAttribute('aria-hidden','true');summary.insertBefore(extra,summary.querySelector('.directory-chevron'));
+    }
+  }
+  window.SahkoUI={iconLabel,roomHeader,rosterOverflow};
 })();

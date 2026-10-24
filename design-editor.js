@@ -9,7 +9,7 @@
  let values={desktop:{},mobile:{}},scope=new URLSearchParams(location.search).get('breakpoint')==='mobile'?'mobile':new URLSearchParams(location.search).get('breakpoint')==='desktop'?'desktop':matchMedia('(max-width:600px)').matches?'mobile':'desktop',category=new URLSearchParams(location.search).get('group')||'Cards',picking=false,selected=null;if(!groups[category])category='Cards';let previewCanvas=null,previewFrame=null;
  function validate(candidate){const clean={desktop:{},mobile:{}};for(const mode of ['desktop','mobile'])for(const [token,value]of Object.entries(candidate?.[mode]||{})){const d=definitions.get(token);if(d&&Number.isFinite(value)&&value>=d[4]&&value<=d[5])clean[mode][token]=value}return clean}
  try{values=validate(JSON.parse(localStorage.getItem(key)||'null'))}catch{}
- const style=document.createElement('style');style.id='sahko-design-overrides';document.head.append(style);
+ const style=document.createElement('style');style.id='sahko-design-overrides';document.body.append(style);
  const declarations=mode=>Object.entries(values[mode]).sort(([a],[b])=>a.localeCompare(b)).map(([name,value])=>'  '+name+': '+value+'rem;').join('\n');
  function css(){const desktop=declarations('desktop'),mobile=declarations('mobile');return '/* Sähkö visual editor · paste after design-system.css */\n'+(desktop?'@media (min-width: 601px) {\n:root {\n'+desktop+'\n}\n}\n':'')+(mobile?'@media (max-width: 600px) {\n:root {\n'+mobile+'\n}\n}\n':'')}
  function paint(){style.textContent=css();window.dispatchEvent(new Event('sahko:design-change'))}

@@ -63,6 +63,7 @@ body #onboarding#onboarding :is(.join-code-form,.entry-code-field) input::placeh
 body #onboarding#onboarding .onboard-copy h1 { font-size:var(--text-heading)!important; line-height:var(--leading-tight)!important; margin-bottom:var(--space-8)!important; letter-spacing:-.035em; }
 .ui-icon-label { display:inline-flex; align-items:center; gap:var(--space-2); }
 .ui-icon-label>svg { width:var(--icon-size); height:var(--icon-size); flex:0 0 var(--icon-size); fill:none; stroke:currentColor; stroke-width:var(--icon-stroke); stroke-linecap:round; stroke-linejoin:round; }
+body #onboarding#onboarding .room-detail { container-type:inline-size; }
 /* Room molecule. A real grid replaces the former fitCardCode ResizeObserver offsets.
    Both Available rooms and expanded Who’s around use this exact header. */
 body #onboarding#onboarding .ui-room-card { container-type:inline-size; padding:var(--card-inset)!important; border-radius:var(--radius-card)!important; }
@@ -102,13 +103,20 @@ body #onboarding#onboarding .room-detail>.room-people-grid { margin-top:var(--sp
 body #onboarding#onboarding .ui-room-header .code-action-pill { position:absolute!important; left:calc(100% + var(--space-1))!important; top:50%!important; translate:0 -50%; display:flex; gap:0; }
 body #onboarding#onboarding .ui-room-header .code-action-pill>button { width:1.5rem!important; min-width:1.5rem!important; height:1.75rem!important; padding:var(--space-1)!important; }
 body #onboarding#onboarding .ui-room-header .code-action-pill>button svg { width:var(--icon-small); height:var(--icon-small); }
+/* Preserve title/portraits and code/presence rows at every card width.
+   Compact the avatar stack instead of moving the entire summary to a new row. */
+body #onboarding#onboarding .ui-room-header :is(.directory-overflow--two,.directory-overflow--one) { display:none; }
 @container (max-width: 340px) {
   body #onboarding#onboarding .ui-room-header { column-gap:var(--space-2); }
-  body #onboarding#onboarding .ui-room-header>.ui-room-title { grid-area:1 / 1 / 2 / -1; }
-  body #onboarding#onboarding .ui-room-header .directory-people { grid-area:2 / 2; }
-  body #onboarding#onboarding .ui-room-header>.room-code-tools { grid-area:3 / 1; }
-  body #onboarding#onboarding .ui-room-header .directory-presence { grid-area:3 / 2; }
-  body #onboarding#onboarding .ui-room-header>.room-availability { grid-area:4 / 1 / 5 / -1; }
+  body #onboarding#onboarding .ui-room-header .directory-avatar:nth-child(n+3),
+  body #onboarding#onboarding .ui-room-header .directory-overflow--regular { display:none; }
+  body #onboarding#onboarding .ui-room-header .directory-overflow--two { display:grid; }
+}
+@container (max-width: 260px) {
+  body #onboarding#onboarding .ui-room-header .directory-avatar:nth-child(n+2),
+  body #onboarding#onboarding .ui-room-header .directory-overflow--two { display:none; }
+  body #onboarding#onboarding .ui-room-header .directory-overflow--one { display:grid; }
+  body #onboarding#onboarding .ui-room-header .directory-presence { max-width:7em; white-space:normal; text-align:right; }
 }
 @media(prefers-reduced-motion:reduce) { .ui-button,.ui-icon-button { transition:none; } }
 /* Header utilities may wrap instead of pushing the profile off a narrow viewport. */
