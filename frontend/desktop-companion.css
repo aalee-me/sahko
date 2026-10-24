@@ -305,7 +305,7 @@ body .dock-activity-row{padding-inline:.875rem;align-items:flex-end;gap:.75rem;m
 body .dock-activity-row>.thought-feed{margin:0!important;align-items:center}
 body .dock-activity-row .thought-rail{flex-basis:1.5rem!important;width:1.5rem;max-width:1.5rem;overflow:visible}
 body .thought-rail .thought-tick{height:2px;min-height:2px;margin:6px 0;transition:width .2s ease,background-color .2s ease}
-body .thought-rail:is(:hover,:focus-within) .thought-tick:last-child{width:1.5rem!important;background:var(--action-accent)}
+body .thought-rail:is(:hover,:focus-within) .thought-tick:last-child{width:1.5rem!important}
 body .session-tools-toggle svg{overflow:visible}
 body .session-tools-toggle:not(:hover) svg{color:var(--text)}
 body .session-tools-toggle:hover{color:var(--action-accent)}

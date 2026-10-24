@@ -119,3 +119,10 @@ Participant portraits use square, non-shrinking targets with a small positive ga
 The Void mark uses an explicitly centered square control. Star-marker styling targets direct children only, so it cannot add margins/glows to waveform bars. Voice playback uses twelve bars in the short preview, centered beside play and duration. The compact map has no added CSS fade mask; the reserved stage and dock handle its bounds.
 
 Room setup includes a sticky, full-width **Review session** button. Entry, rhythm and room-discovery switchers share the same height, indicator insets and spacing. Friends/Available rooms retain their DOM while changing selection so animation works both directions, with a brief content transition. Break-alert radio choices use a shared rounded option treatment and native radio keyboard behavior. `frontend/favicon.svg` uses the uploaded Ö path with a square viewport and theme-aware color.
+
+
+### Whole-pill audio alignment and measured insights
+
+Recording uses a centered waveform column (maximum 12rem) and equal-width leading/trailing columns. Its timer is on the left and cancel/stop controls on the right. Playback also uses equal side columns and a centered, short waveform. Center against the complete pill, not only the available middle-cell space. Activity navigation retains its neutral color on hover; only the line-length animation remains.
+
+`frontend/session-insights.js` derives profile insights from retained session timeline timestamps. Average focus block uses actual focused seconds in finished blocks, excluding idle, pauses and breaks; early-ended or running blocks do not count as finished samples. Focus before idle uses uninterrupted observed focus stretches ending in an idle/drifting state. Focus share is focused / (focused + idle), excluding breaks and pauses. Incomplete or truncated timelines never fall back to planned interval lengths; missing averages display an em dash. Phone pickups only appear as a number for sessions with motion tracking. Sample counts accompany averages. All of these insights remain local to the device's retained session history.
