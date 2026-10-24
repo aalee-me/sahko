@@ -474,3 +474,35 @@ body #onboarding .room-navigation-card .room-plan-duration{margin-top:.5rem!impo
 body #onboarding .room-navigation-card .room-arrow{right:.875rem;bottom:1.625rem}
 .recap-event.taskCompleted{display:grid;place-items:center}
 .recap-event.taskCompleted svg{width:1rem;height:1rem;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+/* Compact hierarchy: utility icons, timer, room identity, then a shared orbit/timeline stage. */
+body.compact>header{height:3rem!important;min-height:3rem!important;padding:.375rem .875rem!important;margin:0!important;justify-content:flex-end}
+body.compact>header>.brand,body.compact>header>#exitCompact,body.compact>header>.compact-studio-trigger{display:none!important}
+body.compact>header>.nav{display:flex!important;align-items:center;gap:.5rem!important;width:100%;height:100%}
+body.compact>header>.nav>*{display:none!important}
+body.compact>header>.nav>.my-profile-trigger,body.compact>header>.nav>.header-pair,body.compact>header>.nav>.open-settings{display:inline-flex!important;align-items:center;justify-content:center;width:2rem!important;height:2rem!important;min-width:2rem!important;margin:0;padding:.375rem!important;border:0!important;background:transparent!important}
+body.compact>header>.nav>.my-profile-trigger{order:0;margin-right:auto}
+body.compact>header>.nav>.header-pair{order:1;font-size:0!important;gap:0!important}
+body.compact>header>.nav>.open-settings{order:2}
+body.compact>header>.nav>.header-pair svg,body.compact>header>.nav>.open-settings svg{width:1.25rem!important;height:1.25rem!important;flex:0 0 1.25rem}
+body.compact .workspace>.session{order:-3!important;padding-top:0!important;margin:0!important}
+body.compact .workspace>.title-row{order:-2!important;margin-top:.625rem!important;flex:0 0 auto}
+body.compact .workspace>.view-modes{top:var(--compact-roster-top,5.5rem)!important;right:.75rem!important}
+body.compact .workspace>.compact-orbit-stage{order:3;position:relative;isolation:isolate;flex:1 1 0;min-height:10rem;width:100%;margin-top:.75rem}
+body.compact .compact-orbit-stage>.scene{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-height:0!important;max-height:none!important;flex:none!important;margin:0!important;aspect-ratio:auto!important;overflow:visible!important;z-index:1}
+body.compact .compact-orbit-stage>.night-progress{position:relative!important;z-index:6;width:100%;min-height:0!important;margin:0!important;pointer-events:none!important}
+body.compact .compact-orbit-stage>.night-progress>svg{height:clamp(3rem,10vh,5rem)!important;overflow:visible!important}
+/* Status belongs in the activity feed, never in a bottom notification pill. */
+#toast{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip-path:inset(50%)!important;padding:0!important;border:0!important;white-space:nowrap}
+#messageNotice{display:none!important}
+.memo-stop.sending{color:var(--action-accent)!important;transition:color .22s ease!important}
+body #voidForm.inline-thought-form.memo-recording{display:flex!important;align-items:center!important;justify-content:center!important;min-height:3.25rem!important;padding:.375rem .625rem!important;box-sizing:border-box}
+body #voidForm.memo-recording>.memo-capture{display:flex;align-items:center!important;align-self:center!important;justify-content:center;height:2.5rem!important;min-height:2.5rem!important;margin:0!important;padding:.3125rem .4375rem!important;box-sizing:border-box}
+body #voidForm.memo-recording .memo-wave,body #voidForm.memo-recording .memo-length,body #voidForm.memo-recording .memo-cancel,body #voidForm.memo-recording .memo-stop{align-self:center!important;margin-block:0!important}
+body.compact>header>.nav>.my-profile-trigger{margin-right:auto!important;border-radius:50%!important;overflow:hidden}
+body.compact>header .my-profile-trigger>.profile-initial,body.compact>header .my-profile-trigger>img{display:grid!important;place-items:center;width:1.5rem!important;height:1.5rem!important;border-radius:50%!important;font-size:.8125rem;line-height:1;object-fit:cover}
+body.compact>header .my-profile-trigger>.default-initial{background:#c6c7c4;color:#30363f}
+body #onboarding .room-join{display:flex;align-items:center;justify-content:center;gap:.625rem}
+body #onboarding .room-join>svg{display:block;width:1.25rem;height:1.25rem;flex:0 0 1.25rem;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+body.compact .workspace-resize{position:fixed!important;right:.375rem!important;bottom:.375rem!important;float:none!important;margin:0!important;width:1.5rem;height:1.5rem;padding:.125rem;background:transparent}
+body.pip-session .workspace-resize{display:none!important}
+.memo-stop .filled-icon{stroke:currentColor!important;stroke-width:1.25;stroke-linejoin:round;stroke-linecap:round}
