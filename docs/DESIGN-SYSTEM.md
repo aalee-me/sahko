@@ -60,7 +60,7 @@ Grid anatomy:
 2. Code left; people-present text right, vertically centered on the code.
 3. Access/availability below the code.
 
-At a card content width ≤340px, title gets its own row, followed by avatar summary, then aligned code/presence. This uses a container query, so it works in a sidebar or mobile without page-specific conditions. Text may wrap; no fixed header height. Copy/share is anchored to the code line, not the title/card edge. Roster is a separate interactive details control; do not nest it in the open-room button.
+Title and avatar summary always share the first row. At a card content width ≤340px the stack shows two portraits; at ≤260px it shows one. The +N indicator updates to count the hidden portraits. Code and presence keep the second row. This uses a container query, so it works in a sidebar or mobile without page-specific conditions. Text may wrap; no fixed header height. Copy/share is anchored to the code line, not the title/card edge. Roster is a separate interactive details control; do not nest it in the open-room button.
 
 The former `fitCardCode` ResizeObserver and calculated top/padding offsets have been removed. Do not reintroduce them.
 
