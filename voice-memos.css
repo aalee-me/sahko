@@ -43,3 +43,12 @@ body .voice-thought>.constellation-time{margin:.25rem .5rem 0 0!important;align-
 
 body .voice-thought .memo-wave-seek{display:flex!important;align-items:center!important;justify-content:center!important;cursor:grab}
 body .voice-thought .memo-wave{display:flex;align-items:center;justify-content:center;gap:2px;padding:0;margin:0!important}
+/* Equal leading/trailing columns keep the waveform on the pill's true center. */
+body #voidForm.memo-recording>.memo-capture{display:grid!important;grid-template-columns:minmax(4rem,1fr) minmax(0,12rem) minmax(4rem,1fr);align-items:center;column-gap:.5rem;width:100%;max-width:100%}
+body .memo-capture>.memo-length{justify-self:start;text-align:left;padding:0!important;margin:0!important}
+body .memo-capture>.memo-wave{justify-self:center;width:100%;max-width:12rem;min-width:0;height:1.75rem;flex:none;margin:0!important}
+.memo-capture-actions{display:flex;align-items:center;justify-content:flex-end;gap:.25rem;min-width:0}
+body .voice-thought .void-voice-controls{align-items:center}
+body .voice-thought .memo-playback{grid-template-columns:1.75rem 2.75rem 1.75rem;justify-content:center;margin-inline:auto}
+body .voice-thought .memo-length{width:100%;justify-content:center;text-align:center}
+body .voice-thought .memo-transcript{align-self:stretch}
