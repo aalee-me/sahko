@@ -12,6 +12,7 @@ import SahkoCore
  @Published var shareVibe=false
  @Published var readingMode=false
  @Published var currentApp="Monitoring is off"
+ @Published var lastExternalApp=""
  @Published var result=Classification(.focused,"Enable local monitoring to begin")
  @Published var policy=Policy()
  @Published var pairCode=""
@@ -32,7 +33,7 @@ import SahkoCore
  init(){if let data=UserDefaults.standard.data(forKey:"policy"),let saved=try? JSONDecoder().decode(Policy.self,from:data){policy=saved};credentials=PairKeychain.load();if credentials != nil {pairStatus="Phone pairing saved"};ticker=Timer.scheduledTimer(timeInterval:1,target:self,selector:#selector(timerTick(_:)),userInfo:nil,repeats:true)}
  @objc private func timerTick(_ timer:Timer){tick()}
  func saveDisplayPreferences(){UserDefaults.standard.set(pinned,forKey:"panelPinned");UserDefaults.standard.set(autoFloat,forKey:"autoFloat");onDisplayChange?(pinned)}
- func classifyCurrentApp(as bucket:String){guard monitoring,currentApp != "Monitoring is off" else{return};let app=currentApp;policy.deepWork.removeAll{$0.caseInsensitiveCompare(app) == .orderedSame};policy.neutral.removeAll{$0.caseInsensitiveCompare(app) == .orderedSame};policy.distracting.removeAll{$0.caseInsensitiveCompare(app) == .orderedSame};switch bucket{case "deep":policy.deepWork.append(app);case "distracting":policy.distracting.append(app);default:policy.neutral.append(app)};savePolicy();classifier.reset();tick()}
+ func classifyCurrentApp(as bucket:String){guard monitoring,!lastExternalApp.isEmpty else{return};let app=lastExternalApp;policy.deepWork.removeAll{$0.caseInsensitiveCompare(app) == .orderedSame};policy.neutral.removeAll{$0.caseInsensitiveCompare(app) == .orderedSame};policy.distracting.removeAll{$0.caseInsensitiveCompare(app) == .orderedSame};switch bucket{case "deep":policy.deepWork.append(app);case "distracting":policy.distracting.append(app);default:policy.neutral.append(app)};savePolicy();classifier.reset();tick()}
  func savePolicy(){if let data=try? JSONEncoder().encode(policy){UserDefaults.standard.set(data,forKey:"policy")}}
  func setMonitoring(_ value:Bool){monitoring=value;classifier.reset();host=nil;result=Classification(.focused,value ? "Local monitoring enabled" : "Monitoring is off");if(!value){currentApp="Monitoring is off"};tick()}
  func markBack(){classifier.reset();result=Classification(.focused,"You checked back in");snapshot.state = .focused;onSnapshot?(snapshot,monitoring)}
@@ -40,6 +41,7 @@ import SahkoCore
   if monitoring {
    let front=NSWorkspace.shared.frontmostApplication,app=front?.localizedName ?? "Unknown",bundle=front?.bundleIdentifier ?? ""
    currentApp=app
+   if bundle != Bundle.main.bundleIdentifier {lastExternalApp=app}
    if bundle != observedBundle {host=nil;observedBundle=bundle}
    if !probeBusy && Date().timeIntervalSince(lastProbe)>=3 && (browserContext || spotifyContext) {
     probeBusy=true;lastProbe=Date();let browser=browserContext,music=spotifyContext
