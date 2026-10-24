@@ -1,0 +1,12 @@
+/* Replace this file with the CSS exported from Settings → Visual design.
+   This stylesheet loads after design-system.css on the app and reference page.
+   Commit it to GitHub to publish your changes for everyone.
+
+   Example:
+   @media (min-width: 601px) {
+     :root { --card-inset: 1.75rem; --text-title: 1.375rem; }
+   }
+   @media (max-width: 600px) {
+     :root { --card-inset: 1rem; }
+   }
+*/

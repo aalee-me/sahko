@@ -11,8 +11,9 @@
   --weight-regular: 400; --weight-medium: 500; --weight-strong: 600;
   --control-height: 2.75rem; --control-compact: 2rem;
   --icon-size: 1.25rem; --icon-small: 1rem; --icon-stroke: 1.7;
-  --radius-input: 999px; --radius-card: 1.5rem;
+  --radius-input: 999rem; --radius-card: 1.5rem;
   --card-inset: var(--space-6); --component-gap: var(--space-4);
+  --room-header-gap: var(--space-2);
   --avatar-size: 1.75rem;
   --motion-fast: 160ms; --motion-normal: 260ms;
   --ease-ui: cubic-bezier(.22,1,.36,1);
@@ -67,7 +68,7 @@ body #onboarding#onboarding .onboard-copy h1 { font-size:var(--text-heading)!imp
 body #onboarding#onboarding .ui-room-card { container-type:inline-size; padding:var(--card-inset)!important; border-radius:var(--radius-card)!important; }
 body #onboarding#onboarding .ui-room-header {
   display:grid; grid-template-columns:minmax(0,1fr) auto; grid-template-rows:auto auto auto;
-  align-items:center; column-gap:var(--space-4); row-gap:var(--space-2);
+  align-items:center; column-gap:var(--space-4); row-gap:var(--room-header-gap);
   position:relative; min-height:0!important; margin:0 0 var(--space-6)!important; padding:0!important;
 }
 body #onboarding#onboarding .ui-room-header>.ui-room-title { grid-area:1 / 1; min-width:0; margin:0; padding:0; font-size:var(--text-title)!important; line-height:var(--leading-tight)!important; font-weight:var(--weight-strong); letter-spacing:-.02em; overflow-wrap:anywhere; }
@@ -93,7 +94,7 @@ body #onboarding#onboarding :is(.ui-room-card,.room-detail) .room-plan-duration 
 body #onboarding#onboarding .ui-room-card .room-plan-duration:before { content:none; }
 body #onboarding#onboarding .ui-room-card .room-arrow { position:absolute; right:0; bottom:0; width:var(--icon-size); height:var(--icon-size); margin:0; }
 body #onboarding#onboarding .ui-room-card .room-arrow svg { width:100%; height:100%; }
-body #onboarding#onboarding .room-directory { gap:var(--space-4); margin-top:0; }
+body #onboarding#onboarding .room-directory { gap:var(--component-gap); margin-top:0; }
 body #onboarding#onboarding .plan-listing { padding:var(--card-inset)!important; border-radius:var(--radius-card)!important; }
 body #onboarding#onboarding .plan-listing strong { font-size:var(--text-body)!important; line-height:var(--leading-body); font-weight:var(--weight-medium); }
 body #onboarding#onboarding .room-detail>.room-people-grid { margin-top:var(--space-6); }
