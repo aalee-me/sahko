@@ -11,3 +11,7 @@ body.reduce-motion .offtask-demo *{transition:none!important;animation:none!impo
 .offtask-demo.returning .offtask-demo-person{animation:offtask-return 1.2s ease-out 1}
 /* Anonymous Orbiters remain distinct from neutral room cards. */
 body .anonymous-portrait{background:#716985!important;color:#fff9ef!important}
+.offtask-demo[data-phase=away] .offtask-demo-person,.offtask-settings[data-mode=social] .offtask-demo[data-phase=away] .offtask-demo-person{left:0!important;top:0!important;transform:none;offset-path:ellipse(35% 30% at 50% 52%);offset-rotate:0deg;offset-anchor:center;animation:offtask-mini-orbit 16s linear infinite}
+.offtask-settings[data-mode=social] .offtask-demo[data-phase=away] .offtask-demo-person{animation:offtask-mini-orbit 16s linear infinite,offtask-attention 1s ease-out 2}
+@keyframes offtask-mini-orbit{to{offset-distance:100%}}
+@media(prefers-reduced-motion:reduce){.offtask-demo[data-phase=away] .offtask-demo-person{animation:none!important}}

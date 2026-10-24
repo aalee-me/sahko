@@ -61,7 +61,7 @@ body .night-progress .night-progress-label{gap:.1875rem;pointer-events:none}
 body .night-progress-label>.block-eyebrow{font-size:.75rem;line-height:1.4;color:#999990;letter-spacing:.04em}
 body .night-progress-label>.block-count{font-size:1.5rem;line-height:1.2;font-weight:500;color:var(--text)}
 .progress-hover-hint{position:absolute;right:1rem;top:0;padding:.5rem .75rem;border:1px solid var(--line);border-radius:999px;background:var(--surface-raised);font-size:.75rem;color:var(--text);opacity:0;transform:translateY(.25rem);transition:opacity .2s,transform .2s;pointer-events:none}
-.night-progress:is(:hover,:focus-visible) .progress-hover-hint{opacity:1;transform:none}
+
 /* Dock activity has its own row, so short windows cannot push it over the timer. */
 body .dock-activity-row{display:flex;align-items:center;justify-content:space-between;gap:.5rem;min-height:4.5rem;order:-1;pointer-events:none}
 body .dock-activity-row>.room-action-rail{position:relative!important;inset:auto!important;flex-direction:row!important;width:max-content;flex-shrink:0;margin-left:auto;pointer-events:auto;gap:.375rem;padding:.5rem;border-radius:999px}
@@ -346,3 +346,34 @@ body #onboarding .room-detail-footer .room-entry-code{height:3rem;line-height:1.
 body #onboarding .room-entry-error{padding:0;border:0;border-radius:0;background:none;color:var(--danger,#d45761);font-size:.8125rem;line-height:1.4;margin:.5rem 0 0}
 body #onboarding .company-row.selected:after{content:none!important}
 body #onboarding .room-detail-footer .room-entry-code{box-sizing:border-box;height:3rem!important;min-height:3rem!important}
+/* Align both activity controls to the composer’s inner edges. */
+body .dock-activity-row{padding-inline:.875rem;align-items:flex-end;gap:.75rem;margin-bottom:.375rem}
+body .dock-activity-row>.thought-feed{margin:0!important;align-items:center}
+body .dock-activity-row .thought-rail{flex-basis:1.5rem!important;width:1.5rem;max-width:1.5rem;overflow:visible}
+body .thought-rail .thought-tick{height:2px;min-height:2px;margin:6px 0;transition:width .2s ease,background-color .2s ease}
+body .thought-rail:is(:hover,:focus-within) .thought-tick:last-child{width:1.5rem!important;background:var(--action-accent)}
+body .session-tools-toggle svg{overflow:visible}
+body .session-tools-toggle:not(:hover) svg{color:var(--text)}
+body .session-tools-toggle:hover{color:var(--action-accent)}
+body .session-tools-toggle svg path:last-child{transform-origin:4px center;transition:transform .2s ease}
+body .session-tools-toggle[aria-expanded=false]:hover svg path:last-child{transform:scaleX(1.13)}
+body .session-tools-menu:hover,body .inline-thought-form:focus-within,body .inline-thought-form:hover,body .space-tabs:hover{border-color:var(--action-accent)!important}
+body .session-tools-toggle:hover svg,body .room-action-rail button:hover svg{stroke:var(--action-accent)}
+body .memo-capture .memo-cancel{color:#a5a6a3!important;background:color-mix(in srgb,#a5a6a3 13%,transparent)!important}
+body .memo-capture>.memo-length{box-sizing:border-box;min-width:3.25rem;padding:.375rem .625rem;margin:0 .25rem 0 0;line-height:1.2;text-align:left;font-variant-numeric:tabular-nums}
+.recap-timeline{margin:0 0 1.5rem!important}.recap-thought-events{list-style:none;margin:1rem 0 0;padding:0;max-height:12rem;overflow-y:auto}.recap-thought-events li{display:flex;align-items:baseline;gap:1rem;padding:.625rem 0;border-bottom:1px solid var(--line);font-size:.8125rem}.recap-thought-events time{color:var(--muted);white-space:nowrap}
+body #onboarding#onboarding .code-action-pill>button,body #sessionRoomCode .code-action-pill>button,body #onboarding#onboarding .code-action-pill>button:hover,body #sessionRoomCode .code-action-pill>button:hover,body #onboarding .copy-room-code,.recap-room-code>button{border:0!important;background:none!important;box-shadow:none!important;outline-offset:2px}
+body #onboarding#onboarding .code-action-pill>button:hover svg,body #sessionRoomCode .code-action-pill>button:hover svg{stroke:var(--action-accent)}
+body .session-tools-toggle[aria-expanded=false] svg path:last-child{transform:none;stroke-dasharray:11;stroke-dashoffset:4;transition:stroke-dashoffset .2s ease}
+body .session-tools-toggle[aria-expanded=false]:hover svg path:last-child{transform:none;stroke-dashoffset:0}
+body #avatars .avatar:hover{border-color:var(--action-accent)!important}
+/* Code actions are inline glyphs, with no floating container or circular buttons. */
+body #onboarding .room-code-tools:before,.session-room-code:before{content:none!important}
+.room-code-line{display:flex;align-items:center;gap:.375rem;width:max-content;max-width:100%;position:relative}
+body #onboarding .room-code-tools output{display:block;width:max-content;font-size:1.25rem!important;line-height:1.5}
+body #onboarding#onboarding .code-action-pill,body #sessionRoomCode .code-action-pill{position:static!important;inset:auto!important;translate:none!important;display:flex;align-items:center;gap:.125rem;width:auto;min-height:0;padding:0!important;margin:0!important;border:0!important;border-radius:0!important;background:none!important;box-shadow:none!important;z-index:auto}
+body #onboarding#onboarding .code-action-pill>button,body #sessionRoomCode .code-action-pill>button{position:relative!important;inset:auto!important;width:1.5rem!important;min-width:1.5rem!important;height:1.75rem!important;padding:.25rem!important;border:0!important;border-radius:0!important;background:none!important;box-shadow:none!important}
+body #onboarding#onboarding .code-action-pill>button.copied,body #sessionRoomCode .code-action-pill>button.copied{width:1.5rem!important;min-width:1.5rem!important;padding:.25rem!important;border:0!important;border-radius:0!important;background:none!important}
+.code-action-pill>button.copied>span{position:absolute;left:.25rem;top:calc(100% + .25rem);font-size:.6875rem;line-height:1.2;color:var(--muted);white-space:nowrap;pointer-events:none}
+body #onboarding .room-code-row>button.copied,.recap-room-code>button.copied{border:0!important;border-radius:0!important;background:none!important;box-shadow:none!important}
+@media(max-width:359px){body #onboarding .room-code-tools output{font-size:1.125rem!important}body #onboarding .directory-people-wrap>.directory-presence{font-size:.75rem!important}}

@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server/dev.mjs",
     "build": "node build-fullstack.mjs",
-    "test": "node --test backend/api.test.mjs backend/setup.test.mjs backend/history.test.mjs"
+    "test": "node --test backend/api.test.mjs backend/setup.test.mjs backend/history.test.mjs backend/pickup.test.mjs"
   },
   "engines": {
     "node": ">=22.13"
