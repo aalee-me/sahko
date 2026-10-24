@@ -1,0 +1,10 @@
+.room-owner-badge{display:inline-block;margin-left:.375rem;color:var(--muted);font-size:.625rem;font-weight:500;line-height:1.25;letter-spacing:0;vertical-align:middle;text-transform:none}
+.room-management{padding:.375rem 0 0;margin:.375rem 0 0;border-top:1px solid var(--line)}
+.room-management>.transfer-owner-button{display:flex;align-items:center;justify-content:space-between;gap:.5rem;width:100%;margin:0;padding:.625rem .5rem;border:0;border-radius:.5rem;background:none;color:var(--text);font:inherit;font-size:.8125rem;text-align:left}
+.transfer-owner-button .ui-arrow,.transfer-owner-button svg{display:block;width:1rem;height:1rem;flex:0 0 1rem}
+.transfer-owner-button svg{fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.room-management>.transfer-owner-button:hover{background:var(--surface-hover)}
+.ownership-dialog{box-sizing:border-box;width:min(24rem,calc(100vw - 2rem));max-height:calc(100dvh - 2rem);padding:1.5rem;border:1px solid var(--line);border-radius:1.5rem;background:var(--surface-raised);color:var(--text);overflow:auto}
+.ownership-dialog::backdrop{background:#0007}.ownership-dialog h2{font-size:1.25rem;margin:0}.ownership-dialog p{font-size:.875rem;line-height:1.5;color:var(--muted)}
+.ownership-field{display:block;margin-top:1rem;font-size:.75rem;color:var(--muted)}.ownership-field select{display:block;box-sizing:border-box;width:100%;margin-top:.5rem;min-height:2.75rem;padding:.625rem .875rem;border:1px solid var(--line);border-radius:.875rem;background:var(--surface);color:var(--text);font:inherit;font-size:.875rem}
+.ownership-actions{display:flex;justify-content:flex-end;gap:.5rem;margin-top:1.25rem}.ownership-actions button{min-height:2.5rem;padding:.5rem .875rem;border-radius:999px;font-size:.8125rem}.ownership-error:empty{display:none}.ownership-dialog .ownership-error{color:#de5a67}

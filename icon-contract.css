@@ -1,0 +1,10 @@
+/* Functional icons use the shared 24-unit vectors and rounded 1.5-unit strokes.
+   Branding, progress diagrams and filled recording/playback artwork are separate. */
+.ui-icon-svg,
+body :is(.clock-controls,.session-tools-menu,.room-action-rail,.session-room-code,.room-code-tools,.return-status) svg,
+body :is(.header-pair,.open-settings,.people-chevron,.room-field-caption,.room-entry-eyebrow) svg,
+body :is(#thoughtMic,#releaseThought) svg {
+  fill:none;stroke:currentColor;stroke-width:1.5!important;stroke-linecap:round!important;stroke-linejoin:round!important;
+}
+.ui-icon-svg :is(path,rect,circle){vector-effect:none}
+body .ui-icon-label>svg{display:block;align-self:center}
