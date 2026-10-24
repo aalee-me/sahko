@@ -123,7 +123,8 @@ body #onboarding .room-detail .room-timing{margin-bottom:1.25rem!important}
 body #onboarding .room-detail .room-card-progress{margin-top:1.25rem!important}
 body #onboarding .session-tasks-heading{font-size:.875rem;font-weight:500;color:var(--muted);text-align:left;margin:0 0 .75rem}
 body #onboarding .current-session-tasks>.task-group-label{text-align:left;font-size:1rem!important;color:var(--text);margin-bottom:.75rem}
-body .night-progress .timeline-segment:not(.elapsed){stroke:var(--action-accent);stroke-dasharray:1 6;stroke-linecap:round;opacity:.5}
+body .night-progress .timeline-segment:not(.elapsed){stroke:#8e918c;stroke-dasharray:1 7;stroke-linecap:round;opacity:.75}
+body .night-progress .timeline-segment.break:not(.elapsed){stroke:var(--action-accent);opacity:.85}
 body .night-progress .timeline-segment.elapsed{stroke:var(--action-accent);stroke-dasharray:none;opacity:1}
 body #clock{color:var(--text)}
 body.onbreak #clock{color:var(--action-accent)}
@@ -377,3 +378,24 @@ body #onboarding#onboarding .code-action-pill>button.copied,body #sessionRoomCod
 .code-action-pill>button.copied>span{position:absolute;left:.25rem;top:calc(100% + .25rem);font-size:.6875rem;line-height:1.2;color:var(--muted);white-space:nowrap;pointer-events:none}
 body #onboarding .room-code-row>button.copied,.recap-room-code>button.copied{border:0!important;border-radius:0!important;background:none!important;box-shadow:none!important}
 @media(max-width:359px){body #onboarding .room-code-tools output{font-size:1.125rem!important}body #onboarding .directory-people-wrap>.directory-presence{font-size:.75rem!important}}
+
+/* The timer is primary; both numeric displays use the same readable figures. */
+body #clock,body .night-progress-label>.block-count{font-family:'DM Sans',sans-serif!important;font-weight:500!important;font-variant-numeric:tabular-nums!important;font-feature-settings:"tnum"!important;letter-spacing:0!important;font-kerning:normal}
+body .night-progress .night-progress-label{display:grid!important;grid-template-rows:auto auto;align-content:start!important;justify-content:start!important;row-gap:.25rem!important;height:auto!important;min-height:0!important}
+body .night-progress .night-progress-label>.block-eyebrow,body .night-progress .night-progress-label>.block-count{height:auto!important;min-height:0!important;margin:0!important;padding:0!important;line-height:1.15!important;align-self:start}
+body .night-progress .night-progress-label>.block-eyebrow{font-size:.75rem!important}
+body .night-progress .night-progress-label>.block-count{font-size:1.5rem!important}
+@media(max-width:600px){body #clock{font-size:clamp(2.75rem,12vw,3.5rem)!important;line-height:1.08!important;white-space:nowrap}body .night-progress .night-progress-label>.block-count{font-size:1.375rem!important}body .night-progress .night-progress-label{row-gap:.1875rem!important}body .night-progress .night-progress-label>.block-eyebrow{font-size:.6875rem!important}}
+/* Saved voice memos use one short, centered control row. */
+body .constellation-thought.voice-thought{width:10.25rem!important;max-width:calc(100vw - 3rem)!important;align-items:stretch!important}
+body .voice-thought .void-voice-controls{display:flex;flex-direction:column;align-items:stretch;gap:.25rem}
+body .voice-thought .memo-playback{display:grid!important;grid-template-columns:1.75rem 2.75rem max-content;align-items:center!important;justify-content:start;column-gap:.4375rem!important;width:max-content!important;max-width:100%;min-height:2.5rem;height:auto;padding:.375rem .5rem!important;box-sizing:border-box}
+body .voice-thought .memo-play{width:1.75rem!important;min-width:1.75rem!important;height:1.75rem!important;min-height:1.75rem!important;padding:.3125rem!important;align-self:center!important}
+body .voice-thought .memo-wave-seek{width:2.75rem!important;max-width:2.75rem!important;min-width:0!important;height:1.5rem!important;margin:0!important;align-self:center}
+body .voice-thought .memo-wave{width:100%;height:1.5rem!important;margin:0!important}
+body .voice-thought .memo-length{display:flex!important;align-items:center;align-self:center!important;font:500 .75rem/1 'DM Sans',sans-serif!important;font-variant-numeric:tabular-nums!important;letter-spacing:0!important;height:1.75rem!important;min-height:0!important;min-width:0!important;margin:0!important;padding:0!important;white-space:nowrap}
+body .voice-thought .memo-transcript{margin:0 .5rem!important;min-width:0}
+body .voice-thought .memo-transcript-preview{max-width:7.25rem!important}
+body .voice-thought>.constellation-time{margin:.25rem .5rem 0 0!important;align-self:flex-end}
+body .memo-capture{gap:.5rem;align-items:center;height:2.75rem;padding:.3125rem .4375rem}
+body .memo-capture>.memo-length{display:flex;align-items:center;align-self:center;min-height:1.875rem;height:auto;padding:0 .375rem;margin:0 .25rem 0 0;line-height:1}
