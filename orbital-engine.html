@@ -1556,6 +1556,7 @@
         uniform vec3 uColor6;
         uniform float uPastelLift;
         uniform float uWarmthTint;
+        uniform vec4 uRoomDrift[8];
 
         float hash21(vec2 p) {
           vec3 p3 = fract(vec3(p.xyx) * 0.1031);
@@ -1611,6 +1612,13 @@
 
           float heatVal = clamp(rawDensity * uHeatGain, 0.0, 1.08);
           vec3 baseCol = getQuantumRamp(heatVal, bgCol);
+          float awayWeight = 0.0;
+          for (int i = 0; i < 8; i++) {
+            vec4 away = uRoomDrift[i];
+            awayWeight = max(awayWeight, exp(-dot(vPlanarPos-away.xy,vPlanarPos-away.xy)/.11) * away.z);
+          }
+          float grey = dot(baseCol, vec3(.2126,.7152,.0722));
+          baseCol = mix(baseCol, vec3(grey * .72), clamp(awayWeight * .9, 0.0, .9));
 
           vec3 N = normalize(vNormalWatch);
           vec3 L = normalize(uLightDir);
