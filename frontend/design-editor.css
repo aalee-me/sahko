@@ -1,0 +1,38 @@
+/* Editor chrome intentionally has its own stable sizing, independent of edited tokens. */
+:is(body,#onboarding) .design-editor {
+  position:fixed; z-index:2147483000; top:1rem; right:1rem;
+  width:min(23rem,calc(100vw - 2rem)); max-height:calc(100dvh - 2rem);
+  box-sizing:border-box; overflow:auto; overscroll-behavior:contain;
+  padding:1.25rem; margin:0; border:1px solid var(--line); border-radius:1rem;
+  background:var(--surface-raised); color:var(--text); box-shadow:0 .75rem 3rem #0004;
+  font:400 .875rem/1.45 Manrope,Arial,sans-serif; text-align:left;
+}
+:is(body,#onboarding) .design-editor[hidden]{display:none!important}
+:is(body,#onboarding) .design-editor *{box-sizing:border-box}
+:is(body,#onboarding) .design-editor-head{position:sticky;top:-1.25rem;z-index:1;display:flex;align-items:center;gap:.5rem;width:auto;height:auto;min-height:0;margin:-1.25rem -1.25rem 1rem;padding:1rem 1.25rem;background:var(--surface-raised);border:0;border-bottom:1px solid var(--line)}
+:is(body,#onboarding) .design-editor-head h2{flex:1;margin:0;font:600 1rem/1.3 Manrope,Arial,sans-serif;letter-spacing:0}
+:is(body,#onboarding) .design-editor p{margin:.75rem 0;color:var(--muted);font-size:.8125rem;line-height:1.5;letter-spacing:0}
+:is(body,#onboarding) .design-editor :is(button,select,input,a){font:inherit;letter-spacing:0;line-height:1.4;box-shadow:none}
+:is(body,#onboarding) .design-editor button{display:inline-flex;align-items:center;justify-content:center;gap:.25rem;min-height:2rem;height:auto;width:auto;min-width:0;margin:0;padding:.375rem .625rem;border:1px solid var(--line);border-radius:.5rem;background:var(--surface);color:var(--text);font-size:.75rem!important;cursor:pointer}
+:is(body,#onboarding) .design-editor button:hover:not(:disabled){background:var(--surface-hover)}
+:is(body,#onboarding) .design-editor button:disabled{opacity:.4;cursor:default}
+:is(body,#onboarding) .design-editor :is(button,select,input,a):focus-visible{outline:2px solid var(--action-accent);outline-offset:2px}
+:is(body,#onboarding) .design-editor select{display:block;width:100%;min-width:0;max-width:100%;height:2.5rem;margin:.375rem 0 0;padding:.375rem .75rem;border:1px solid var(--line);border-radius:.5rem;background:var(--surface);color:var(--text);font-size:.875rem}
+:is(body,#onboarding) .design-editor :is(.design-editor-modes label,.design-editor-group){display:block;margin:.75rem 0;color:var(--muted);font-size:.75rem}
+:is(body,#onboarding) .design-editor-tools{display:flex;flex-wrap:wrap;gap:.5rem;margin:1rem 0}
+:is(body,#onboarding) .design-editor-fields{display:grid;gap:.875rem;margin:1rem 0}
+:is(body,#onboarding) .design-editor-field{display:grid;grid-template-columns:minmax(0,1fr) 4.75rem auto auto;align-items:center;gap:.25rem .5rem;margin:0;padding:0;font-size:.8125rem}
+:is(body,#onboarding) .design-editor-field>input{display:block;box-sizing:border-box;width:100%;height:2.25rem;min-height:0;margin:0;padding:.375rem .5rem;border:1px solid var(--line);border-radius:.375rem;background:var(--surface);color:var(--text);font:inherit;text-align:right}
+:is(body,#onboarding) .design-editor-field code{grid-column:1/-1;color:var(--muted);font-size:.6875rem;overflow-wrap:anywhere}
+:is(body,#onboarding) .design-editor-unit{color:var(--muted);font-size:.75rem}
+:is(body,#onboarding) .design-editor-field .design-editor-token-reset{min-height:2rem;padding:.25rem;border:0;background:none}
+:is(body,#onboarding) .design-editor-footer{display:flex;align-items:center;gap:.75rem;margin:1rem 0 0;padding:1rem 0 0;border-top:1px solid var(--line)}
+:is(body,#onboarding) .design-editor-footer>button{background:var(--action-accent);color:var(--on-action);border-color:transparent}
+:is(body,#onboarding) .design-editor-footer>a{color:var(--text);font-size:.75rem}
+:is(body,#onboarding) .design-editor[data-collapsed]{padding:0;overflow:visible}
+:is(body,#onboarding) .design-editor[data-collapsed]>:not(.design-editor-head){display:none}
+:is(body,#onboarding) .design-editor[data-collapsed]>.design-editor-head{position:static;margin:0;border:0;border-radius:inherit}
+.design-editor-selected{outline:2px dashed var(--action-accent)!important;outline-offset:4px}
+body.design-editor-picking :is(.ui-room-header,.ui-room-card,.room-detail,.unified-switcher){cursor:crosshair}
+.visual-editor-setting{margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--line)}
+@media(max-width:600px){:is(body,#onboarding) .design-editor{top:auto;bottom:1rem;max-height:55dvh;width:calc(100vw - 2rem)}:is(body,#onboarding) .design-editor-head h2{font-size:.875rem}:is(body,#onboarding) .design-editor-field{grid-template-columns:minmax(0,1fr) 4rem auto auto}}

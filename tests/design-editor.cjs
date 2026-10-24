@@ -1,0 +1,21 @@
+const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright'),fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+(async()=>{const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',headless:true,args:['--no-sandbox']});try{
+ const page=await browser.newPage({viewport:{width:1280,height:1000}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.route('https://sahko.test/**',async route=>{const url=new URL(route.request().url());if(url.pathname==='/orbital-engine.html')return route.fulfill({contentType:'text/html',body:'<body><script>orbital={ready:true,active(){},set(){},points(){return[]},contourPoint(){return{x:.5,y:.5}},progressArcPoint(){return{x:.5,y:.5}}}</script>'});try{const file=path.join(__dirname,'../pages',url.pathname==='/'?'index.html':url.pathname);await route.fulfill({body:fs.readFileSync(file),contentType:file.endsWith('.css')?'text/css':file.endsWith('.js')?'application/javascript':'text/html'})}catch{await route.abort()}});
+ await page.goto('https://sahko.test/components.html');await page.getByRole('button',{name:'Edit styles',exact:true}).click();const panel=page.getByRole('complementary',{name:'Visual style editor'});await panel.waitFor();
+ await panel.getByRole('spinbutton',{name:'Card padding in rem',exact:true}).fill('2');
+ assert.equal(await page.locator('.ui-room-card').evaluate(e=>getComputedStyle(e).paddingLeft),'32px');
+ await page.reload();assert.equal(await page.locator('.ui-room-card').evaluate(e=>getComputedStyle(e).paddingLeft),'32px');await page.getByRole('button',{name:'Edit styles',exact:true}).click();
+ await panel.getByRole('combobox',{name:'Edit breakpoint',exact:true}).selectOption('mobile');await panel.getByRole('spinbutton',{name:'Card padding in rem',exact:true}).fill('1.25');
+ assert.equal(await page.locator('.ui-room-card').evaluate(e=>getComputedStyle(e).paddingLeft),'32px','Phone edit must not affect desktop');
+ await page.setViewportSize({width:390,height:844});assert.equal(await page.locator('.ui-room-card').evaluate(e=>getComputedStyle(e).paddingLeft),'20px');
+ await panel.getByRole('button',{name:'Collapse',exact:true}).click();assert(await panel.getByRole('button',{name:'Expand',exact:true}).isVisible());await panel.getByRole('button',{name:'Expand',exact:true}).click();
+ await panel.getByRole('spinbutton',{name:'Card padding in rem',exact:true}).fill('99');assert.equal(await page.locator('.ui-room-card').evaluate(e=>getComputedStyle(e).paddingLeft),'20px','Reject out-of-range token');
+ await panel.getByRole('button',{name:'Reset breakpoint',exact:true}).click();assert.equal(await page.locator('.ui-room-card').evaluate(e=>getComputedStyle(e).paddingLeft),'16px');
+ const downloadEvent=page.waitForEvent('download');await panel.getByRole('button',{name:'Export CSS',exact:true}).click();const download=await downloadEvent;const exported=fs.readFileSync(await download.path(),'utf8');assert(exported.includes('--card-inset: 2rem;'));assert(!exported.includes('99rem'));
+ await page.goto('https://sahko.test/?design=1');await page.evaluate(()=>{config.reduced=true;config.soundVolume=0});await panel.waitFor();assert(await panel.evaluate(e=>e.parentElement.id==='onboarding'));
+ await panel.getByRole('button',{name:'Collapse',exact:true}).click();await page.locator('#onboardNext').click();await page.getByRole('tab',{name:'Join existing room',exact:true}).click();
+ await panel.getByRole('button',{name:'Expand',exact:true}).click();await panel.getByRole('button',{name:'Pick a component',exact:true}).click();await page.locator('.ui-room-title').first().click();assert.equal(await panel.getByRole('combobox',{name:'Component styles',exact:true}).inputValue(),'Cards');assert(await page.locator('.design-editor-selected').count());
+ await panel.getByRole('button',{name:'Close',exact:true}).click();assert(await panel.isHidden());assert.equal(await page.locator('.design-editor-selected').count(),0);
+ await page.screenshot({path:'/tmp/sahko-design-editor-preview.png'});assert.deepEqual(errors,[]);console.log('PASS live rem edits, persistence, responsive scopes, bounds, reset, CSS export, modal hosting and component picker');
+}finally{await browser.close()}})().catch(e=>{console.error(e);process.exit(1)});

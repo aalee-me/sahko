@@ -77,3 +77,18 @@ To change **title-to-code spacing**, edit the shared header `row-gap: var(--spac
 Checks 320/390/768/1440px widths at 100% and 125% text, grid alignment and bounds, timing order, expanded header and credential validation. Screenshots go to `/tmp`.
 
 For future migrations: move a complete component family into this stylesheet, remove its old sizing rules, reuse its atom/molecule, and add an example to the reference. Scoped adapters currently override older setup rules during migration; unrelated orbital, timer and Void layout rules remain in their existing files.
+
+
+## Edit visually without writing CSS
+
+1. Open the app → Settings → Visual design → **Open design editor**. Or use **Edit styles** on the component reference. The direct app link is `https://aalee-me.github.io/sahko/?design=1`.
+2. Select Desktop or Phone. Changes affect that breakpoint only; resize the browser to preview it. On a phone, Collapse keeps the preview visible while you inspect it.
+3. Pick a component on the page, or select Typography, Cards, Controls, or Spacing. Enter a rem value. Blank means inherit the design system default, shown as a placeholder; each token has Reset. Reset breakpoint clears that breakpoint's overrides.
+4. Changes are saved in this browser and immediately previewed across components using the token. They do not alter the repository or other visitors. Desktop and phone share the same named tokens but can have different overrides.
+5. Click **Export CSS**. Rename the downloaded `sahko-design-overrides.css` to `design-overrides.css`, then replace `frontend/design-overrides.css` in GitHub and commit. This file is already linked after the foundation on both the app and reference page. If updating the existing `gh-pages` publication directly, replace `design-overrides.css` at that branch's root as well. Current deployment does not automatically copy main to gh-pages.
+
+Editing source directly: open `frontend/design-overrides.css` using GitHub's pencil button or a local editor. Use `:root` custom properties; the example in that file shows both breakpoints. Keep `design-system.css` as the baseline and use the overrides file for your intentional customizations.
+
+**rem:** `1rem` equals the user's root text size (normally 16px). `1.5rem` normally equals 24px and scales with Settings → Text size. Border hairlines, SVG viewBox geometry and media-query thresholds may remain px/unitless; component text and spacing use rem.
+
+This is a token/style editor, not a page builder. It supports shared sizing, picking components, local persistence, breakpoint overrides and export. Freeform dragging, new sections, text content editing, multiplayer editing, and publishing directly from the panel are not included. A full Framer authoring workflow would require a separate content/layout model or rebuilding the editable pages in Framer.
