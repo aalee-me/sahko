@@ -176,8 +176,5 @@ body #onboarding#onboarding .rhythm-layout .clock-reveal:not(.open){display:none
 body #onboarding :is(.ui-choice,.company-row){box-sizing:border-box;min-height:var(--control-height);border:1px solid var(--line)!important;border-radius:1rem!important;background:var(--surface-raised)!important;padding:var(--space-3) var(--space-4)!important}
 body #onboarding :is(.ui-choice:has(input:checked),.company-row.selected){border-color:var(--action-accent)!important;background:var(--surface-hover)!important;color:var(--text)!important}
 body .ui-choice>input[type=radio]:checked{border-color:var(--action-accent);background:var(--action-accent);box-shadow:inset 0 0 0 .1875rem var(--surface-hover);border-width:1px}
-.roster-flight{display:grid;place-items:center;box-sizing:border-box;overflow:hidden;border-radius:50%;line-height:1}
-.roster-flight>:is(img,.portrait-fallback){display:grid;place-items:center;box-sizing:border-box;width:100%!important;height:100%!important;min-width:0!important;min-height:0!important;max-width:none!important;max-height:none!important;object-fit:cover;border-radius:50%;margin:0!important}
-
 .company-label{display:flex;flex-direction:column;gap:var(--space-1);min-width:0}
 body #onboarding .company-label>.company-description{font-size:var(--text-caption);line-height:var(--leading-label);color:var(--muted)}
