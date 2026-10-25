@@ -51,12 +51,14 @@
   }
   function rosterMotion(menu,{sources,targets,panel}) {
     menu.classList.add('roster-motion');
-    let animations=[];
+    let animations=[],closing=false;
+    const reduced=()=>window.matchMedia('(prefers-reduced-motion: reduce)').matches||(typeof config!=='undefined'&&config.reduced);
+    menu.querySelector('summary').addEventListener('click',event=>{if(!menu.open||reduced())return;event.preventDefault();if(closing)return;const list=menu.querySelector(panel);if(!list){menu.open=false;return}closing=true;const exit=list.animate([{opacity:1,transform:'translateY(0)'},{opacity:0,transform:'translateY(-.25rem)'}],{duration:120,easing:'ease-in',fill:'forwards'});animations.push(exit);exit.finished.then(()=>{closing=false;menu.open=false},()=>{closing=false})});
     menu.addEventListener('toggle',()=>{
       animations.forEach(a=>a.cancel());animations=[];
-      if(!menu.open)return;
       const from=[...menu.querySelectorAll(sources)].filter(a=>a.getBoundingClientRect().width>0),to=[...menu.querySelectorAll(targets)];
-      if(window.matchMedia('(prefers-reduced-motion: reduce)').matches||(typeof config!=='undefined'&&config.reduced))return;
+      if(reduced())return;
+      if(!menu.open){const returning=[...from,...menu.querySelectorAll('.people-overflow,.directory-overflow')].filter(a=>a.getBoundingClientRect().width>0);returning.forEach((avatar,index)=>animations.push(avatar.animate([{opacity:0,transform:'translateY(.5rem)'},{opacity:1,transform:'translateY(0)'}],{duration:180,delay:index*50,fill:'backwards',easing:'ease-out'})));return}
       const list=menu.querySelector(panel);
       if(list)animations.push(list.animate([{opacity:0},{opacity:1}],{duration:160,delay:90,fill:'backwards',easing:'ease-out'}));
       from.forEach((avatar,index)=>animations.push(avatar.animate([{opacity:1,transform:'translateY(0)'},{opacity:0,transform:'translateY(.5rem)'}],{duration:180,delay:index*50,fill:'backwards',easing:'ease-in'})));

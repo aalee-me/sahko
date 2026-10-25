@@ -144,3 +144,5 @@ Closed/Open replaces Solo (private)/Open world in session setup. Closed means on
 Roster transitions never move portraits to list coordinates; orbital portraits never participate in the dropdown animation. The orbital header includes a responsive +N count, and Friends dropdowns in compact view are capped at 45vw × min(11rem, 28dvh), with scrolling and no automatic secondary panel on hover. Dock positioning removes workspace slide transforms before calculating its fixed anchor, keeping space navigation stationary.
 
 The session-menu SVG morphs its existing list strokes and dots into an X and reverses on close; the menu panel retains its original slide animation. Sent thoughts retain the upward 750ms motion, now measured against the selected message’s text bounds. The message is revealed at landing and remains visible for one second before fading.
+
+Closing a people menu fades the list over 120ms, then returns the header portraits and +N indicator upward by .5rem over 180ms with the same 50ms stagger. Reduced motion closes immediately.
