@@ -39,6 +39,10 @@
       extra.setAttribute('aria-hidden','true');summary.insertBefore(extra,summary.querySelector('.directory-chevron'));
     }
   }
+  function choice({label,name,value,selected=false,onChange}){
+    const root=node('label','ui-choice'),input=document.createElement('input');input.type='radio';input.name=name;input.value=value;input.checked=selected;
+    input.onchange=()=>{if(input.checked)onChange?.(value)};root.append(input,node('span','',label));return root;
+  }
   function positionMarkerHint(marker,hint,container){
     const dot=marker.getBoundingClientRect(),box=container.getBoundingClientRect(),width=hint.getBoundingClientRect().width;
     const center=dot.x+dot.width/2,left=Math.max(8,Math.min(innerWidth-width-8,center-width/2));
@@ -56,18 +60,19 @@
       const list=menu.querySelector(panel);
       if(list)animations.push(list.animate([{opacity:0},{opacity:1}],{duration:180,easing:'ease-out'}));
       to.forEach((avatar,index)=>{
-        const source=from[Math.min(index,from.length-1)];if(!source)return;
+        const source=from[index],delay=index*70,duration=360;
+        if(!source){animations.push(avatar.animate([{opacity:0,translate:'0 -.375rem'},{opacity:1,translate:'0 0'}],{duration:200,delay,fill:'backwards'}));return}
         const a=source.getBoundingClientRect(),b=avatar.getBoundingClientRect();if(!a.width||!b.width)return;
-        const delay=index*70,duration=360;
-        avatar.style.transformOrigin='center';
-        animations.push(avatar.animate([
-          {transform:`translate(${a.x+a.width/2-b.x-b.width/2}px,${a.y+a.height/2-b.y-b.height/2}px) scale(${a.width/b.width})`,opacity:0},
-          {opacity:1,offset:.08},
-          {transform:'translate(0,0) scale(1)',opacity:1}
-        ],{duration,delay,easing:'cubic-bezier(.22,.75,.2,1)',fill:'backwards'}));
+        const ghost=source.cloneNode(true);ghost.className='roster-flight';ghost.removeAttribute('tabindex');ghost.removeAttribute('data-tooltip');ghost.setAttribute('aria-hidden','true');ghost.inert=true;
+        Object.assign(ghost.style,{position:'fixed',left:a.x+'px',top:a.y+'px',width:a.width+'px',height:a.height+'px',transformOrigin:'center',pointerEvents:'none',zIndex:10000});
+        (menu.closest('dialog')||document.body).append(ghost);
+        const flight=ghost.animate([{transform:'translate(0,0) scale(1)',opacity:0},{opacity:1,offset:.01},{transform:`translate(${b.x+b.width/2-a.x-a.width/2}px,${b.y+b.height/2-a.y-a.height/2}px) scale(${b.width/a.width})`,opacity:1}],{duration,delay,easing:'cubic-bezier(.22,.75,.2,1)',fill:'backwards'});
+        flight.finished.then(()=>ghost.remove(),()=>ghost.remove());animations.push(flight);
+        animations.push(avatar.animate([{opacity:0},{opacity:0,offset:.99},{opacity:1}],{duration,delay,fill:'backwards'}));
       });
-      from.forEach((avatar,index)=>animations.push(avatar.animate([{opacity:1},{opacity:0}],{duration:65,delay:index*70,fill:'backwards'})));
+      from.forEach((avatar,index)=>animations.push(avatar.animate([{opacity:1},{opacity:0}],{duration:1,delay:index*70,fill:'backwards'})));
+
     });
   }
-  window.SahkoUI={positionMarkerHint,rosterMotion,button,iconSVG,iconLabel,roomHeader,rosterOverflow};
+  window.SahkoUI={choice,positionMarkerHint,rosterMotion,button,iconSVG,iconLabel,roomHeader,rosterOverflow};
 })();
