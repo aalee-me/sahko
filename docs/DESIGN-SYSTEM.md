@@ -191,7 +191,7 @@ Closed/Open cards use the shared person/people vectors, consistent 1rem padding 
 
 Closed/Open setup choices share a 0.25rem vertical gap and 4.25rem minimum row height. Desktop timer spacing uses `--desktop-timer-gap` (default 0.375rem), adjustable under Settings. Mobile retains its existing compact gap. The optional PiP scroll-to-controls setting moves the controls below the first viewport without changing regular desktop layouts. Checkpoint recap and exit controls share the same type and control sizing.
 
-Progress segment tooltips have three rows: block identity, projected clock time, and the muted caption “projected start.” The completion marker retains its separate percent tooltip. The returning-user popup sits at the right with the check-up countdown above its action.
+Progress segment tooltips have three rows: block identity, projected clock time, and the muted caption “projected start.” The completion marker retains its separate percent tooltip. The returning-user check-up sits in the identity row below the Orbiters, aligned to the shared right content edge, with its countdown above the action. It has no outer panel.
 
 `recap-art.js` and `recap-art.css` own the supplied SVG layer composition, slow continuous movement, page crossfades, reduced-motion behavior, and shared PNG export composition. Original supplied assets live under `frontend/assets/recap/`; they contain their original gradients and embedded image data. No generated grain is added. Recap shell, pages, timeline and footer center on the same axis.
 
