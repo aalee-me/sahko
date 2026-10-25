@@ -168,3 +168,10 @@ The additive `frontend/clouds.js` / `clouds.css` module wraps the original priva
 Settings → Demo tools is collapsed by default. Its Run session demo switch calls the existing local 30-second simulation, reflects running/stopped state, and is disabled in live rooms. The compact header places the supplied Sähkö vector wordmark at the far right as the home action, with confirmation before ending a running session. Exit compact view remains a separate utility. The activity rail keeps its natural message-position widths on hover; the bottom line has no special expansion.
 
 Settings also includes **Show navigation shortcuts**, off by default and stored locally. It controls the legacy Live room / Plan session / Solo / Compact view shortcuts while retaining the primary setup flow and compact header utilities. The camera, demo and navigation switches share the native `.ui-switch` atom and keyboard behavior. The Void camera, organize and undo actions share the floating capsule and reveal their labels on hover/focus. Capture opens a contracted viewfinder with geometry as the default, an optional Show text switch and a Save PNG action.
+
+
+### Input alignment contract
+
+Task rows use a 1.5rem leading control box and a 1.5rem input line. Plus, checkbox and remove controls align to the task's first line; dates stay in the nested text column. The plus circle stays 18px within a centered 24px vector; its cross grows from 8 to 12 vector units.
+
+The Void composer separates the text line, icon artwork and square control target. Full view uses a 1.5rem line and 2.25rem controls; compact uses a 1.25rem line and 2rem controls. Its shared rules live in `frontend/design-system.css` using `--composer-*` variables. `fitThought` in `frontend/experience.js` measures whole text lines, keeps an empty placeholder to one line, and refits on input, viewport resize and compact-mode changes. `tests/input-alignment.cjs` verifies centers, square controls, multiline sizing and task gaps at 320/390/768/1440px.
