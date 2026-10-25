@@ -39,6 +39,12 @@
       extra.setAttribute('aria-hidden','true');summary.insertBefore(extra,summary.querySelector('.directory-chevron'));
     }
   }
+  function positionMarkerHint(marker,hint,container){
+    const dot=marker.getBoundingClientRect(),box=container.getBoundingClientRect(),width=hint.getBoundingClientRect().width;
+    const center=dot.x+dot.width/2,left=Math.max(8,Math.min(innerWidth-width-8,center-width/2));
+    hint.style.left=(left-box.x)+'px';hint.style.top=(dot.bottom-box.y+8)+'px';
+    hint.style.setProperty('--marker-arrow-x',(center-left)+'px');
+  }
   function rosterMotion(menu,{sources,targets,panel}) {
     menu.classList.add('roster-motion');
     let animations=[];
@@ -63,5 +69,5 @@
       from.forEach((avatar,index)=>animations.push(avatar.animate([{opacity:1},{opacity:0}],{duration:65,delay:index*70,fill:'backwards'})));
     });
   }
-  window.SahkoUI={rosterMotion,button,iconSVG,iconLabel,roomHeader,rosterOverflow};
+  window.SahkoUI={positionMarkerHint,rosterMotion,button,iconSVG,iconLabel,roomHeader,rosterOverflow};
 })();

@@ -411,3 +411,13 @@ body #voidForm.inline-thought-form .void-actions>#releaseThought:not(:disabled):
 body #voidForm.inline-thought-form .void-actions>#releaseThought:not(:disabled)>svg{opacity:1;transform:translateY(0) scale(1);transition-delay:.035s}
 @media(prefers-reduced-motion:reduce){body #voidForm.inline-thought-form .void-actions>#releaseThought,body #voidForm.inline-thought-form .void-actions>#releaseThought::before,body #voidForm.inline-thought-form .void-actions>#releaseThought>svg{transition:none!important}}
 body.reduce-motion #voidForm.inline-thought-form .void-actions>#releaseThought,body.reduce-motion #voidForm.inline-thought-form .void-actions>#releaseThought::before,body.reduce-motion #voidForm.inline-thought-form .void-actions>#releaseThought>svg{transition:none!important}
+
+/* Progress captions share the dark tooltip treatment and only follow dot hover. */
+body :is(.progress-hover-hint,.card-progress-percent){position:absolute;right:auto;bottom:auto;box-sizing:border-box;margin:0;padding:.375rem .5rem;border:0;border-radius:.5rem;background:#202020;color:#f6f5e9;font:400 .6875rem/1.4 'DM Sans',sans-serif;white-space:nowrap;box-shadow:0 .3125rem 1.125rem #0003;transform:none!important;pointer-events:none;z-index:40;opacity:0;transition:opacity .12s}
+body :is(.progress-hover-hint,.card-progress-percent):before{content:'';position:absolute;left:var(--marker-arrow-x,50%);bottom:100%;translate:-50% 0;border:5px solid transparent;border-bottom-color:#202020}
+body :is(.night-progress,.room-card-progress).marker-hovered :is(.progress-hover-hint,.card-progress-percent){opacity:1}
+
+/* The feed navigator is a five-bar control, never one bar per message. */
+body .thought-feed>.thought-rail{box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;align-self:center;flex:0 0 1.5rem!important;width:1.5rem!important;min-width:1.5rem;max-width:1.5rem;height:2rem!important;min-height:2rem!important;max-height:2rem!important;gap:.25rem;margin:0!important;padding:0!important;overflow:hidden!important}
+body .thought-feed>.thought-rail>:nth-child(n+6){display:none!important}
+body .thought-feed>.thought-rail:before,body .thought-feed>.thought-rail:after{content:none!important;display:none!important}
