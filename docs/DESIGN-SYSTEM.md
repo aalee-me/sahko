@@ -165,13 +165,24 @@ The additive `frontend/clouds.js` / `clouds.css` module wraps the original priva
 
 ### Quiet demo controls and compact home
 
-Settings → Demo tools is collapsed by default. Its Run session demo switch calls the existing local 30-second simulation, reflects running/stopped state, and is disabled in live rooms. The compact header places the supplied Sähkö vector wordmark at the far right as the home action, with confirmation before ending a running session. Exit compact view remains a separate utility. The activity rail keeps its natural message-position widths on hover; the bottom line has no special expansion.
+Settings → Demo tools is collapsed by default. Its Run session demo switch calls the existing local 30-second simulation, reflects running/stopped state, and is disabled in live rooms. The compact header places the supplied Sähkö vector wordmark at the far left as the home action, with confirmation before ending a running session. Exit compact view remains a separate utility. The activity rail keeps its natural message-position widths on hover; the bottom line has no special expansion.
 
-Settings also includes **Show navigation shortcuts**, off by default and stored locally. It controls the legacy Live room / Plan session / Solo / Compact view shortcuts while retaining the primary setup flow and compact header utilities. The camera, demo and navigation switches share the native `.ui-switch` atom and keyboard behavior. The Void camera, organize and undo actions share the floating capsule and reveal their labels on hover/focus. Capture opens a contracted viewfinder with geometry as the default, an optional Show text switch and a Save PNG action.
+Settings also includes **Show navigation shortcuts**, off by default and stored locally. It controls the legacy Live room / Plan session / Solo / Compact view shortcuts while retaining the primary setup flow and compact header utilities. Camera, demo, navigation and visibility switches share the native `.ui-switch` atom and keyboard behavior. The Void camera, organize and undo actions live inside the existing expanding menu, replacing room actions while in the private Void. Capture opens a contracted viewfinder with geometry as the default, an optional Show text switch and a Save PNG action.
 
 
 ### Input alignment contract
 
-Task rows use a 1.5rem leading control box and a 1.5rem input line. Plus, checkbox and remove controls align to the task's first line; dates stay in the nested text column. The plus circle stays 18px within a centered 24px vector; its cross grows from 8 to 12 vector units.
+Task rows use a 1.5rem leading control box and a 1.5rem input line. Plus, checkbox and remove controls align to the task's first line; dates stay in the nested text column. The plus circle stays 18px within a centered 24px vector; its cross spans 8 vector units.
 
 The Void composer separates the text line, icon artwork and square control target. Full view uses a 1.5rem line and 2.25rem controls; compact uses a 1.25rem line and 2rem controls. Its shared rules live in `frontend/design-system.css` using `--composer-*` variables. `fitThought` in `frontend/experience.js` measures whole text lines, keeps an empty placeholder to one line, and refits on input, viewport resize and compact-mode changes. `tests/input-alignment.cjs` verifies centers, square controls, multiline sizing and task gaps at 320/390/768/1440px.
+
+
+### Session hierarchy and member details
+
+`frontend/session-layout.js` / `session-layout.css` own the timer-first row, its measured Orbiters reserve, bottom-aligned playback group, and shared header edges. Sähkö stays at the left and Profile at the right. Title/code sit below the timer, and Block sits above the progress arc. The progress marker is 16px. Transparent segment hit paths retain keyboard focus across timer repaints and show block/break number plus projected start time; the dot still shows completion percent. A paused projection assumes resuming now.
+
+Pair desktop reveals a floating identification pill without moving adjacent controls or intercepting their pointer events. The Settings gear rotates on hover/focus; reduced motion skips that animation. The Who’s around search uses Search for room / Search by code, name, friend and filters locally by room title, code and member name/handle.
+
+`frontend/ui-preferences.js` adds local visibility switches: task dates are shown by default and can be hidden; photo-upload controls are hidden by default, including demo participant uploads. These switches do not delete stored dates/photos. `frontend/compact-roster.js` adds available handles and expands compact participant actions inline within the existing Orbiters dropdown. Functional person actions use shared SVG icons; no second member profile pane opens in compact mode.
+
+Closed/Open cards use the shared person/people vectors, consistent 1rem padding and no resting border. Invite friends has a leading people icon and adjacent external arrow; its selected count owns the opposite corner. Its search has one rounded focus boundary.

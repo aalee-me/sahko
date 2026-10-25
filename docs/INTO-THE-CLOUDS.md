@@ -1,13 +1,13 @@
 # Into the Clouds — additive demo
 
-The existing Void remains the private bottom tier. A new anonymous public tier sits one viewport above it. Opening the Void always starts at the bottom; the tether, normal upward scroll or a swipe reveals Into the Clouds. Existing text/voice capture, dragging, chronological organization, undo and the original portal transition remain available.
+The existing Void remains the private bottom tier. A new anonymous public tier sits one viewport above it. Opening the Void always starts at the bottom; the tether, normal upward scroll or a swipe reveals Into the Clouds. Existing text/voice capture, dragging, chronological organization, undo and the original portal transition remain available. The existing menu above the composer switches to Capture, Organize, Undo and Info in the private Void; no second toolbar is added.
 
 ## Try it without hosting or paid APIs
 
 - The GitHub Pages build automatically uses the **Local demo** store. No Cloud API requests are sent from that build. Released copies and reactions are shared between tabs of the same browser/origin; they are not shared across the internet.
 - Open the site in two separate tabs. Release a short typed thought in one tab, then visit Into the Clouds in the other and hold space. The originating tab's tether pulses quietly. Browser tabs use separate anonymous viewer tokens.
 - `npm start` runs the prepared shared API against local SQLite. Development mode enables Clouds locally. It requires no external service, paid API, subscription or deployment. `SAHKO_CLOUDS_ENABLED=0 npm start` disables it.
-- Local demo releases are never automatically uploaded if a backend is added later. API mode and local demo mode are labeled explicitly. A failed shared write stays an inline error; it does not silently create or upload another copy.
+- Local demo releases are never automatically uploaded if a backend is added later. API mode and local demo mode are disclosed explicitly in the top-right Info card. A failed shared write stays an inline error; it does not silently create or upload another copy.
 
 ## Private storage and deliberate release
 
@@ -31,11 +31,11 @@ The browser supplies an unguessable `x-sahko-cloud-client` token. The server sto
 
 The prepared Worker defaults to **disabled** unless `CLOUDS_ENABLED=true` is configured. Apply `migrations/0012_clouds.sql` along with the existing migrations, bind DB, and set a deployment-specific `CLOUDS_HASH_SECRET` only after choosing and approving a host. No backend deployment or billing change was performed for this feature. Internet deployment should add edge/IP rate limiting and a reporting/moderation process; anonymous per-token limits are suitable for this demo but can be evaded by minting new tokens.
 
-Polling runs at most every 30 seconds while the Void/Clouds is open and only if viewing the public tier or checking a released copy. Local cross-tab reactions use BroadcastChannel/storage events. No push notifications, toast notifications, replies, external AI/transcription APIs or background uploads are added. Motion parallax is optional and enabled through a user gesture; reduced motion freezes ambient movement.
+Polling runs at most every 30 seconds while the Void/Clouds is open and only if viewing the public tier or checking a released copy. Local cross-tab reactions use BroadcastChannel/storage events. No push notifications, toast notifications, replies, external AI/transcription APIs or background uploads are added. Pointer parallax is on by default. Orientation events are used automatically when the browser already permits them; no permission prompt is bypassed. Reduced motion freezes ambient movement.
 
 ## Capture Constellation
 
-The floating Void toolbar uses camera, connected-node and undo vectors with labels revealed on hover/focus. Camera opens a framed viewfinder before any download. Capture exports a PNG locally using an offscreen canvas; it makes no network request. Geometry only is the default on every open. The Show text switch updates the preview, and Save PNG downloads that exact preview. A timestamp watermark is included in both modes. Export uses up to 3× resolution, bounded to approximately 4096 pixels per canvas dimension. The private constellation's current positions and connections are preserved; voice audio is never embedded in an image.
+The existing expanding menu changes to camera, connected-node and undo vectors while in the Void, using the same tooltips and action targets as the session menu. Camera opens a framed viewfinder before any download. Capture exports a PNG locally using an offscreen canvas; it makes no network request. Geometry only is the default on every open. The Show text switch updates the preview, and Save PNG downloads that exact preview. A timestamp watermark is included in both modes. Export uses up to 3× resolution, bounded to approximately 4096 pixels per canvas dimension. The private constellation's current positions and connections are preserved; voice audio is never embedded in an image.
 
 ## Validation
 
@@ -45,6 +45,6 @@ The floating Void toolbar uses camera, connected-node and undo vectors with labe
 
 The viewport uses mandatory full-tier snapping. Wheel/trackpad intent starts a 920 ms eased vertical transition; lingering momentum cannot bounce immediately into another tier. Native touch scrolling retains snap points, and reduced motion skips the animated travel. The organized private thought list keeps its own scrolling before transitioning at its edge.
 
-Thought actions are shared 24 px SVG controls: Copy text, Send a copy into the clouds, and Info. Explanations appear only in the explicitly opened info card. Short success/error feedback remains inline. Public explanatory copy is also behind Info; the Local demo/Anonymous scope badge stays visible. Help cards overlay the field without resizing it or shifting their trigger buttons. `tests/clouds-controls.cjs` checks the vectors, opt-in help, phone bounds, clipboard/release, eased intermediate scroll positions, two-way snapping and reduced motion.
+Thought actions are shared 24 px SVG controls: Copy text, Send a copy into the clouds, and Info. Explanations appear only in the explicitly opened info card. Short success/error feedback remains inline. Public explanatory copy and local/shared mode disclosure are behind the top-right Info card. The field is edge-to-edge procedural clouds, with no heading, mode badge or motion button. A quiet downward tether mirrors the private upward tether and returns to the Void. Help cards overlay the field without resizing it or shifting their trigger buttons. `tests/clouds-controls.cjs` checks the vectors, opt-in help, phone bounds, clipboard/release, eased intermediate scroll positions, two-way snapping and reduced motion.
 
-`frontend/constellation-camera.js` owns the local viewfinder and cancels stale async previews when the toggle changes or the view closes. `tests/constellation-camera.cjs` covers organize/undo preservation, geometry-first rendering, text toggling, phone bounds and the exact preview download.
+`frontend/cloud-atmosphere.js` renders a small local fractal-noise canvas for the cloud field. It makes no network or image-generation request. `frontend/constellation-camera.js` owns the local viewfinder and cancels stale async previews when the toggle changes or the view closes. `tests/constellation-camera.cjs` covers organize/undo preservation, geometry-first rendering, text toggling, phone bounds and the exact preview download.
