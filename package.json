@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server/dev.mjs",
     "build": "node build-fullstack.mjs",
-    "test": "node --test backend/api.test.mjs backend/setup.test.mjs backend/history.test.mjs backend/insights.test.mjs backend/pickup.test.mjs server/wifi.test.mjs",
+    "test": "node --test backend/api.test.mjs backend/clouds.test.mjs backend/setup.test.mjs backend/history.test.mjs backend/insights.test.mjs backend/pickup.test.mjs server/wifi.test.mjs",
     "wifi": "node server/wifi.mjs",
     "wifi:setup": "node server/setup-wifi.mjs"
   },

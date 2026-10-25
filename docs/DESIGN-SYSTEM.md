@@ -152,3 +152,12 @@ Task lists share `.task-surface` across setup, check-in and Tasks: 14px task tex
 Roster header portraits use CSS transitions tied to the native details state in both directions, so closing does not flash visible before restarting a separate animation. Dropdown headings read Orbiters and use the shared people vector. Compact headers expose an icon-only Exit compact view control, retaining the original full-view/PiP return behavior. Closed/Open titles and descriptions align to the same left edge: For you to lock in alone / For friends or other orbiters to join.
 
 Room titles and codes share the identity type role (Manrope at `--text-title`) in room headers, reviews and full session view; compact identity uses 1.125rem for both. Editable room title/code fields share the body type role. Review details—including timeline labels, times, finish estimate and tasks—use .875rem with weight/color for emphasis.
+
+
+### Live time-left control
+
+`SahkoControls.remainingDial` is the seconds-based rotary countdown atom in `frontend/remaining-dial.js`. Time left is the first timer-settings card and reads the actual live `M:SS`; turning the knob changes the current countdown without changing the planned focus/break interval. Arrow Left/Right adjust one second; Arrow Up/Down or Shift adjust one minute. The separate interval cards retain the setup dial and presets. Room ownership restrictions remain in `frontend/session-tools.js`.
+
+### Into the Clouds
+
+The additive `frontend/clouds.js` / `clouds.css` module wraps the original private Void in a two-viewport stack. Its labels use rem units. Capture, typed-thought actions and the quiet tether are independent controls; voice release is unavailable. See `docs/INTO-THE-CLOUDS.md` for local demo, storage and backend contracts.
