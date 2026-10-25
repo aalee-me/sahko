@@ -29,7 +29,7 @@ body.compact .workspace>.title-row{order:-2!important;display:block!important;fl
 body.compact .workspace>.title-row>div:first-child{display:flex;flex-direction:column;gap:.125rem;width:100%;min-width:0;margin:0;padding:0}
 body.compact .title-row h1{width:auto!important;max-width:none!important;min-width:0;margin:0!important;padding:0;font-size:1.125rem!important;line-height:1.2!important;font-weight:500;letter-spacing:-.025em}
 body.compact #sessionRoomCode{margin:0!important;min-height:0;gap:.25rem;line-height:1.2}
-body.compact #sessionRoomCode>span{font-size:.75rem!important;line-height:1.2;letter-spacing:.1em}
+body.compact #sessionRoomCode>span{font-size:1.125rem!important;line-height:1.2;letter-spacing:.1em}
 body.compact #sessionRoomCode .code-action-pill>button{box-sizing:border-box;width:1.25rem!important;min-width:1.25rem!important;height:1.25rem!important;padding:.125rem!important}
 body.compact #sessionRoomCode .code-action-pill>button svg{width:.875rem;height:.875rem}
 body.compact .workspace>.view-modes{position:absolute!important;top:var(--compact-roster-top,5rem)!important;right:0!important;margin:0!important;padding:0;z-index:12}
@@ -101,3 +101,7 @@ body.compact #peopleMenu .person-row>:is(img,.portrait-fallback){flex:0 0 1.5rem
 body.compact #peopleMenu .person-identity{min-width:0;font-size:.75rem}
 body.compact #peopleMenu .profile-card{left:auto!important;right:0!important;top:calc(100% + .5rem)!important;width:11rem;max-width:45vw;max-height:min(11rem,28dvh);overflow:auto}
 @media(max-width:379px){body #peopleMenu .people-stack>.people-hover-target:nth-child(n+3){display:none!important}body.compact .workspace>.title-row{padding-right:7.75rem!important}}
+
+body:not(.compact) #exitCompact{display:none!important}
+body.compact>header>.nav>#exitCompact{display:grid!important;place-items:center;box-sizing:border-box;order:10;flex:0 0 var(--compact-target);width:var(--compact-target);height:var(--compact-target);min-width:var(--compact-target);min-height:var(--compact-target);margin:0;padding:.4375rem!important;border:0;background:transparent;border-radius:50%;color:var(--muted)}
+body.compact>header>.nav>#exitCompact>svg{display:block;width:1.125rem;height:1.125rem}

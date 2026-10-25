@@ -141,10 +141,14 @@ Setup sections use `.ui-stack` for a 1rem parent gap and zero direct-child block
 
 Closed/Open replaces Solo (private)/Open world in session setup. Closed means only you and proceeds directly to review; Open configures a joinable room without repeating the visibility choice. `SahkoUI.choice` supplies reminder radio cards and their Controls preview, with the same card surface and selected outline as orbital choices.
 
-Roster transitions never move portraits to list coordinates; orbital portraits never participate in the dropdown animation. The orbital header includes a responsive +N count, and Friends dropdowns in compact view are capped at 45vw × min(11rem, 28dvh), with scrolling and no automatic secondary panel on hover. Dock positioning removes workspace slide transforms before calculating its fixed anchor, keeping space navigation stationary.
+Roster transitions never move portraits to list coordinates; orbital portraits never participate in the dropdown animation. The orbital header includes a responsive +N count, and Orbiters dropdowns in compact view are capped at 45vw × min(11rem, 28dvh), with scrolling and no automatic secondary panel on hover. Dock positioning removes workspace slide transforms before calculating its fixed anchor, keeping space navigation stationary.
 
 The session-menu SVG morphs its existing list strokes and dots into an X and reverses on close; the menu panel retains its original slide animation. Sent thoughts retain the upward 750ms motion, now measured against the selected message’s text bounds. The message is revealed at landing and remains visible for one second before fading.
 
 Closing a people menu fades the list over 120ms, then returns the header portraits and +N indicator upward by .5rem over 180ms with the same 50ms stagger. Reduced motion closes immediately.
 
 Task lists share `.task-surface` across setup, check-in and Tasks: 14px task text, 12px muted headings/actions, 11px creation dates and a 2px text-to-date gap, all expressed in rem. Rows size to their content; popovers use a 1rem inset. Tasks has no exit action. Check-in and exit confirmation use Exit session with the menu’s exit vector.
+
+Roster header portraits use CSS transitions tied to the native details state in both directions, so closing does not flash visible before restarting a separate animation. Dropdown headings read Orbiters and use the shared people vector. Compact headers expose an icon-only Exit compact view control, retaining the original full-view/PiP return behavior. Closed/Open titles and descriptions align to the same left edge: For you to lock in alone / For friends or other orbiters to join.
+
+Room titles and codes share the identity type role (Manrope at `--text-title`) in room headers, reviews and full session view; compact identity uses 1.125rem for both. Editable room title/code fields share the body type role. Review details—including timeline labels, times, finish estimate and tasks—use .875rem with weight/color for emphasis.

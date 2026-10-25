@@ -210,3 +210,28 @@ body .task-surface .task-row{column-gap:.375rem}
 body .task-surface .task-row>:is(.task-complete,.task-add-circle){grid-column:1;min-width:1.125rem;max-width:1.125rem;min-height:1.125rem;max-height:1.125rem}
 body .task-surface .task-row>:is(.task-entry,.task-input){grid-column:2;text-align:left;text-indent:0}
 body .task-surface .task-row>.task-remove{grid-column:3}
+
+/* Native details state drives both directions, avoiding an animation restart on close. */
+.roster-motion>summary [data-roster-source]{opacity:1;transform:translateY(0);transition:opacity .18s ease var(--roster-delay,0ms),transform .18s ease var(--roster-delay,0ms)}
+.roster-motion[open]>summary [data-roster-source]{opacity:0;transform:translateY(.5rem);pointer-events:none}
+.roster-motion.roster-reduced>summary [data-roster-source]{transition:none!important}
+@media(prefers-reduced-motion:reduce){.roster-motion>summary [data-roster-source]{transition:none!important}}
+body :is(.people-list-heading,.directory-roster-heading){display:flex;align-items:center;gap:.375rem}
+body :is(.people-list-heading,.directory-roster-heading)>svg{display:block;flex:0 0 .875rem;width:.875rem;height:.875rem}
+
+body #onboarding .company-row{grid-template-columns:1.5rem minmax(0,1fr) 1rem;column-gap:.75rem;text-align:left}
+body #onboarding .company-label{align-items:flex-start;text-align:left;width:100%}
+body #onboarding .company-label>strong{align-self:flex-start;justify-content:flex-start;text-align:left}
+body #onboarding .company-arrow{position:static;translate:none;align-self:center;width:1rem;height:1rem}
+
+/* Room identity uses one type role; review details share one body role. */
+body #onboarding#onboarding .ui-room-header .room-code-tools output{font-size:var(--text-title)!important}
+body #onboarding#onboarding .room-setup :is(.room-field>input,.room-code-value){font-size:var(--text-body)!important;line-height:var(--leading-body)!important}
+body #onboarding#onboarding .session-review{--review-text:.875rem;line-height:var(--leading-label);padding:1rem}
+body #onboarding#onboarding .session-review :is(p,span,strong,dt,dd,h2,ul,li,small,output,.timeline-title,.timeline-times){font-size:var(--review-text)!important;line-height:var(--leading-label)!important}
+body #onboarding#onboarding .session-review :is(.review-room-title,.room-code-value){font-size:var(--text-title)!important;line-height:var(--leading-tight)!important}
+body #onboarding#onboarding .session-review .review-kind{text-transform:none;letter-spacing:0}
+body #onboarding#onboarding .session-review :is(.review-detail-row dd,.timeline-title strong){font-weight:var(--weight-medium)}
+body .workspace>.title-row h1,body #sessionRoomCode>span{font-size:var(--text-title)!important}
+
+body #onboarding#onboarding .ui-room-header :is(.ui-room-title,.room-code-tools output),body #onboarding#onboarding .session-review :is(.review-room-title,.room-code-value),body .workspace>.title-row h1,body #sessionRoomCode>span{font-family:Manrope,sans-serif!important}
