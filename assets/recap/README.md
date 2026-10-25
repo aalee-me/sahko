@@ -1,0 +1,1 @@
+Original supplied SVG artwork, preserved as uploaded. All references are local filter IDs or embedded PNG data; there are no scripts or external resources. shape23.svg is a UI pill from the supplied set and is retained for handoff rather than used as atmospheric artwork. The other shapes are used across the five recap pages.
