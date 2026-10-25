@@ -1,0 +1,90 @@
+/* Shared session hierarchy: timer + Orbiters, then title/code. */
+body .workspace.session-hierarchy{display:flex!important;flex-direction:column}
+body .workspace.session-hierarchy>.session{order:-3!important;display:block;flex:none;margin:0!important;padding:0!important;min-height:0}
+body .workspace.session-hierarchy .session-info{display:flex!important;align-items:flex-end!important;justify-content:flex-start;gap:.25rem!important;box-sizing:border-box;width:calc(100% - var(--session-roster-width,0px) - var(--session-roster-gap,0px))!important;min-width:0;margin:0!important;padding:0!important}
+body .workspace.session-hierarchy .session-info>div:last-child:not(.clock-controls){display:none}
+body .workspace.session-hierarchy .session-info>#clock{flex:none;min-width:0!important;min-inline-size:0!important;width:max-content!important;margin:0!important;padding:0!important;font-size:var(--session-clock-size,4rem)!important;line-height:1.05!important;letter-spacing:0!important;font-variant-numeric:tabular-nums}
+body .workspace.session-hierarchy .clock-controls{align-self:flex-end!important;flex:none;margin:0!important;box-sizing:border-box}
+body .workspace.session-hierarchy>.title-row{order:-2!important;flex:none;display:block!important;width:100%;box-sizing:border-box;margin:.375rem 0 0!important;padding:0!important;min-height:0}
+body .workspace.session-hierarchy>.title-row>div:first-child{display:flex;flex-direction:column;gap:.125rem;width:100%;min-width:0}
+body .workspace.session-hierarchy .title-row h1{max-width:100%!important;width:auto;margin:0!important;padding:0;line-height:1.2!important}
+body .workspace.session-hierarchy #sessionRoomCode{margin:0!important;line-height:1.2}
+body .workspace.session-hierarchy>.view-modes{position:absolute!important;top:var(--session-roster-top,1rem)!important;right:var(--session-content-right,0px)!important;margin:0!important;padding:0;z-index:12}
+body .workspace.session-hierarchy .people-menu>summary{display:flex;align-items:center;gap:.5rem;min-height:2rem;margin:0;padding:0!important;background:transparent!important;border:0!important}
+body .workspace.session-hierarchy .people-stack{display:flex;align-items:center;gap:.25rem;padding:0}
+body .workspace.session-hierarchy .people-stack :is(img,.portrait-fallback),body .workspace.session-hierarchy .people-stack>.people-hover-target{display:grid;place-items:center;box-sizing:border-box;flex:0 0 1.625rem!important;width:1.625rem!important;height:1.625rem!important;min-width:1.625rem!important;margin:0!important;padding:0;border-radius:50%;font-size:.75rem}
+body .workspace.session-hierarchy .people-chevron{display:grid!important;place-items:center;box-sizing:border-box;flex:0 0 1.625rem;width:1.625rem!important;height:1.625rem!important;min-width:1.625rem;padding:.3125rem!important;margin:0!important;border:0!important;background:transparent!important;color:var(--muted)}
+body .workspace.session-hierarchy .people-chevron svg{display:block;width:1rem!important;height:1rem!important}
+body .workspace.session-hierarchy .people-count{display:none}
+@media(max-width:600px){body .workspace.session-hierarchy .clock-controls{height:2.25rem!important;gap:.125rem;padding:.1875rem!important}body .workspace.session-hierarchy .clock-controls button{flex:0 0 1.75rem!important;width:1.75rem!important;min-width:1.75rem!important;max-width:1.75rem;height:1.75rem!important;padding:.375rem!important}body .workspace.session-hierarchy .clock-controls button svg{width:1rem!important;height:1rem!important}}
+@media(max-width:359px){body .workspace.session-hierarchy .people-stack>.people-hover-target:nth-child(n+2){display:none!important}body .workspace.session-hierarchy .clock-controls{height:1.875rem!important;padding:.125rem!important}body .workspace.session-hierarchy .clock-controls button{flex-basis:1.375rem!important;width:1.375rem!important;min-width:1.375rem!important;max-width:1.375rem;height:1.375rem!important;padding:.1875rem!important}}
+/* Header edges use the measured content column, including the centered compact view. */
+body>header{box-sizing:border-box;width:var(--session-header-width,calc(100% - 2rem));max-width:none;margin-left:var(--session-header-left,1rem)!important;margin-right:0!important;padding-left:0!important;padding-right:0!important}
+body.compact>header{width:var(--session-header-width,calc(100% - 1.75rem))!important;margin-left:var(--session-header-left,.875rem)!important;padding-left:0!important;padding-right:0!important}
+body>header>.nav{align-items:center;gap:.5rem!important}body>header>.nav>strong{display:none}
+body>header .my-profile-trigger{display:grid;place-items:center;box-sizing:border-box;width:2rem;height:2rem;min-width:2rem;margin:0;padding:.25rem}
+body>header .my-profile-trigger>:is(img,.profile-initial){box-sizing:border-box;width:1.5rem;height:1.5rem;min-width:1.5rem;border-radius:50%;margin:0;object-fit:cover}
+body>header .open-settings{display:grid;place-items:center;box-sizing:border-box;width:2rem!important;height:2rem!important;min-width:2rem;padding:.375rem!important;margin:0}
+.open-settings>svg{transform-origin:50% 50%;transition:transform .4s cubic-bezier(.22,.75,.2,1)}.open-settings:is(:hover,:focus-visible)>svg{transform:rotate(60deg)}.open-settings:active>svg{transform:rotate(100deg)}
+/* A floating identification pill opens beside the desktop icon without moving its neighbors. */
+body :is(.onboard-header,header>.nav)>.header-pair{position:relative;display:inline-flex!important;align-items:center;justify-content:center;box-sizing:border-box;flex:0 0 2rem!important;width:2rem!important;min-width:2rem!important;max-width:2rem!important;height:2rem!important;min-height:2rem!important;max-height:2rem!important;padding:.375rem!important;margin:0!important;border:1px solid var(--line)!important;border-radius:999px!important;background:var(--surface-raised)!important;overflow:visible;gap:0!important;aspect-ratio:auto;isolation:isolate}
+.header-pair>.header-pair-label{position:absolute;display:flex;align-items:center;left:calc(100% - 1px);top:-1px;height:calc(100% + 2px);box-sizing:border-box;width:max-content;max-width:0;padding:0;overflow:hidden;white-space:nowrap;font:.75rem/1.4 'DM Sans',sans-serif;color:var(--text);background:var(--surface-raised);border:1px solid transparent;border-left:0;border-radius:0 999px 999px 0;opacity:0;transform:translateX(-.5rem);transition:max-width .25s ease,padding .25s ease,opacity .2s ease,transform .25s ease;pointer-events:none}
+body .header-pair:is(:hover,:focus-visible){z-index:50;border-top-right-radius:0!important;border-bottom-right-radius:0!important;border-right-color:transparent!important}
+.header-pair:is(:hover,:focus-visible)>.header-pair-label{max-width:10rem;padding:0 .75rem 0 .375rem;border-color:var(--line);opacity:1;transform:none;pointer-events:none}
+.night-progress .timeline-hit{fill:none!important;stroke:transparent!important;stroke-width:18;vector-effect:non-scaling-stroke;pointer-events:stroke!important;cursor:help;outline:none}
+body .night-progress.segment-hovered .progress-hover-hint{opacity:1}
+@media(prefers-reduced-motion:reduce){.open-settings>svg,.header-pair>.header-pair-label{transition:none}.open-settings:is(:hover,:focus-visible,:active)>svg{transform:none}}
+
+body .night-progress{display:flex;flex-direction:column}
+body .night-progress>.night-progress-label{order:0;flex:none;margin:0 0 .375rem!important;padding-top:0!important}
+body .night-progress>svg{order:1;flex:none}
+body.compact>header>.nav>.compact-home-trigger{order:0!important;margin:0 auto 0 0!important}
+
+.directory-search-field{display:flex;flex-direction:column;gap:.375rem;flex:1;min-width:0;font:.75rem/1.4 'DM Sans',sans-serif;color:var(--muted)}
+.directory-search-field>input{box-sizing:border-box;width:100%;border-radius:999px!important;margin:0!important}
+.directory-actions .join-code-form{align-items:flex-end}.directory-actions .join-code-form>.join-code-error{flex-basis:100%}
+
+body.compact>header>.nav>.compact-home-trigger{padding:.25rem 0!important;justify-items:start}
+@media(max-width:359px){body .workspace.session-hierarchy #peopleMenu .people-stack>.people-hover-target:nth-child(n+2){display:none!important}}
+body>header>.nav>.my-profile-trigger{width:2rem!important;height:2rem!important;min-width:2rem!important;padding:.25rem!important}
+body>header>.nav>:is(.header-pair,.open-settings)>svg{display:block;flex:none;width:1.125rem!important;height:1.125rem!important}
+body.reduce-motion .open-settings>svg,body.reduce-motion .header-pair>.header-pair-label{transition:none}
+body.reduce-motion .open-settings:is(:hover,:focus-visible,:active)>svg{transform:none}
+
+/* Shared appearance preferences never remove stored data. */
+body.hide-task-dates .task-created-date,body.hide-photo-upload .profile-photo-actions,body.hide-photo-upload .demo-photo-upload{display:none!important}
+body #onboarding .company-row{display:grid;grid-template-columns:1.5rem minmax(0,1fr) 1.25rem;align-items:center;column-gap:.875rem;min-height:5rem;padding:1rem!important;border:0!important;box-shadow:none!important;text-align:left}
+body #onboarding .company-row:after{display:none!important}
+body #onboarding .company-row .company-icon{display:grid;place-items:center;width:1.5rem;height:1.5rem;margin:0;padding:0}
+body #onboarding .company-row .company-icon svg{display:block;width:1.5rem;height:1.5rem;fill:none;stroke:currentColor;stroke-width:1.5}
+body #onboarding .company-row .company-label{display:flex;flex-direction:column;gap:.25rem;align-items:flex-start;min-width:0;text-align:left}
+body #onboarding .company-row .company-label strong{font-size:1rem!important;line-height:1.35;margin:0;padding:0}
+body #onboarding .company-row .company-label small{font-size:.8125rem!important;line-height:1.4;margin:0;padding:0}
+body #onboarding .company-row>.company-arrow{position:static!important;inset:auto!important;justify-self:end;width:1.25rem;height:1.25rem;margin:0!important;padding:0}
+body #onboarding .invite-friends{padding:1rem!important}
+body #onboarding .friends-preview-head{display:flex;align-items:center;justify-content:space-between;gap:.75rem;margin:0 0 .75rem;padding:0}
+body #onboarding .friends-preview .manage-friends{display:inline-flex;align-items:center;gap:.5rem;margin:0!important;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important;font:.875rem/1.4 'DM Sans',sans-serif!important;color:var(--text);border-radius:.375rem!important}
+body #onboarding .manage-friends svg{display:block;position:static!important;inset:auto!important;flex:0 0 1.125rem;width:1.125rem;height:1.125rem;margin:0;fill:none;stroke:currentColor;stroke-width:1.5}
+body #onboarding .invite-selection-count{flex:none;font:.75rem/1.4 'DM Sans',sans-serif;color:var(--muted);white-space:nowrap}
+body #onboarding .invite-search-field{display:flex;align-items:center;gap:.5rem;box-sizing:border-box;width:100%;min-height:2.75rem;margin:0 0 .75rem;padding:.625rem .875rem;border:1px solid var(--line);border-radius:999px;background:var(--surface-raised)}
+.invite-search-field>svg{display:block;flex:0 0 1.125rem;width:1.125rem;height:1.125rem;color:var(--muted)}
+body #onboarding .invite-search-field>.friend-search{display:block;flex:1;min-width:0;width:100%;margin:0!important;padding:0!important;border:0!important;border-radius:inherit!important;box-shadow:none;background:transparent!important;box-shadow:none!important;font:.875rem/1.5 'DM Sans',sans-serif!important}
+body #onboarding :is(.entry-code-field>input,.directory-search-field>input){border-radius:999px!important}
+/* Member actions stay inside the compact roster; no second profile panel. */
+body.compact #peopleMenu .person-row{display:flex;align-items:center;gap:.5rem;min-height:2.75rem;width:100%;text-align:left}
+.person-identity>.orbiter-handle{display:block;margin:.125rem 0 0;font:.6875rem/1.3 'DM Sans',sans-serif;color:var(--muted)}
+body.compact #peopleMenu .person-identity{flex:1;min-width:0}
+.orbiter-row-chevron{display:grid;place-items:center;flex:none;width:1rem;height:1rem;margin-left:auto}
+.orbiter-row-chevron>svg{display:block;width:1rem;height:1rem;transition:transform .2s ease}
+.person-row[aria-expanded=true]>.orbiter-row-chevron>svg{transform:rotate(180deg)}
+.orbiter-inline-panel{margin:0 .375rem .5rem;padding:.5rem;border-radius:.75rem;background:var(--surface-hover)}
+.orbiter-inline-panel .person-actions{display:flex;flex-direction:column;gap:.25rem;margin:0;padding:0}
+.orbiter-inline-panel .person-actions>button{display:flex;align-items:center;justify-content:flex-start;gap:.5rem;min-height:1.75rem;margin:0;padding:.25rem .375rem;font:.75rem/1.3 'DM Sans',sans-serif;text-align:left;border:0;background:transparent}
+.orbiter-inline-panel .action-icon{display:grid;place-items:center;flex:0 0 1rem;width:1rem;height:1rem;margin:0}
+.person-actions .action-icon>svg{display:block;width:1rem;height:1rem;fill:none;stroke:currentColor;stroke-width:1.5}
+.orbiter-inline-panel .profile-task{margin:0 0 .375rem;font:.6875rem/1.4 'DM Sans',sans-serif;color:var(--muted)}
+@media(prefers-reduced-motion:reduce){.orbiter-row-chevron>svg{transition:none}}
+
+body #onboarding .invite-search-field:focus-within{border-color:var(--action-accent);box-shadow:0 0 0 1px var(--action-accent)}
+body #onboarding .invite-search-field>.friend-search:focus{outline:none!important;box-shadow:none!important}
+body.compact #peopleMenu .people-list{max-height:min(14.5rem,35dvh)}

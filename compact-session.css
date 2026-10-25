@@ -91,7 +91,7 @@ body.compact>header>.nav>.my-profile-trigger{margin:0!important;padding:0!import
 body.compact>header>.nav>:is(.header-pair,.open-settings){padding:0!important}
 body.compact>header>.nav>.header-pair{display:flex!important;align-items:center;justify-content:center}
 .compact-leave-trigger{display:none}
-body.compact>header>.nav>.compact-leave-trigger{display:grid!important;place-items:center;box-sizing:border-box;order:50;flex:0 0 4.75rem;width:4.75rem;height:var(--compact-target);margin:0 0 0 auto!important;padding:.25rem!important;border:0;background:transparent;border-radius:.375rem;color:var(--text)}
+body.compact>header>.nav>.compact-leave-trigger{display:grid!important;place-items:center;box-sizing:border-box;order:0;flex:0 0 4.75rem;width:4.75rem;height:var(--compact-target);margin:0 auto 0 0!important;padding:.25rem!important;border:0;background:transparent;border-radius:.375rem;color:var(--text)}
 body.compact>header>.nav>.compact-home-trigger>svg{display:block;width:4.25rem;height:auto;max-height:1.5rem}
 
 /* Keep the compact roster a small, scrollable popover beside the orbit. */
