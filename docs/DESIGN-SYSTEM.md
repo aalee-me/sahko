@@ -138,3 +138,7 @@ People menus use `SahkoUI.rosterMotion` to move portraits from the overlapping s
 Progress percentages use a small dark tooltip with a triangular pointer below the marker. Only hovering the circle reveals it; the progressbar ARIA value provides the percentage for assistive technology. The activity rail remains five bars and 2rem high after any number of messages.
 
 Setup sections use `.ui-stack` for a 1rem parent gap and zero direct-child block margins. Rhythm cards retain .75rem between revealed cards; expanded editors do not change the gap around the finish-mode switcher. Closed clock controls are excluded from layout spacing.
+
+Closed/Open replaces Solo (private)/Open world in session setup. Closed means only you and proceeds directly to review; Open configures a joinable room without repeating the visibility choice. `SahkoUI.choice` supplies reminder radio cards and their Controls preview, with the same card surface and selected outline as orbital choices.
+
+Roster transitions animate temporary copies of only the visible stacked portraits. Other rows reveal in place; orbital portraits never participate in the dropdown animation. Dock positioning removes workspace slide transforms before calculating its fixed anchor, keeping space navigation stationary.
