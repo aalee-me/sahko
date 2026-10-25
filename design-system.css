@@ -235,3 +235,5 @@ body #onboarding#onboarding .session-review :is(.review-detail-row dd,.timeline-
 body .workspace>.title-row h1,body #sessionRoomCode>span{font-size:var(--text-title)!important}
 
 body #onboarding#onboarding .ui-room-header :is(.ui-room-title,.room-code-tools output),body #onboarding#onboarding .session-review :is(.review-room-title,.room-code-value),body .workspace>.title-row h1,body #sessionRoomCode>span{font-family:Manrope,sans-serif!important}
+/* Restore the original plus artwork without restoring the oversized text indent. */
+body .task-surface .task-add-circle svg{width:1.5rem;height:1.5rem;max-width:none;overflow:visible}
