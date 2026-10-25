@@ -196,3 +196,17 @@ Progress segment tooltips have three rows: block identity, projected clock time,
 `recap-art.js` and `recap-art.css` own the supplied SVG layer composition, slow continuous movement, page crossfades, reduced-motion behavior, and shared PNG export composition. Original supplied assets live under `frontend/assets/recap/`; they contain their original gradients and embedded image data. No generated grain is added. Recap shell, pages, timeline and footer center on the same axis.
 
 Task persistence is documented in [TASK-PERSISTENCE.md](TASK-PERSISTENCE.md). `plan-storage.js` owns device-local snapshots and recovery; task UI must wait for recovery before editing and must not swallow save failures.
+
+
+## Product defaults (defaults19)
+
+`frontend/defaults.js` owns the requested baseline. Control initial values and Reset appearance use the same configuration. The default palette is Ember; peak height is 0.23, grain 2.08, feather 1.9, drift speed 3.6 and sensitivity 1.5. The remaining provided motion, texture, portrait and reveal values are retained. Popup text starts left aligned, the map scale is 180%, and the compact/PiP size is 585×764. Intentional baked presets and saved per-device preferences still override defaults. Checkbox states omitted from the pasted request are unchanged. The later reminder request changes the default pulse period from 15 to five seconds.
+
+Tool menus contain only the actions for their current context. Unused controls move into an inert hidden parking container so their existing handlers remain intact. Void order is Info, Capture, Organize, Undo (when available), Exit. Solo/Room use Tasks, Voice/chat, Timer and Exit. The shared expanding shell animates its individual actions with overlapping delays, reverses on close, and cancels interrupted animations cleanly. Reduced motion skips these animations.
+
+Progress tooltip vectors have explicit 0.75rem bounds so they cannot inherit the large progress SVG height. The three lines use 0.125rem gaps. The saved recap card and PNG place the timeline below the wordmark; PNG timelines include task-completion and other recorded-event markers, with a planned timeline fallback for older records without measured activity.
+
+The web demo's ordinary-page inactivity heuristic is 90 seconds without interaction or 20 seconds hidden, except quiet-work mode. Interactive web PiP is exempt: working in another app is not evidence of distraction. Native monitoring and paired state retain their existing classification paths. A visual reminder stops when the pointer returns to the session area without silently claiming a verified focus state.
+
+
+Session completion and explicit exit emit `sahko:session-ended`. Private archival completes before the matching active thoughts disappear. The recap Thoughts page owns a private session-log section, with read-only transcripts and shared memo playback controls. Session logs retain drafts and audio blobs; neither is included in public Clouds requests or exported recap PNGs. A storage failure prevents automatic clearing.
