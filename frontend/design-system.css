@@ -150,3 +150,11 @@ body #onboarding .ui-choice>input[type=radio]:checked{border-width:.3rem}
 body #onboarding .ui-choice:hover:not(:has(input:checked)){background:var(--surface-hover)}
 body #onboarding .ui-choice:has(input:focus-visible){outline:2px solid var(--action-accent);outline-offset:3px}
 @media(prefers-reduced-motion:reduce){body #onboarding#onboarding .unified-switcher:before{transition:none!important}}
+body #onboarding .ui-button--primary{background:var(--action-accent)!important;color:var(--on-action)!important;border:0!important}
+body :is(#onboarding,#checkin) .task-complete{position:relative;display:grid;place-items:center}
+body :is(#onboarding,#checkin) .task-complete>.task-checkmark{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;opacity:0}
+body :is(#onboarding,#checkin) .task-complete>.task-checkmark>svg{display:block;width:.875rem;height:.875rem;fill:none;stroke:var(--on-action);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+body :is(#onboarding,#checkin) .task-complete:has(input:checked)>.task-checkmark{opacity:1}
+body :is(#onboarding,#checkin) .task-complete input:checked{background:var(--action-accent)!important;border-color:var(--action-accent)!important}
+body #onboarding .onboard-copy>#onboardBack{left:0!important;padding:0!important;display:grid;place-items:center;width:1.5rem;height:1.5rem;line-height:1}
+body #onboarding .onboard-copy>#onboardBack svg{display:block;width:1.5rem;height:1.5rem;translate:-.3125rem 0}

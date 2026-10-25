@@ -126,3 +126,9 @@ Room setup includes a sticky, full-width **Review session** button. Entry, rhyth
 Recording uses a centered waveform column (maximum 12rem) and equal-width leading/trailing columns. Its timer is on the left and cancel/stop controls on the right. Playback also uses equal side columns and a centered, short waveform. Center against the complete pill, not only the available middle-cell space. Activity navigation retains its neutral color on hover; only the line-length animation remains.
 
 `frontend/session-insights.js` derives profile insights from retained session timeline timestamps. Average focus block uses actual focused seconds in finished blocks, excluding idle, pauses and breaks; early-ended or running blocks do not count as finished samples. Focus before idle uses uninterrupted observed focus stretches ending in an idle/drifting state. Focus share is focused / (focused + idle), excluding breaks and pauses. Incomplete or truncated timelines never fall back to planned interval lengths; missing averages display an em dash. Phone pickups only appear as a number for sessions with motion tracking. Sample counts accompany averages. All of these insights remain local to the device's retained session history.
+
+### Session controls and compact geometry
+
+`SahkoUI.button` supplies the reusable Review session control in setup and the Controls preview. Header utilities share centered square targets, with Profile always last. The compact view has a leading Leave session control; opening Profile keeps the orbital renderer running.
+
+The feed navigator uses five stable bars in a 1.5rem × 2rem box regardless of message count. Compact feed edges fade over .25rem; the orbital’s lower boundary fades over .875rem into the feed, without changing the map’s other edges. Break-page tools sit on the right. Voice playback fits its content, and task checkboxes use a vector checkmark.
