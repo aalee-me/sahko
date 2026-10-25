@@ -421,3 +421,6 @@ body :is(.night-progress,.room-card-progress).marker-hovered :is(.progress-hover
 body .thought-feed>.thought-rail{box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;align-self:center;flex:0 0 1.5rem!important;width:1.5rem!important;min-width:1.5rem;max-width:1.5rem;height:2rem!important;min-height:2rem!important;max-height:2rem!important;gap:.25rem;margin:0!important;padding:0!important;overflow:hidden!important}
 body .thought-feed>.thought-rail>:nth-child(n+6){display:none!important}
 body .thought-feed>.thought-rail:before,body .thought-feed>.thought-rail:after{content:none!important;display:none!important}
+
+body .session-tools-toggle.icon-morphing svg path:last-child{stroke-dasharray:none!important;stroke-dashoffset:0!important;transform:none!important}
+body .thought-feed.is-empty>.thought-rail{visibility:hidden;pointer-events:none}

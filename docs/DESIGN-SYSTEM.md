@@ -131,14 +131,16 @@ Recording uses a centered waveform column (maximum 12rem) and equal-width leadin
 
 `SahkoUI.button` supplies the reusable Review session control in setup and the Controls preview. Header utilities share centered square targets, with Profile always last. The compact view has a leading Leave session control; opening Profile keeps the orbital renderer running.
 
-The feed navigator uses five stable bars in a 1.5rem × 2rem box regardless of message count. Compact feed edges fade over .25rem; the orbital’s lower boundary fades over .875rem into the feed, without changing the map’s other edges. Break-page tools sit on the right. Voice playback fits its content, and task checkboxes use a vector checkmark.
+The feed navigator uses up to five message-driven bars in a stable 1.5rem × 2rem box. Compact feed edges fade over .25rem; the orbital’s lower boundary fades over .875rem into the feed, without changing the map’s other edges. Break-page tools sit on the right. Voice playback fits its content, and task checkboxes use a vector checkmark.
 
 People menus use `SahkoUI.rosterMotion` to move portraits from the overlapping summary stack into roster rows. Each 360ms movement starts 70ms after the previous one; reduced motion skips the transition. Hidden overflow portraits are excluded from the origin geometry. Focus-status text is omitted from card and roster identities.
 
-Progress percentages use a small dark tooltip with a triangular pointer below the marker. Only hovering the circle reveals it; the progressbar ARIA value provides the percentage for assistive technology. The activity rail remains five bars and 2rem high after any number of messages.
+Progress percentages use a small dark tooltip with a triangular pointer below the marker. Only hovering the circle reveals it; the progressbar ARIA value provides the percentage for assistive technology. The activity rail stays 2rem high, is empty before activity, and caps its message-driven bars at five.
 
 Setup sections use `.ui-stack` for a 1rem parent gap and zero direct-child block margins. Rhythm cards retain .75rem between revealed cards; expanded editors do not change the gap around the finish-mode switcher. Closed clock controls are excluded from layout spacing.
 
 Closed/Open replaces Solo (private)/Open world in session setup. Closed means only you and proceeds directly to review; Open configures a joinable room without repeating the visibility choice. `SahkoUI.choice` supplies reminder radio cards and their Controls preview, with the same card surface and selected outline as orbital choices.
 
 Roster transitions animate temporary copies of only the visible stacked portraits. Other rows reveal in place; orbital portraits never participate in the dropdown animation. Dock positioning removes workspace slide transforms before calculating its fixed anchor, keeping space navigation stationary.
+
+The session-menu SVG morphs its existing list strokes and dots into an X and reverses on close; the menu panel retains its original slide animation. Sent thoughts retain the upward 750ms motion, now measured against the selected message’s text bounds. The message is revealed at landing and remains visible for one second before fading.
