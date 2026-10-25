@@ -237,3 +237,11 @@ body .workspace>.title-row h1,body #sessionRoomCode>span{font-size:var(--text-ti
 body #onboarding#onboarding .ui-room-header :is(.ui-room-title,.room-code-tools output),body #onboarding#onboarding .session-review :is(.review-room-title,.room-code-value),body .workspace>.title-row h1,body #sessionRoomCode>span{font-family:Manrope,sans-serif!important}
 /* Restore the original plus artwork without restoring the oversized text indent. */
 body .task-surface .task-add-circle svg{width:1.5rem;height:1.5rem;max-width:none;overflow:visible}
+
+/* Native checkbox switch atom for optional demo/navigation and capture controls. */
+body input.ui-switch{appearance:none!important;position:relative;display:inline-block;box-sizing:border-box;flex:0 0 2.25rem;width:2.25rem!important;min-width:2.25rem!important;max-width:2.25rem;height:1.25rem!important;min-height:1.25rem!important;margin:0!important;padding:0!important;border:1px solid var(--line)!important;border-radius:999px!important;background:var(--neutral-surface)!important;box-shadow:none!important;cursor:pointer;vertical-align:middle;transition:background .2s ease}
+body input.ui-switch:after{content:'';position:absolute;left:.1875rem;top:50%;width:.75rem;height:.75rem;border-radius:50%;background:var(--muted);translate:0 -50%;transition:transform .2s ease,background .2s ease}
+body input.ui-switch:checked{background:var(--action-accent)!important;border-color:var(--action-accent)!important;box-shadow:none!important}
+body input.ui-switch:checked:after{transform:translateX(1rem);background:var(--on-accent)}
+body input.ui-switch:focus-visible{outline:2px solid var(--action-accent);outline-offset:3px}body input.ui-switch:disabled{opacity:.4;cursor:not-allowed}
+@media(prefers-reduced-motion:reduce){body input.ui-switch,body input.ui-switch:after{transition:none}}

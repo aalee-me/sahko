@@ -59,3 +59,28 @@ body #voidSpace.clouds-enabled.is-clouds-traveling{scroll-snap-type:none;scroll-
 .clouds-info-card .clouds-mode{padding:0;font:inherit;color:inherit}
 .clouds-mode-badge{display:block;margin-top:.375rem;font:.625rem/1.4 'DM Sans',sans-serif;color:#a49aad}
 @media(prefers-reduced-motion:reduce){body #voidSpace.clouds-enabled{scroll-behavior:auto}}
+
+/* The private Void gets a floating tool capsule; labels identify controls on intent. */
+body #voidSpace .void-floating-toolbar{position:absolute;z-index:22;top:7.25rem;left:50%;translate:-50% 0;display:flex;align-items:center;gap:.25rem;flex-wrap:nowrap;max-width:calc(100% - 2rem);box-sizing:border-box;margin:0;padding:.375rem;border:1px solid var(--line);border-radius:999px;background:var(--surface-raised);box-shadow:0 .5rem 1.5rem #0003}
+body #voidSpace .void-floating-toolbar .void-tool{display:inline-flex;align-items:center;justify-content:center;flex:none;gap:0;width:auto;height:2.25rem;min-height:2.25rem;box-sizing:border-box;margin:0;padding:.375rem;border:0;border-radius:999px;background:transparent;color:var(--muted);font:400 .75rem/1.4 'DM Sans',sans-serif;white-space:nowrap;overflow:hidden;cursor:pointer}
+body #voidSpace .void-floating-toolbar .void-tool[hidden]{display:none!important}
+.void-floating-toolbar .void-tool>svg{display:block;flex:none;width:1.5rem;height:1.5rem;fill:none;stroke:currentColor;stroke-width:1.5}
+.void-floating-toolbar .void-tool-label{max-width:0;margin-left:0;opacity:0;overflow:hidden;transition:max-width .25s ease,margin-left .25s ease,opacity .2s ease}
+.void-floating-toolbar .void-tool:is(:hover,:focus-visible) .void-tool-label{max-width:10rem;margin-left:.375rem;opacity:1}
+body #voidSpace .void-floating-toolbar .void-tool:is(:hover,:focus-visible),body #voidSpace .void-floating-toolbar .void-tool[aria-expanded=true]{background:var(--surface-hover);color:var(--text)}
+.void-toolbar-info{position:absolute;top:calc(100% + .5rem);left:50%;translate:-50% 0;width:17.5rem;max-width:calc(100vw - 2rem);box-sizing:border-box;box-shadow:0 .5rem 1.5rem #0004}
+.constellation-camera-dialog{box-sizing:border-box;width:min(40rem,calc(100vw - 2rem));max-height:calc(100dvh - 2rem);padding:1.25rem;border:1px solid var(--line);border-radius:1.5rem;background:var(--surface-raised);color:var(--text);overflow:auto}
+.constellation-camera-dialog[open]{animation:constellation-camera-open .24s cubic-bezier(.22,.75,.2,1)}
+.constellation-camera-dialog::backdrop{background:#0008;backdrop-filter:blur(6px)}
+.constellation-camera-header{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1rem}
+.constellation-camera-header h2{margin:0;font:500 1.125rem/1.3 Manrope,sans-serif;letter-spacing:-.025em}
+.constellation-camera-close{display:grid;place-items:center;flex:none;width:2rem;height:2rem;margin:0;padding:.375rem;border:0;border-radius:50%;background:transparent;color:var(--muted)}.constellation-camera-close svg{display:block;width:1.25rem;height:1.25rem}
+.constellation-viewfinder{position:relative;display:grid;place-items:center;isolation:isolate;width:100%;height:clamp(12rem,46dvh,25rem);box-sizing:border-box;margin:0;overflow:hidden;background:var(--canvas);border-radius:.75rem}
+.constellation-viewfinder>img{display:block;width:100%;height:100%;object-fit:contain}
+.viewfinder-corner{position:absolute;z-index:1;width:1.5rem;height:1.5rem;border:0 solid var(--muted);pointer-events:none}.viewfinder-corner.tl{top:.75rem;left:.75rem;border-top-width:1px;border-left-width:1px}.viewfinder-corner.tr{top:.75rem;right:.75rem;border-top-width:1px;border-right-width:1px}.viewfinder-corner.bl{bottom:.75rem;left:.75rem;border-bottom-width:1px;border-left-width:1px}.viewfinder-corner.br{bottom:.75rem;right:.75rem;border-bottom-width:1px;border-right-width:1px}
+.constellation-camera-controls{display:flex;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap;margin-top:1rem}
+.constellation-camera-controls .constellation-text-toggle{display:flex;align-items:center;gap:.75rem;margin:0;padding:0;font:.8125rem/1.4 'DM Sans',sans-serif}.constellation-text-toggle input{width:1.125rem;height:1.125rem;margin:0;flex:none}
+.constellation-camera-controls .ui-button{display:flex;align-items:center;justify-content:center;gap:.5rem;min-height:2.5rem;margin:0;padding:.625rem 1rem;border-radius:999px;font:.8125rem/1.4 'DM Sans',sans-serif}.constellation-camera-controls .ui-button svg{width:1.125rem;height:1.125rem}
+.constellation-camera-status{margin:.5rem 0 0;color:var(--muted);font:.75rem/1.4 'DM Sans',sans-serif}.constellation-camera-status:empty{display:none}
+@keyframes constellation-camera-open{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
+@media(prefers-reduced-motion:reduce){.constellation-camera-dialog[open]{animation:none}.void-floating-toolbar .void-tool-label{transition:none}}
