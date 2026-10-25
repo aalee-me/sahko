@@ -156,5 +156,12 @@ body :is(#onboarding,#checkin) .task-complete>.task-checkmark{position:absolute;
 body :is(#onboarding,#checkin) .task-complete>.task-checkmark>svg{display:block;width:.875rem;height:.875rem;fill:none;stroke:var(--on-action);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 body :is(#onboarding,#checkin) .task-complete:has(input:checked)>.task-checkmark{opacity:1}
 body :is(#onboarding,#checkin) .task-complete input:checked{background:var(--action-accent)!important;border-color:var(--action-accent)!important}
-body #onboarding .onboard-copy>#onboardBack{left:0!important;padding:0!important;display:grid;place-items:center;width:1.5rem;height:1.5rem;line-height:1}
+body #onboarding .onboard-copy>#onboardBack{left:0!important;padding:0!important;display:grid;place-items:center;width:1.5rem;min-width:1.5rem;max-width:1.5rem;height:1.5rem;min-height:1.5rem;max-height:1.5rem;line-height:1}
 body #onboarding .onboard-copy>#onboardBack svg{display:block;width:1.5rem;height:1.5rem;translate:-.3125rem 0}
+
+/* All setup and join-field captions share the label and icon atoms. */
+body #onboarding#onboarding :is(.room-field,.room-entry-field){display:flex;flex-direction:column;gap:var(--space-2)}
+body #onboarding#onboarding :is(.room-field-caption,.room-entry-eyebrow){display:flex;align-items:center;gap:var(--space-2);margin:0;padding:0;font-size:var(--text-label);line-height:var(--leading-label);font-weight:var(--weight-medium);color:var(--muted)}
+body #onboarding#onboarding :is(.room-field-caption,.room-entry-eyebrow)>svg{display:block;box-sizing:border-box;width:var(--icon-size);height:var(--icon-size);flex:0 0 var(--icon-size);margin:0;align-self:center}
+
+body #onboarding .onboard-copy>#onboardBack:after{content:"";position:absolute;inset:-.625rem}
