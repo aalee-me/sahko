@@ -39,5 +39,29 @@
       extra.setAttribute('aria-hidden','true');summary.insertBefore(extra,summary.querySelector('.directory-chevron'));
     }
   }
-  window.SahkoUI={button,iconSVG,iconLabel,roomHeader,rosterOverflow};
+  function rosterMotion(menu,{sources,targets,panel}) {
+    menu.classList.add('roster-motion');
+    let animations=[];
+    menu.addEventListener('toggle',()=>{
+      animations.forEach(a=>a.cancel());animations=[];
+      if(!menu.open)return;
+      const from=[...menu.querySelectorAll(sources)].filter(a=>a.getBoundingClientRect().width>0),to=[...menu.querySelectorAll(targets)];
+      if(window.matchMedia('(prefers-reduced-motion: reduce)').matches||(typeof config!=='undefined'&&config.reduced))return;
+      const list=menu.querySelector(panel);
+      if(list)animations.push(list.animate([{opacity:0},{opacity:1}],{duration:180,easing:'ease-out'}));
+      to.forEach((avatar,index)=>{
+        const source=from[Math.min(index,from.length-1)];if(!source)return;
+        const a=source.getBoundingClientRect(),b=avatar.getBoundingClientRect();if(!a.width||!b.width)return;
+        const delay=index*70,duration=360;
+        avatar.style.transformOrigin='center';
+        animations.push(avatar.animate([
+          {transform:`translate(${a.x+a.width/2-b.x-b.width/2}px,${a.y+a.height/2-b.y-b.height/2}px) scale(${a.width/b.width})`,opacity:0},
+          {opacity:1,offset:.08},
+          {transform:'translate(0,0) scale(1)',opacity:1}
+        ],{duration,delay,easing:'cubic-bezier(.22,.75,.2,1)',fill:'backwards'}));
+      });
+      from.forEach((avatar,index)=>animations.push(avatar.animate([{opacity:1},{opacity:0}],{duration:65,delay:index*70,fill:'backwards'})));
+    });
+  }
+  window.SahkoUI={rosterMotion,button,iconSVG,iconLabel,roomHeader,rosterOverflow};
 })();

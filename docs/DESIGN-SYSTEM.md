@@ -132,3 +132,5 @@ Recording uses a centered waveform column (maximum 12rem) and equal-width leadin
 `SahkoUI.button` supplies the reusable Review session control in setup and the Controls preview. Header utilities share centered square targets, with Profile always last. The compact view has a leading Leave session control; opening Profile keeps the orbital renderer running.
 
 The feed navigator uses five stable bars in a 1.5rem × 2rem box regardless of message count. Compact feed edges fade over .25rem; the orbital’s lower boundary fades over .875rem into the feed, without changing the map’s other edges. Break-page tools sit on the right. Voice playback fits its content, and task checkboxes use a vector checkmark.
+
+People menus use `SahkoUI.rosterMotion` to move portraits from the overlapping summary stack into roster rows. Each 360ms movement starts 70ms after the previous one; reduced motion skips the transition. Hidden overflow portraits are excluded from the origin geometry. Focus-status text is omitted from card and roster identities.

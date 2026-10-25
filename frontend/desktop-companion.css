@@ -364,13 +364,14 @@ body .night-progress .block-eyebrow svg{display:block;width:.875rem!important;he
 @media(max-height:600px){}
 @media(max-height:600px){}
 /* Opening a roster hands the portraits from the summary into the list. */
-.people-menu>summary .people-stack,.directory-people>summary .directory-avatar-stack,.directory-people>summary .directory-overflow{opacity:1;visibility:visible;transform:translateY(0) scale(1);transition:opacity .18s ease,transform .22s ease,visibility 0s}
-.people-menu[open]>summary .people-stack,.directory-people[open]>summary .directory-avatar-stack,.directory-people[open]>summary .directory-overflow{opacity:0;visibility:hidden;transform:translateY(.75rem) scale(.9);pointer-events:none;transition:opacity .18s ease,transform .22s ease,visibility 0s .22s}
-.people-menu[open] .people-list>.person>img,.people-menu[open] .people-list>.person>.portrait-fallback,.directory-people[open] .directory-roster-person>.directory-avatar{animation:roster-portrait-enter .25s ease-out both}
-.people-menu[open] .people-list>.person:nth-child(2)>:first-child,.directory-people[open] .directory-roster-person:nth-of-type(2)>.directory-avatar{animation-delay:.025s}
-.people-menu[open] .people-list>.person:nth-child(n+3)>:first-child,.directory-people[open] .directory-roster-person:nth-of-type(n+3)>.directory-avatar{animation-delay:.05s}
-@keyframes roster-portrait-enter{from{opacity:0;transform:translateY(-.625rem) scale(.9)}to{opacity:1;transform:translateY(0) scale(1)}}
-@media(prefers-reduced-motion:reduce){.people-menu>summary .people-stack,.directory-people>summary .directory-avatar-stack,.directory-people>summary .directory-overflow{transition:none!important}.people-menu[open] .people-list>.person>:first-child,.directory-people[open] .directory-roster-person>.directory-avatar{animation:none!important}}
+/* Individual portraits travel from the overlapping stack into roster rows. */
+.roster-motion>summary :is(.people-stack,.directory-avatar-stack){opacity:1!important;visibility:visible!important;transform:none!important;transition:none!important}
+.roster-motion>summary :is(.people-stack,.directory-avatar-stack)>*{opacity:1}
+.roster-motion[open]>summary :is(.people-stack,.directory-avatar-stack)>*{opacity:0;pointer-events:none}
+.roster-motion>summary .directory-overflow{transition:opacity .18s}
+.roster-motion[open]>summary .directory-overflow{opacity:0;pointer-events:none}
+.roster-motion :is(.directory-roster,.people-list),.roster-motion :is(.directory-roster-person>.directory-avatar,.person-row>img,.person-row>.portrait-fallback){animation:none!important}
+
 /* Available rooms keep code and presence on one centered row with less dead space. */
 body #onboarding#onboarding .room-navigation-card{padding:1.25rem!important}
 body #onboarding .room-navigation-card .room-card-progress{margin:.5rem 0 .625rem!important}
