@@ -114,7 +114,7 @@ The GitHub Pages demo supports local role changes for rooms created in that demo
 
 ### Alignment and setup interaction details
 
-Participant portraits use square, non-shrinking targets with a small positive gap; the adjacent chevron uses the same dimensions and no outline ring. Missing dates on legacy tasks are omitted; newly entered tasks retain their recorded creation timestamps. The This session / Disregard all labels share the caption text role. The break-page action menu is positioned at the leading edge of its composer dock.
+Participant portraits use square, non-shrinking targets in a gently overlapping stack; the adjacent chevron uses the same dimensions and no outline ring. Missing dates on legacy tasks are omitted; newly entered tasks retain their recorded creation timestamps. The This session / Disregard all labels share the caption text role. The break-page action menu is positioned at the trailing edge of its composer dock.
 
 The Void mark uses an explicitly centered square control. Star-marker styling targets direct children only, so it cannot add margins/glows to waveform bars. Voice playback uses twelve bars in the short preview, centered beside play and duration. The compact map has no added CSS fade mask; the reserved stage and dock handle its bounds.
 
@@ -133,7 +133,7 @@ Recording uses a centered waveform column (maximum 12rem) and equal-width leadin
 
 The feed navigator uses up to five message-driven bars in a stable 1.5rem × 2rem box. Compact feed edges fade over .25rem; the orbital’s lower boundary fades over .875rem into the feed, without changing the map’s other edges. Break-page tools sit on the right. Voice playback fits its content, and task checkboxes use a vector checkmark.
 
-People menus use `SahkoUI.rosterMotion` to move portraits from the overlapping summary stack into roster rows. Each 360ms movement starts 70ms after the previous one; reduced motion skips the transition. Hidden overflow portraits are excluded from the origin geometry. Focus-status text is omitted from card and roster identities.
+People menus use `SahkoUI.rosterMotion`: header portraits dip .5rem and fade over 180ms with a 50ms stagger, while list portraits pop in locally. Reduced motion skips the transition. Focus-status text is omitted from card and roster identities.
 
 Progress percentages use a small dark tooltip with a triangular pointer below the marker. Only hovering the circle reveals it; the progressbar ARIA value provides the percentage for assistive technology. The activity rail stays 2rem high, is empty before activity, and caps its message-driven bars at five.
 
@@ -141,6 +141,6 @@ Setup sections use `.ui-stack` for a 1rem parent gap and zero direct-child block
 
 Closed/Open replaces Solo (private)/Open world in session setup. Closed means only you and proceeds directly to review; Open configures a joinable room without repeating the visibility choice. `SahkoUI.choice` supplies reminder radio cards and their Controls preview, with the same card surface and selected outline as orbital choices.
 
-Roster transitions animate temporary copies of only the visible stacked portraits. Other rows reveal in place; orbital portraits never participate in the dropdown animation. Dock positioning removes workspace slide transforms before calculating its fixed anchor, keeping space navigation stationary.
+Roster transitions never move portraits to list coordinates; orbital portraits never participate in the dropdown animation. The orbital header includes a responsive +N count, and Friends dropdowns in compact view are capped at 45vw × min(11rem, 28dvh), with scrolling and no automatic secondary panel on hover. Dock positioning removes workspace slide transforms before calculating its fixed anchor, keeping space navigation stationary.
 
 The session-menu SVG morphs its existing list strokes and dots into an X and reverses on close; the menu panel retains its original slide animation. Sent thoughts retain the upward 750ms motion, now measured against the selected message’s text bounds. The message is revealed at landing and remains visible for one second before fading.

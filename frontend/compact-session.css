@@ -25,7 +25,7 @@ body.compact .session-info>div:last-child{max-width:none!important}
 body.compact .clock-controls{align-self:center!important;display:inline-flex;align-items:center;justify-content:center;gap:.125rem;padding:.1875rem!important;margin:0!important;border:1px solid var(--line);border-radius:999px;flex:none;height:2.25rem;min-height:0}
 body.compact .clock-controls button,body.compact .clock-controls.owner-controls button{display:grid;place-items:center;box-sizing:border-box;flex:0 0 1.75rem!important;width:1.75rem!important;min-width:1.75rem!important;max-width:1.75rem;height:1.75rem!important;min-height:0;padding:.375rem!important;margin:0!important;border:0!important;line-height:1}
 body.compact .clock-controls button svg{display:block;width:var(--compact-icon)!important;height:var(--compact-icon)!important;flex:none}
-body.compact .workspace>.title-row{order:-2!important;display:block!important;flex:0 0 auto;margin:0!important;padding:0 8.25rem 0 0!important;min-height:2.5rem}
+body.compact .workspace>.title-row{order:-2!important;display:block!important;flex:0 0 auto;margin:0!important;padding:0 9.25rem 0 0!important;min-height:2.5rem}
 body.compact .workspace>.title-row>div:first-child{display:flex;flex-direction:column;gap:.125rem;width:100%;min-width:0;margin:0;padding:0}
 body.compact .title-row h1{width:auto!important;max-width:none!important;min-width:0;margin:0!important;padding:0;font-size:1.125rem!important;line-height:1.2!important;font-weight:500;letter-spacing:-.025em}
 body.compact #sessionRoomCode{margin:0!important;min-height:0;gap:.25rem;line-height:1.2}
@@ -93,3 +93,11 @@ body.compact>header>.nav>.header-pair{display:flex!important;align-items:center;
 .compact-leave-trigger{display:none}
 body.compact>header>.nav>.compact-leave-trigger{display:grid!important;place-items:center;box-sizing:border-box;order:0;flex:0 0 var(--compact-target);width:var(--compact-target);height:var(--compact-target);margin:0 auto 0 0!important;padding:.4375rem!important;border:0;background:transparent;border-radius:50%;color:var(--muted)}
 body.compact>header>.nav>.compact-leave-trigger>svg{display:block;width:1.125rem;height:1.125rem}
+
+/* Keep the compact roster a small, scrollable popover beside the orbit. */
+body.compact #peopleMenu .people-list{position:absolute;top:calc(100% + .5rem);right:0;width:11rem;max-width:45vw;max-height:min(11rem,28dvh);overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;padding:.375rem;border-radius:1rem}
+body.compact #peopleMenu .person-row{min-height:2.25rem;padding:.375rem;gap:.375rem}
+body.compact #peopleMenu .person-row>:is(img,.portrait-fallback){flex:0 0 1.5rem;width:1.5rem;height:1.5rem;min-width:1.5rem}
+body.compact #peopleMenu .person-identity{min-width:0;font-size:.75rem}
+body.compact #peopleMenu .profile-card{left:auto!important;right:0!important;top:calc(100% + .5rem)!important;width:11rem;max-width:45vw;max-height:min(11rem,28dvh);overflow:auto}
+@media(max-width:379px){body #peopleMenu .people-stack>.people-hover-target:nth-child(n+3){display:none!important}body.compact .workspace>.title-row{padding-right:7.75rem!important}}

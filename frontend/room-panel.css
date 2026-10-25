@@ -134,3 +134,8 @@ body .thought-feed .thought-rail .thought-tick:disabled{cursor:default}
 .tasks-home-control{margin-top:1rem;display:inline-flex;align-items:center;justify-content:center;gap:.5rem}
 .tasks-home-control .ui-icon-svg,.home-confirm-actions .ui-icon-svg{width:1rem;height:1rem;flex:0 0 1rem}
 .home-confirm-actions>.primary{display:inline-flex;align-items:center;gap:.5rem}
+
+body #peopleMenu .people-overflow{display:grid;place-items:center;flex:0 0 var(--roster-avatar-size);width:var(--roster-avatar-size);height:var(--roster-avatar-size);border-radius:50%;background:var(--surface-hover);color:var(--muted);font-size:.6875rem;line-height:1}
+body #peopleMenu .people-overflow[hidden]{display:none}
+body #peopleMenu[open] .people-overflow{opacity:0;pointer-events:none;transition:opacity .18s}
+.people-list-heading{position:sticky;top:0;z-index:2;padding:.375rem;color:var(--muted);background:var(--surface-raised);font-size:.6875rem;line-height:1.4}
