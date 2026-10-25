@@ -136,3 +136,5 @@ The feed navigator uses five stable bars in a 1.5rem × 2rem box regardless of m
 People menus use `SahkoUI.rosterMotion` to move portraits from the overlapping summary stack into roster rows. Each 360ms movement starts 70ms after the previous one; reduced motion skips the transition. Hidden overflow portraits are excluded from the origin geometry. Focus-status text is omitted from card and roster identities.
 
 Progress percentages use a small dark tooltip with a triangular pointer below the marker. Only hovering the circle reveals it; the progressbar ARIA value provides the percentage for assistive technology. The activity rail remains five bars and 2rem high after any number of messages.
+
+Setup sections use `.ui-stack` for a 1rem parent gap and zero direct-child block margins. Rhythm cards retain .75rem between revealed cards; expanded editors do not change the gap around the finish-mode switcher. Closed clock controls are excluded from layout spacing.

@@ -165,3 +165,9 @@ body #onboarding#onboarding :is(.room-field-caption,.room-entry-eyebrow){display
 body #onboarding#onboarding :is(.room-field-caption,.room-entry-eyebrow)>svg{display:block;box-sizing:border-box;width:var(--icon-size);height:var(--icon-size);flex:0 0 var(--icon-size);margin:0;align-self:center}
 
 body #onboarding .onboard-copy>#onboardBack:after{content:"";position:absolute;inset:-.625rem}
+
+/* A stack owns section spacing; child card and switcher margins never collapse. */
+body #onboarding#onboarding .ui-stack{display:flex;flex-direction:column;gap:var(--space-4);min-width:0}
+body #onboarding#onboarding .ui-stack>*{margin-block:0!important}
+body #onboarding#onboarding .rhythm-layout .rhythm-stage.revealed+.rhythm-stage.revealed{margin-top:var(--space-3)}
+body #onboarding#onboarding .rhythm-layout .clock-reveal:not(.open){display:none}
