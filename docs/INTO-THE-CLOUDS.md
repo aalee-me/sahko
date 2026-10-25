@@ -35,7 +35,7 @@ Polling runs at most every 30 seconds while the Void/Clouds is open and only if 
 
 ## Capture Constellation
 
-Capture exports a PNG locally using an offscreen canvas; it makes no network request. Geometry only (redacted) is the default. Show text includes the thought labels. A timestamp watermark is included in both modes. Export uses up to 3× resolution, bounded to approximately 4096 pixels per canvas dimension. The private constellation's current positions and connections are preserved; voice audio is never embedded in an image.
+The floating Void toolbar uses camera, connected-node and undo vectors with labels revealed on hover/focus. Camera opens a framed viewfinder before any download. Capture exports a PNG locally using an offscreen canvas; it makes no network request. Geometry only is the default on every open. The Show text switch updates the preview, and Save PNG downloads that exact preview. A timestamp watermark is included in both modes. Export uses up to 3× resolution, bounded to approximately 4096 pixels per canvas dimension. The private constellation's current positions and connections are preserved; voice audio is never embedded in an image.
 
 ## Validation
 
@@ -46,3 +46,5 @@ Capture exports a PNG locally using an offscreen canvas; it makes no network req
 The viewport uses mandatory full-tier snapping. Wheel/trackpad intent starts a 920 ms eased vertical transition; lingering momentum cannot bounce immediately into another tier. Native touch scrolling retains snap points, and reduced motion skips the animated travel. The organized private thought list keeps its own scrolling before transitioning at its edge.
 
 Thought actions are shared 24 px SVG controls: Copy text, Send a copy into the clouds, and Info. Explanations appear only in the explicitly opened info card. Short success/error feedback remains inline. Public explanatory copy is also behind Info; the Local demo/Anonymous scope badge stays visible. Help cards overlay the field without resizing it or shifting their trigger buttons. `tests/clouds-controls.cjs` checks the vectors, opt-in help, phone bounds, clipboard/release, eased intermediate scroll positions, two-way snapping and reduced motion.
+
+`frontend/constellation-camera.js` owns the local viewfinder and cancels stale async previews when the toggle changes or the view closes. `tests/constellation-camera.cjs` covers organize/undo preservation, geometry-first rendering, text toggling, phone bounds and the exact preview download.

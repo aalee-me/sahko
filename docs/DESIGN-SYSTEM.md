@@ -161,3 +161,10 @@ Room titles and codes share the identity type role (Manrope at `--text-title`) i
 ### Into the Clouds
 
 The additive `frontend/clouds.js` / `clouds.css` module wraps the original private Void in a two-viewport stack. Its labels use rem units. Capture, typed-thought actions and the quiet tether are independent controls; voice release is unavailable. See `docs/INTO-THE-CLOUDS.md` for local demo, storage and backend contracts.
+
+
+### Quiet demo controls and compact home
+
+Settings → Demo tools is collapsed by default. Its Run session demo switch calls the existing local 30-second simulation, reflects running/stopped state, and is disabled in live rooms. The compact header places the supplied Sähkö vector wordmark at the far right as the home action, with confirmation before ending a running session. Exit compact view remains a separate utility. The activity rail keeps its natural message-position widths on hover; the bottom line has no special expansion.
+
+Settings also includes **Show navigation shortcuts**, off by default and stored locally. It controls the legacy Live room / Plan session / Solo / Compact view shortcuts while retaining the primary setup flow and compact header utilities. The camera, demo and navigation switches share the native `.ui-switch` atom and keyboard behavior. The Void camera, organize and undo actions share the floating capsule and reveal their labels on hover/focus. Capture opens a contracted viewfinder with geometry as the default, an optional Show text switch and a Save PNG action.
