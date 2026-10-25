@@ -6,6 +6,8 @@
     clock:'<circle cx="12" cy="12" r="8"/><path d="M12 7.5V12l3 2"/>',
     hourglass:'<path d="M5 4h14M5 20h14M7 4v4l5 4-5 4v4M17 4v4l-5 4 5 4v4"/>',
     lock:'<rect x="5" y="10" width="14" height="10" rx="3"/><path d="M8 10V8a4 4 0 0 1 8 0v2M12 14v2"/>',
+    people:'<circle cx="9" cy="7" r="3"/><path d="M2 20v-2a7 7 0 0 1 14 0v2M17 4a3 3 0 0 1 0 6M19 15a5 5 0 0 1 3 5"/>',
+    expand:'<path d="M9 3H3v6M15 3h6v6M21 15v6h-6M9 21H3v-6M3 3l6 6M21 21l-6-6"/>',
     person:'<circle cx="12" cy="7" r="3"/><path d="M5 20v-2a7 7 0 0 1 14 0v2"/>',
     copy:'<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V4H4v12h4"/>',
     share:'<path d="M12 15V3m-4 4 4-4 4 4M5 12v8h14v-8"/>',
@@ -53,15 +55,14 @@
     menu.classList.add('roster-motion');
     let animations=[],closing=false;
     const reduced=()=>window.matchMedia('(prefers-reduced-motion: reduce)').matches||(typeof config!=='undefined'&&config.reduced);
-    menu.querySelector('summary').addEventListener('click',event=>{if(!menu.open||reduced())return;event.preventDefault();if(closing)return;const list=menu.querySelector(panel);if(!list){menu.open=false;return}closing=true;const exit=list.animate([{opacity:1,transform:'translateY(0)'},{opacity:0,transform:'translateY(-.25rem)'}],{duration:120,easing:'ease-in',fill:'forwards'});animations.push(exit);exit.finished.then(()=>{closing=false;menu.open=false},()=>{closing=false})});
+    function register(){const items=[...menu.querySelectorAll(sources),...menu.querySelectorAll('.people-overflow,.directory-overflow')].filter(a=>a.getBoundingClientRect().width>0);items.forEach((avatar,index)=>{avatar.dataset.rosterSource='';avatar.style.setProperty('--roster-delay',index*50+'ms')});menu.classList.toggle('roster-reduced',reduced())}register();new MutationObserver(register).observe(menu.querySelector('summary'),{childList:true,subtree:true});
+    menu.querySelector('summary').addEventListener('click',event=>{if(!menu.open||reduced())return;event.preventDefault();if(closing)return;const list=menu.querySelector(panel);if(!list){menu.open=false;return}closing=true;const current=getComputedStyle(list),exit=list.animate([{opacity:current.opacity,transform:current.transform},{opacity:0,transform:'translateY(-.25rem)'}],{duration:120,easing:'ease-in',fill:'forwards'});animations.push(exit);exit.finished.then(()=>{closing=false;menu.open=false},()=>{closing=false})});
     menu.addEventListener('toggle',()=>{
-      animations.forEach(a=>a.cancel());animations=[];
-      const from=[...menu.querySelectorAll(sources)].filter(a=>a.getBoundingClientRect().width>0),to=[...menu.querySelectorAll(targets)];
-      if(reduced())return;
-      if(!menu.open){const returning=[...from,...menu.querySelectorAll('.people-overflow,.directory-overflow')].filter(a=>a.getBoundingClientRect().width>0);returning.forEach((avatar,index)=>animations.push(avatar.animate([{opacity:0,transform:'translateY(.5rem)'},{opacity:1,transform:'translateY(0)'}],{duration:180,delay:index*50,fill:'backwards',easing:'ease-out'})));return}
+      animations.forEach(a=>a.cancel());animations=[];register();
+      const to=[...menu.querySelectorAll(targets)];
+      if(reduced()||!menu.open)return;
       const list=menu.querySelector(panel);
       if(list)animations.push(list.animate([{opacity:0},{opacity:1}],{duration:160,delay:90,fill:'backwards',easing:'ease-out'}));
-      from.forEach((avatar,index)=>animations.push(avatar.animate([{opacity:1,transform:'translateY(0)'},{opacity:0,transform:'translateY(.5rem)'}],{duration:180,delay:index*50,fill:'backwards',easing:'ease-in'})));
       to.forEach((avatar,index)=>animations.push(avatar.animate([{opacity:0,transform:'scale(.94)'},{opacity:1,transform:'scale(1)'}],{duration:180,delay:110+index*45,fill:'backwards',easing:'ease-out'})));
 
     });
