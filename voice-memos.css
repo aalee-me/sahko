@@ -52,3 +52,10 @@ body .voice-thought .void-voice-controls{align-items:center}
 body .voice-thought .memo-playback{grid-template-columns:1.75rem 2.75rem 1.75rem;justify-content:center;margin-inline:auto}
 body .voice-thought .memo-length{width:100%;justify-content:center;text-align:center}
 body .voice-thought .memo-transcript{align-self:stretch}
+/* Playback is one compact component; transcript and timestamp align to its edges. */
+body .constellation-thought.voice-thought{width:max-content!important;min-width:0}
+body .voice-thought .void-voice-controls{width:max-content;max-width:100%;align-items:stretch}
+body .voice-thought .memo-playback{margin:0!important;justify-content:center!important}
+body .voice-thought .memo-transcript{width:7.125rem;max-width:calc(100% - 1rem);margin:.25rem .5rem 0!important}
+body .voice-thought .memo-transcript-preview{max-width:100%!important}
+body .voice-thought>.constellation-time{margin:.25rem .5rem 0 0!important}

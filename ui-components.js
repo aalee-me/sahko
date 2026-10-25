@@ -14,9 +14,12 @@
     skip:'<path d="m6 5 10 7-10 7ZM18 5v14"/>',
     checklist:'<rect x="4" y="4" width="16" height="16" rx="3"/><path d="m8 12 3 3 5-6"/>',
     menu:'<circle cx="5" cy="6" r="1"/><circle cx="5" cy="12" r="1"/><circle cx="5" cy="18" r="1"/><path d="M9 6h11M9 12h11M9 18h11"/>',
+    home:'<path d="m4 10 8-7 8 7v10h-6v-6h-4v6H4Z"/>',
+    leave:'<path d="M9 4H5v16h4M14 8l4 4-4 4M8 12h10"/>',
     desktop:'<rect x="3" y="4" width="18" height="13" rx="3"/><path d="M8 21h8M12 17v4"/>'
   };
   function iconSVG(name){if(!iconPaths[name])throw new Error('Unknown UI icon: '+name);return '<svg class="ui-icon-svg" data-ui-icon="'+name+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+iconPaths[name]+'</svg>'}
+  function button({label,variant='secondary',icon,className='',onClick,type='button'}={}){const root=node('button','ui-button'+(variant==='primary'?' ui-button--primary':'')+(className?' '+className:''));root.type=type;root.append(node('span','',label||''));if(icon){const holder=document.createElement('template');holder.innerHTML=icon;root.append(holder.content)}if(onClick)root.onclick=onClick;return root}
   function iconLabel({label,icon,className=''}) {
     const root=node('span','ui-icon-label '+className);
     if(icon)root.innerHTML=icon;
@@ -36,5 +39,5 @@
       extra.setAttribute('aria-hidden','true');summary.insertBefore(extra,summary.querySelector('.directory-chevron'));
     }
   }
-  window.SahkoUI={iconSVG,iconLabel,roomHeader,rosterOverflow};
+  window.SahkoUI={button,iconSVG,iconLabel,roomHeader,rosterOverflow};
 })();

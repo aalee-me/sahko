@@ -5,3 +5,12 @@
 
 .insights-sample{font-size:.75rem;color:var(--muted);line-height:1.4;margin:.5rem 0 1rem}
 .profile-insight-stat .insight-detail{display:block;font-size:.6875rem;color:var(--muted);line-height:1.4;margin-top:.5rem}
+/* Header utilities share a centered target; the profile is always trailing. */
+body>header .nav{align-items:center}
+body :is(.onboard-header,.nav)>.my-profile-trigger{order:40;display:grid!important;place-items:center;box-sizing:border-box;flex:0 0 2.25rem;width:2.25rem!important;min-width:2.25rem;height:2.25rem!important;min-height:2.25rem;margin:0!important;padding:0!important;border:0!important;border-radius:50%!important;background:transparent!important;box-shadow:none!important;outline:none}
+body :is(.onboard-header,.nav)>.my-profile-trigger>:is(img,.profile-initial){display:grid;place-items:center;box-sizing:border-box;flex:none;width:1.75rem;height:1.75rem;min-width:1.75rem;min-height:1.75rem;margin:0;padding:0;border-radius:50%;line-height:1;object-fit:cover}
+body :is(.onboard-header,.nav)>.my-profile-trigger:focus-visible{outline:2px solid var(--text);outline-offset:2px}
+body :is(.onboard-header,.nav)>.header-pair{order:20;min-height:2.25rem;margin:0;align-items:center;justify-content:center}
+body :is(.onboard-header,.nav)>.open-settings{order:30;display:grid;place-items:center;box-sizing:border-box;flex:0 0 2.25rem;width:2.25rem;height:2.25rem;padding:0!important;margin:0;border-radius:50%}
+body :is(.onboard-header,.nav)>:is(.header-pair,.open-settings)>svg{display:block;width:1.25rem;height:1.25rem;margin:0}
+.my-profile::backdrop{backdrop-filter:none;background:#0003}
