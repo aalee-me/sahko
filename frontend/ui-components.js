@@ -10,6 +10,8 @@
     expand:'<path d="M9 3H3v6M15 3h6v6M21 15v6h-6M9 21H3v-6M3 3l6 6M21 21l-6-6"/>',
     person:'<circle cx="12" cy="7" r="3"/><path d="M5 20v-2a7 7 0 0 1 14 0v2"/>',
     copy:'<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V4H4v12h4"/>',
+    info:'<circle cx="12" cy="12" r="8"/><path d="M12 11v5M12 8h.01"/>',
+    cloudSend:'<path d="M6 18H5a4 4 0 0 1-.6-8A6 6 0 0 1 16 7a5 5 0 0 1 3 9.6M12 21V11m-4 4 4-4 4 4"/>',
     share:'<path d="M12 15V3m-4 4 4-4 4 4M5 12v8h14v-8"/>',
     pause:'<path d="M9 5v14M15 5v14"/>',
     play:'<path d="m9 5 10 7-10 7Z"/>',

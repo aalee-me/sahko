@@ -40,3 +40,9 @@ Capture exports a PNG locally using an offscreen canvas; it makes no network req
 ## Validation
 
 `backend/clouds.test.mjs` covers feature gating, anonymous privacy, origin checks, validation, nonce retries, reaction uniqueness/undo, expiry and rate limits. `tests/clouds.cjs` exercises private-first navigation, cross-tab local resonance, unchanged originals, voice exclusion, native clipboard paste, local persistence and redacted/high-resolution PNG export.
+
+## Navigation and quiet thought actions
+
+The viewport uses mandatory full-tier snapping. Wheel/trackpad intent starts a 920 ms eased vertical transition; lingering momentum cannot bounce immediately into another tier. Native touch scrolling retains snap points, and reduced motion skips the animated travel. The organized private thought list keeps its own scrolling before transitioning at its edge.
+
+Thought actions are shared 24 px SVG controls: Copy text, Send a copy into the clouds, and Info. Explanations appear only in the explicitly opened info card. Short success/error feedback remains inline. Public explanatory copy is also behind Info; the Local demo/Anonymous scope badge stays visible. Help cards overlay the field without resizing it or shifting their trigger buttons. `tests/clouds-controls.cjs` checks the vectors, opt-in help, phone bounds, clipboard/release, eased intermediate scroll positions, two-way snapping and reduced motion.
