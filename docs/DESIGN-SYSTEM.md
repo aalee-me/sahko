@@ -146,3 +146,5 @@ Roster transitions never move portraits to list coordinates; orbital portraits n
 The session-menu SVG morphs its existing list strokes and dots into an X and reverses on close; the menu panel retains its original slide animation. Sent thoughts retain the upward 750ms motion, now measured against the selected message’s text bounds. The message is revealed at landing and remains visible for one second before fading.
 
 Closing a people menu fades the list over 120ms, then returns the header portraits and +N indicator upward by .5rem over 180ms with the same 50ms stagger. Reduced motion closes immediately.
+
+Task lists share `.task-surface` across setup, check-in and Tasks: 14px task text, 12px muted headings/actions, 11px creation dates and a 2px text-to-date gap, all expressed in rem. Rows size to their content; popovers use a 1rem inset. Tasks has no exit action. Check-in and exit confirmation use Exit session with the menu’s exit vector.
