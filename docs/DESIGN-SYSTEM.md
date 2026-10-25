@@ -186,3 +186,13 @@ Pair desktop reveals a floating identification pill without moving adjacent cont
 `frontend/ui-preferences.js` adds local visibility switches: task dates are shown by default and can be hidden; photo-upload controls are hidden by default, including demo participant uploads. These switches do not delete stored dates/photos. `frontend/compact-roster.js` adds available handles and expands compact participant actions inline within the existing Orbiters dropdown. Functional person actions use shared SVG icons; no second member profile pane opens in compact mode.
 
 Closed/Open cards use the shared person/people vectors, consistent 1rem padding and no resting border. Invite friends has a leading people icon and adjacent external arrow; its selected count owns the opposite corner. Its search has one rounded focus boundary.
+
+## Session refinements (refine16)
+
+Closed/Open setup choices share a 0.25rem vertical gap and 4.25rem minimum row height. Desktop timer spacing uses `--desktop-timer-gap` (default 0.375rem), adjustable under Settings. Mobile retains its existing compact gap. The optional PiP scroll-to-controls setting moves the controls below the first viewport without changing regular desktop layouts. Checkpoint recap and exit controls share the same type and control sizing.
+
+Progress segment tooltips have three rows: block identity, projected clock time, and the muted caption “projected start.” The completion marker retains its separate percent tooltip. The returning-user popup sits at the right with the check-up countdown above its action.
+
+`recap-art.js` and `recap-art.css` own the supplied SVG layer composition, slow continuous movement, page crossfades, reduced-motion behavior, and shared PNG export composition. Original supplied assets live under `frontend/assets/recap/`; they contain their original gradients and embedded image data. No generated grain is added. Recap shell, pages, timeline and footer center on the same axis.
+
+Task persistence is documented in [TASK-PERSISTENCE.md](TASK-PERSISTENCE.md). `plan-storage.js` owns device-local snapshots and recovery; task UI must wait for recovery before editing and must not swallow save failures.
