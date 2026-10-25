@@ -1,7 +1,7 @@
 /* Additive 200vh space: the original Void stays below a separate public field. */
-body #voidSpace.clouds-enabled{display:block;overflow-x:hidden;overflow-y:auto;scroll-snap-type:y proximity;overscroll-behavior-y:contain;scrollbar-width:none;scroll-behavior:smooth}
+body #voidSpace.clouds-enabled{display:block;overflow-x:hidden;overflow-y:auto;scroll-snap-type:y mandatory;overscroll-behavior-y:contain;scrollbar-width:none;scroll-behavior:smooth}
 body #voidSpace.clouds-enabled .clouds-stack{height:200dvh;min-height:200dvh;display:flex;flex-direction:column}
-.clouds-public-tier,.clouds-private-tier{position:relative;box-sizing:border-box;flex:0 0 100dvh;height:100dvh;min-height:100dvh;scroll-snap-align:start;overflow:hidden}
+.clouds-public-tier,.clouds-private-tier{position:relative;box-sizing:border-box;flex:0 0 100dvh;height:100dvh;min-height:100dvh;scroll-snap-align:start;scroll-snap-stop:always;overflow:hidden}
 .clouds-private-tier{display:flex;flex-direction:column;background:var(--canvas);color:var(--text)}
 body #voidSpace .clouds-private-tier>.space-header{flex:none;padding-top:3rem}
 body #voidSpace .clouds-private-tier>.constellation-viewport{flex:1;min-height:0;height:auto!important;overscroll-behavior-y:auto;touch-action:pan-y}
@@ -41,3 +41,21 @@ body.in-clouds :is(#voidComposer,#sessionBottomDock:not(.checkin-dock)) *{pointe
 .cloud-resonate:disabled{opacity:.65}
 
 .clouds-recording-notice{margin:0;padding:.375rem 5vw;font:.75rem/1.4 sans-serif;color:#dac189}.clouds-recording-notice[hidden]{display:none}
+
+/* Match the shared 24px vectors and keep help behind an explicit info control. */
+body #voidSpace.clouds-enabled.is-clouds-traveling{scroll-snap-type:none;scroll-behavior:auto}
+.void-thought-actions{width:8.125rem;max-width:calc(100% - 1.5rem);padding:.375rem;gap:0}
+.clouds-action-row{display:flex;align-items:center;gap:.25rem}
+.void-thought-actions .clouds-action-row>button,.clouds-public-info{display:grid;place-items:center;flex:none;width:2.25rem;height:2.25rem;min-height:2.25rem;box-sizing:border-box;padding:.375rem;border:0;border-radius:.625rem;background:transparent;color:var(--muted);cursor:pointer}
+.clouds-action-row svg,.clouds-public-info svg{display:block;width:1.5rem;height:1.5rem;stroke-width:1.5}
+.clouds-action-row button:hover,.clouds-action-row button:focus-visible{color:var(--text);background:var(--surface-hover)}
+.clouds-action-row button[aria-expanded=true]{color:var(--action-accent)}
+.clouds-info-card{max-width:16rem;padding:.75rem;border-radius:.75rem;background:var(--surface-raised);border:1px solid var(--line);color:var(--muted);font:400 .75rem/1.5 'DM Sans',sans-serif}
+.clouds-info-card p{margin:0}.clouds-info-card p+p{margin-top:.5rem}.clouds-info-card[hidden]{display:none}
+.void-thought-actions .clouds-info-card{position:absolute;bottom:calc(100% + .5rem);width:17.5rem;max-width:calc(100vw - 1.5rem);box-sizing:border-box;margin:0;padding:.75rem;box-shadow:0 .5rem 2rem #0004}
+.clouds-action-status:empty{display:none}.clouds-action-status{max-width:16rem;margin:.5rem;padding:.125rem 0}
+.clouds-public-info{color:#aaa5b4}.clouds-public-info:hover,.clouds-public-info[aria-expanded=true]{color:#e8e4dc;background:#ffffff0a}
+.clouds-public-info-card{position:absolute;right:5vw;z-index:4;box-sizing:border-box;margin:0;background:#18151f;border-color:#494151;color:#bcb2c7}
+.clouds-info-card .clouds-mode{padding:0;font:inherit;color:inherit}
+.clouds-mode-badge{display:block;margin-top:.375rem;font:.625rem/1.4 'DM Sans',sans-serif;color:#a49aad}
+@media(prefers-reduced-motion:reduce){body #voidSpace.clouds-enabled{scroll-behavior:auto}}
