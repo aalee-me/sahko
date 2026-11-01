@@ -9,6 +9,7 @@
 .people-count{display:none!important}.people-menu>summary{gap:5px}.people-chevron{display:grid;place-items:center;width:32px;height:32px;flex:0 0 32px;border:2px solid var(--text);border-radius:50%;background:var(--surface-raised);color:var(--text);font-size:1.0625rem}.people-stack{padding-left:10px}.people-stack img,.people-stack .portrait-fallback{border-color:var(--text)}
 @media(max-width:759px){.people-chevron{width:30px;height:30px;flex-basis:30px}}
 
-.room-demo-badge{display:block;grid-column:1/-1;margin:.5rem 0 0;color:var(--muted);font:.6875rem/1.4 'DM Sans',sans-serif;letter-spacing:.015em}
 .room-audience-group{display:flex;flex-direction:column;gap:.5rem;margin:0 0 .5rem}
 .room-audience-group>.settings-help{margin:0}
+.room-demo-label{display:inline;white-space:nowrap;color:var(--muted);font:500 .625em/1.2 'DM Sans',sans-serif;letter-spacing:.025em;margin-left:.35em}
+.workspace h1[data-demo-room=true]:after{content:' [DEMO]';white-space:nowrap;color:var(--muted);font:500 .625em/1.2 'DM Sans',sans-serif;letter-spacing:.025em}
