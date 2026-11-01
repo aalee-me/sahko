@@ -99,7 +99,11 @@
  const clockSVG=SahkoUI.iconSVG('clock'),focusSVG=SahkoUI.iconSVG('block');
  const hourglassSVG=SahkoUI.iconSVG('hourglass');
  function roomDuration(room){return SahkoUI.iconLabel({className:'room-plan-duration',icon:hourglassSVG,label:'Blocks: '+(room.focusSeconds||1500)/60+' min · Breaks: '+(room.breakSeconds??300)/60+' min'})}
- function roomTiming(room){const footer=el('span','room-timing'),minutes=Math.max(0,Math.ceil(((room.endsAt||Date.now())-Date.now())/60000));footer.append(SahkoUI.iconLabel({className:'room-block-label',icon:focusSVG,label:'Block '+(room.sprint||1)+' / '+(room.totalSprints||2)}),SahkoUI.iconLabel({className:'room-time',icon:clockSVG,label:minutes+' min left'}));return footer}
+ function roomTiming(room){const footer=el('span','room-timing'),left=Math.max(0,Math.ceil(((room.endsAt||Date.now())-Date.now())/1000)),minutes=Math.ceil(left/60),block=room.sprint||1,total=room.totalSprints||2,focus=room.focusSeconds||1500,rest=room.breakSeconds??300,future=Math.max(0,total-block),remaining=room.phase==='complete'?0:left+future*focus+Math.max(0,future-(room.phase==='break'?1:0))*rest;
+ const blockLabel=SahkoUI.iconLabel({className:'room-block-label',icon:focusSVG,label:(room.phase==='break'?'Break after block ':'Block ')+block+' / '+total}),timeLabel=SahkoUI.iconLabel({className:'room-time',icon:clockSVG,label:minutes+' min left'});
+ blockLabel.dataset.tooltip='A block is one focus interval. '+Math.round(focus/60)+' min focus, followed by a '+Math.round(rest/60)+' min break.';timeLabel.dataset.tooltip=minutes+' min left in this '+(room.phase==='break'?'break':'block')+' · '+Math.ceil(remaining/60)+' min left in the full session, including breaks.';
+ for(const label of[blockLabel,timeLabel]){label.tabIndex=0;label.dataset.tooltipPlacement='above'}footer.append(blockLabel,timeLabel);return footer}
+
  const lockSVG=SahkoUI.iconSVG('lock');
  function roomFull(room){return room.full===true||(room.members?.length||0)>=(Number(room.capacity||room.maxMembers)||8)}
  function roomAccess(room,cls){const privateRoom=room.protected||['private','friends'].includes(room.visibility),friendsOnly=!room.demo&&room.visibility==='friends',badge=el('span',cls);badge.dataset.access=privateRoom?'private':'public';badge.dataset.availability=roomFull(room)?'full':'open';badge.innerHTML=friendsOnly?SahkoUI.iconSVG('people'):privateRoom?lockSVG:SahkoUI.iconSVG('person');badge.append(el('span','',(friendsOnly?'Friends only':privateRoom?'Private':'Public')+', '+(roomFull(room)?'full':'open')));return badge}

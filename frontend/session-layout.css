@@ -146,3 +146,13 @@ body #sessionBottomDock .void-dock{min-height:0!important;flex:none}
 
 /* Fade only the orbital renderer where the layout/dock clips its lower edge. */
 body .workspace #originalOrbital{--orbital-fade-end:100%;--orbital-fade-start:calc(100% - 4rem);-webkit-mask-image:linear-gradient(to bottom,#000 0,#000 var(--orbital-fade-start),transparent var(--orbital-fade-end))!important;mask-image:linear-gradient(to bottom,#000 0,#000 var(--orbital-fade-start),transparent var(--orbital-fade-end))!important}
+
+/* Code and bare actions stay in one measured row on room info cards. */
+body #onboarding#onboarding .ui-room-header .room-code-tools{width:max-content;min-width:0;max-width:100%}
+body #onboarding#onboarding .room-code-tools:before{content:none!important}
+body #onboarding#onboarding .room-code-line{display:flex;align-items:center;gap:.25rem;min-width:0;max-width:100%}
+body #onboarding#onboarding .room-code-line>output{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+body #onboarding#onboarding .ui-room-header .code-action-pill{position:static!important;inset:auto!important;translate:none!important;display:flex;align-items:center;flex:0 0 auto;gap:.125rem;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:none!important;box-shadow:none!important}
+body #onboarding#onboarding .ui-room-header .code-action-pill>button{position:relative!important;inset:auto!important;display:grid;place-items:center;box-sizing:border-box;flex:0 0 auto;width:1.75rem!important;min-width:1.75rem!important;height:1.75rem!important;margin:0!important;padding:.25rem!important;border:0!important;background:none!important}
+body #onboarding#onboarding .ui-room-header .code-action-pill>button.copied{display:flex!important;width:auto!important;min-width:4.5rem!important;padding:.25rem .5rem!important}
+body #onboarding#onboarding .room-timing>span:focus-visible{outline:2px solid var(--action-accent);outline-offset:3px;border-radius:.25rem}

@@ -13,3 +13,11 @@
 .account-friend-form>input{min-width:0;min-height:var(--control-height);border:1px solid var(--line);border-radius:999px;padding:.625rem .875rem;font:var(--text-label)/var(--leading-label) 'DM Sans',sans-serif;color:var(--text);background:var(--surface-raised)}
 .account-friend-form>button{margin:0;padding:.625rem 1rem;font:var(--text-label)/var(--leading-label) 'DM Sans',sans-serif}
 .account-friend-form>.account-status{grid-column:1/-1}
+
+/* Account actions use the same control atom as the rest of the application. */
+body .my-profile .account-panel .ui-button{box-sizing:border-box;min-width:0;max-width:100%;min-height:var(--control-height);margin:0;padding:.625rem 1rem;border-radius:var(--radius-pill,999px);font:var(--text-label)/var(--leading-label) 'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:.5rem;white-space:normal}
+body .my-profile .account-panel .ui-button--primary{background:var(--action-accent);border-color:transparent;color:var(--on-action)}
+body .my-profile .account-panel .account-mode{margin:0;width:100%}
+body .my-profile .account-panel .account-mode>button{background:transparent!important;border:0!important}
+body .my-profile .account-form>.account-forgot{align-self:flex-end;min-height:1.75rem;padding:0 .125rem;background:transparent;border:0;border-radius:.25rem;font:.75rem/1.4 'DM Sans',sans-serif;color:var(--muted)}
+body .my-profile .account-form>.account-forgot:hover{color:var(--text);text-decoration:underline}

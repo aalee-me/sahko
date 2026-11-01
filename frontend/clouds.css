@@ -70,7 +70,7 @@ body #voidSpace.clouds-enabled.is-clouds-traveling{scroll-snap-type:none;scroll-
 .constellation-viewfinder>img{display:block;width:100%;height:100%;object-fit:contain}
 .viewfinder-corner{position:absolute;z-index:1;width:1.5rem;height:1.5rem;border:0 solid var(--muted);pointer-events:none}.viewfinder-corner.tl{top:.75rem;left:.75rem;border-top-width:1px;border-left-width:1px}.viewfinder-corner.tr{top:.75rem;right:.75rem;border-top-width:1px;border-right-width:1px}.viewfinder-corner.bl{bottom:.75rem;left:.75rem;border-bottom-width:1px;border-left-width:1px}.viewfinder-corner.br{bottom:.75rem;right:.75rem;border-bottom-width:1px;border-right-width:1px}
 .constellation-camera-controls{display:flex;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap;margin-top:1rem}
-.constellation-camera-controls .constellation-text-toggle{display:flex;align-items:center;gap:.75rem;margin:0;padding:0;font:.8125rem/1.4 'DM Sans',sans-serif}.constellation-text-toggle input{width:1.125rem;height:1.125rem;margin:0;flex:none}
+.constellation-camera-controls :is(.constellation-text-toggle,.constellation-time-toggle){display:flex;align-items:center;gap:.75rem;margin:0;padding:0;font:.8125rem/1.4 'DM Sans',sans-serif}.constellation-text-toggle input{width:1.125rem;height:1.125rem;margin:0;flex:none}
 .constellation-camera-controls .ui-button{display:flex;align-items:center;justify-content:center;gap:.5rem;min-height:2.5rem;margin:0;padding:.625rem 1rem;border-radius:999px;font:.8125rem/1.4 'DM Sans',sans-serif}.constellation-camera-controls .ui-button svg{width:1.125rem;height:1.125rem}
 .constellation-camera-status{margin:.5rem 0 0;color:var(--muted);font:.75rem/1.4 'DM Sans',sans-serif}.constellation-camera-status:empty{display:none}
 @keyframes constellation-camera-open{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
@@ -106,10 +106,10 @@ body #voidSpace .clouds-stack{position:relative;background:var(--canvas)}
 .clouds-public-tier:after,.clouds-private-tier:before{content:none}
 .clouds-title{position:absolute;top:1.25rem;left:var(--session-header-left,5vw);z-index:3;margin:0;font:400 1.5rem/1.3 Manrope,sans-serif;letter-spacing:-.025em;color:var(--text)}
 /* Reuse the real session navigation, including profile, instead of a second bar. */
-body.in-void:not(.in-clouds)>header{position:relative;z-index:81;background:transparent}
-body.in-clouds>header{visibility:hidden;pointer-events:none}
-body #voidSpace .clouds-private-tier>.space-header{box-sizing:border-box;width:var(--session-header-width,90vw);margin-left:var(--session-header-left,5vw);padding:calc(var(--void-header-height,5.125rem) + 1.25rem) 0 0;gap:0}
-body #voidSpace .clouds-private-tier>.clouds-tether{top:calc(var(--void-header-height,5.125rem) + 1.25rem)}
+body.in-void>header{position:relative;z-index:81;background:transparent}
+body.in-clouds>header{visibility:visible;pointer-events:auto}
+body #voidSpace .clouds-private-tier>.space-header{box-sizing:border-box;width:var(--session-header-width,90vw);margin-left:var(--session-header-left,5vw);padding:calc(var(--void-header-height,5.125rem) + .375rem) 0 0;gap:0}
+body #voidSpace .clouds-private-tier>.clouds-tether{top:calc(var(--void-header-height,5.125rem) + .375rem)}
 
 body.in-void:not(.in-clouds) :is(#voidComposer,#sessionBottomDock:not(.checkin-dock)){opacity:var(--void-tier-opacity,1)!important;transition:opacity .12s linear}
 @media(prefers-reduced-motion:reduce){body.in-void :is(#voidComposer,#sessionBottomDock){transition:none}}
@@ -129,3 +129,6 @@ body .room-action-rail:not([data-context=void])>.void-menu-action{display:none!i
 .void-clear-actions{display:flex;justify-content:flex-end;gap:.5rem;margin-top:1.25rem}
 .void-clear-status:empty,.void-storage-settings>.settings-help:empty{display:none}
 .void-clear-dialog .void-clear-status{margin-top:.75rem;color:var(--warning)}
+
+body.in-clouds .clouds-title{top:calc(var(--void-header-height,5.125rem) + .375rem)}
+body.in-clouds .clouds-corner-tools{top:calc(var(--void-header-height,5.125rem) + .375rem)}
