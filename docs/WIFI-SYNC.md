@@ -1,8 +1,8 @@
 # Same-Wi-Fi session sync
 
-No relay hosting or subscription is required. Your Mac runs a local Node HTTPS server and SQLite database; your own Wi-Fi and electricity are the only ongoing resources. No router port forwarding, cloud account, tunnel or deployment is needed. Node 24, mkcert and Homebrew are free. The separate internet relay remains undeployed.
+No relay hosting or subscription is required. Your Mac runs a local Node HTTPS server and SQLite database; your own Wi-Fi and electricity are the only ongoing resources. No router port forwarding, cloud account, tunnel or deployment is needed. Node 24, mkcert and Homebrew are free. The separate Sites internet relay remains undeployed. Free browser-to-browser internet rooms are now available on the GitHub site; see [INTERNET-MULTIPLAYER.md](INTERNET-MULTIPLAYER.md).
 
-This is a developer setup, not yet a server bundled inside the Mac app. You need the source checkout and must leave the terminal process running. The latest Mac download includes the Wi-Fi address setting. The phone receives the same desktop session ID, timer and group state, can send Jolts, and can send opt-in pickup estimates into that session’s recap. Private thoughts/audio stay on their originating device and are not transferred by the pairing relay.
+The Wi-Fi server now supports real multiplayer rooms as well as desktop-to-phone pairing. This is a developer setup, not yet a server bundled inside the Mac app. You need the source checkout and must leave the terminal process running. The latest Mac download includes the Wi-Fi address setting. The phone receives the same desktop session ID, timer and group state, can send Jolts, and can send opt-in pickup estimates into that session’s recap. Private thoughts/audio stay on their originating device and are not transferred by the pairing relay.
 
 ## One-time setup on your Mac
 
@@ -16,11 +16,20 @@ This is a developer setup, not yet a server bundled inside the Mac app. You need
 
 1. Connect both devices to the same trusted Wi-Fi, then run `npm run wifi` on the Mac. Allow Node local network access in the macOS firewall if prompted. The local listener uses port 8443.
 2. In Sähkö for Mac → Settings → Phone connection, enter the printed HTTPS address and choose **Use Wi-Fi**. The session window reloads from the local server. Start your session there. Existing GitHub-site sessions/history are separate and are not automatically moved.
-3. Choose **Create pairing code** in Mac Settings. On the phone, open the same printed HTTPS address in Safari/Chrome, choose **Pair desktop**, and enter the code. The code expires after ten minutes and can be used once. The phone pairing-page link in Mac Settings already includes the code.
+3. In the session header, choose **Pair desktop → Connect phone → Show connection code**. On the phone, open the same printed HTTPS address in Safari/Chrome, choose **Pair desktop → Enter code**, and enter the large code. You can also use **Create pairing code** in native Mac Settings. The code expires after ten minutes and can be used once. The phone pairing-page link in Mac Settings already includes the code.
 4. On the phone, optionally choose **Enable pickup detection**, allow motion permission, and set it down still for two seconds. Keep this minimal companion screen open. A calibrated movement/tilt is an estimated pickup, not a guaranteed hardware counter. Web motion collection pauses while the page is hidden or the phone is locked.
 5. Keep the Mac awake and the terminal running. End the session normally to save its recap. Revoke phone access in Mac Settings when desired. Stop the relay with Control-C.
 
-The pairing API accepts only capability-authorized operations. It does not expose the development server’s account, friends or room-management APIs on the LAN. This version mirrors one desktop session to its phone; it does not add internet multiplayer or shared private memo storage. State polls every two/three seconds. Losing Wi-Fi marks the phone offline; pending pickup events retry and are deduplicated by event ID. Stale-session events are discarded.
+## Multiplayer rooms on the same Wi-Fi
+
+1. Everyone opens the **same printed local HTTPS address**, with its certificate trusted on each device. Keep the server running on one Mac.
+2. The host creates an **Open** session and shares the **room code**. Each friend uses **Search for room** to find that code and joins; password-protected rooms still require the password.
+3. Everyone receives the real roster, shared timer and jolts. Only the room owner can pause, skip, adjust the timer or transfer ownership. Use distinct devices or separate browser profiles to test separate people; tabs in one profile represent the same person.
+4. Pairing a phone is a separate operation: it mirrors a desktop session instead of adding the same person twice to the room. Codes expire after ten minutes and can be used once. Generating a new code invalidates the old code; disconnecting revokes phone access.
+
+The LAN server issues a random Secure, HttpOnly, SameSite cookie and hashes it into a local identity. It ignores supplied development/authentication headers. Browser-client IDs remain separate, and room membership/ownership is checked by the same backend used for hosted rooms. Clearing browser cookies loses that local identity. This is for a trusted Wi-Fi network, not public hosting. No login provider, paid service or internet deployment is added. Private thoughts, audio, task storage and recap archives stay on their originating device; the Clouds remain local-demo only. Photo uploads are unavailable on this relay.
+
+The pairing API accepts only capability-authorized operations. This adds Wi-Fi multiplayer, not internet multiplayer or shared private memo storage. State polls every two/three seconds. Losing Wi-Fi marks the phone offline; pending pickup events retry and are deduplicated by event ID. Stale-session events are discarded.
 
 ## Troubleshooting
 
