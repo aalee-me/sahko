@@ -138,3 +138,8 @@ body #sessionRecap .recap-share-card>.recap-timeline{box-sizing:border-box;width
 .recap-private-log h3{font:500 .875rem/1.4 'DM Sans',sans-serif;color:var(--muted);margin:0 0 .5rem}
 .recap-private-log ol{list-style:none;padding:0;margin:0}.recap-private-log li{padding:.75rem 0;border-bottom:1px solid var(--line)}
 .recap-private-log li>time{display:block;color:var(--muted);font-size:.6875rem;margin-bottom:.375rem}.recap-private-log li>p{margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
+
+/* The private composer and spaces switcher share a flow layout at every size. */
+body.in-void #sessionBottomDock .void-dock>#voidComposer{position:relative!important;inset:auto!important;display:block;box-sizing:border-box;width:100%!important;max-width:100%!important;margin:0!important;padding:0!important;flex:none}
+body.in-void #sessionBottomDock .void-dock{min-height:0!important;flex:none}
+body.in-void #sessionBottomDock{row-gap:.625rem}

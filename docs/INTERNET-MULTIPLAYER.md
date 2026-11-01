@@ -1,5 +1,7 @@
 # Free internet rooms and phone pairing
 
+Account-backed rooms and a global public/friends directory can now be connected with a Free Supabase project: see [ACCOUNTS-SETUP.md](ACCOUNTS-SETUP.md). In that mode, room state and ownership survive the creator closing their tab. Until configured, the guest peer-to-peer behavior and limitations below still apply.
+
 The GitHub Pages app uses PeerJS Cloud for free signaling and WebRTC data channels for session traffic. No hosting account, paid API key, paid plan, TURN subscription, or database deployment is configured. See https://peerjs.com/client/faq and https://peerjs.com/server/cloud for the service's current terms and limitations. The community signaling service has no availability guarantee; it is appropriate for this demo.
 
 ## Use it

@@ -5,7 +5,7 @@ const root=path.dirname(fileURLToPath(import.meta.url)),out=path.join(root,'page
 fs.rmSync(out,{recursive:true,force:true});
 fs.cpSync(path.join(root,'frontend'),out,{recursive:true,filter:source=>path.basename(source)!=='original-studio.html'});
 const entry=path.join(out,'index.html');
-fs.writeFileSync(entry,fs.readFileSync(entry,'utf8').replace('</head>','<script src="static-demo.js"></script></head>'));
+fs.writeFileSync(entry,fs.readFileSync(entry,'utf8').replace('</head>','<script src="static-demo.js?v=accounts23"></script></head>'));
 fs.writeFileSync(path.join(out,'.nojekyll'),'');
 console.log('GitHub Pages desktop and mobile demo:',out);
 // The browser host reuses the exact room authorization/timer API in memory.

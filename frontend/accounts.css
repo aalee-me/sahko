@@ -1,0 +1,15 @@
+.account-panel{display:flex;flex-direction:column;gap:1rem;max-width:30rem}
+.account-panel h2,.account-panel p{margin:0}
+.account-form{display:flex;flex-direction:column;gap:var(--space-3);margin:0}
+.account-field{display:flex;flex-direction:column;gap:.375rem;color:var(--muted);font:var(--text-label,.8125rem)/1.4 'DM Sans',sans-serif}
+.account-field>input{box-sizing:border-box;width:100%;min-height:var(--control-height);margin:0;padding:.625rem .875rem;font:var(--text-label)/var(--leading-body) 'DM Sans',sans-serif;background:var(--surface-raised);border:1px solid var(--line);border-radius:var(--radius-input);color:var(--text)}
+.account-form>.ui-button,.account-panel>.ui-button{display:flex;align-items:center;justify-content:center;min-height:var(--control-height);margin:0;padding:.625rem 1rem;font:var(--text-label)/var(--leading-label) 'DM Sans',sans-serif;border-radius:999px}
+.account-error{color:var(--danger,#dc6666)}
+.account-status,.account-setup-note{font:.8125rem/1.5 'DM Sans',sans-serif;color:var(--muted)}
+.account-status:empty{display:none}.account-guest-tag{font:var(--text-label)/var(--leading-label) 'DM Sans',sans-serif;color:var(--text)}
+.account-mode{width:100%;margin:0}.account-panel .settings-help{font:.75rem/1.5 'DM Sans',sans-serif}
+
+.account-friend-form{display:grid;grid-template-columns:minmax(0,1fr)auto;gap:.5rem;margin:.75rem 0}
+.account-friend-form>input{min-width:0;min-height:var(--control-height);border:1px solid var(--line);border-radius:999px;padding:.625rem .875rem;font:var(--text-label)/var(--leading-label) 'DM Sans',sans-serif;color:var(--text);background:var(--surface-raised)}
+.account-friend-form>button{margin:0;padding:.625rem 1rem;font:var(--text-label)/var(--leading-label) 'DM Sans',sans-serif}
+.account-friend-form>.account-status{grid-column:1/-1}
