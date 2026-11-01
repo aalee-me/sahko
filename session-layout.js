@@ -12,3 +12,19 @@
  progress.addEventListener('sahko:timeline',event=>{const {durations}=event.detail,current=durations.findIndex(p=>p.index===sprint&&p.kind===(onBreak?'break':'focus'));let before=durations.slice(0,Math.max(0,current)).reduce((n,p)=>n+p.seconds,0),currentLength=durations[current]?.seconds||0,now=window.sahkoNow?.()??Date.now(),start=now-(before+currentLength-remaining)*1000,cursor=0;const pieces=svg.querySelectorAll('.session-timeline-segments>.timeline-segment:not(.elapsed)'),keys=new Set();durations.forEach((part,index)=>{const key=part.kind+'-'+part.index;keys.add(key);let hit=hits.get(key);if(!hit){hit=document.createElementNS(svg.namespaceURI,'path');hit.classList.add('timeline-hit');hit.dataset.key=key;hit.setAttribute('tabindex','0');hit.setAttribute('role','img');zones.append(hit);hits.set(key,hit)}hit.setAttribute('d',pieces[index]?.getAttribute('d')||'');const time=new Date(start+cursor*1000).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'});hit.dataset.partLabel=(part.kind==='focus'?'Block ':'Break ')+part.index;hit.dataset.startLabel=time;hit.dataset.kind=part.kind;hit.setAttribute('aria-label',hit.dataset.partLabel+' · Projected start '+time);cursor+=part.seconds});for(const [key,hit]of hits)if(!keys.has(key)){hit.remove();hits.delete(key)}if(active){const hit=hits.get(active.key);if(hit)showSegment(hit,active.x,active.y);else hideSegment()}});
  svg.addEventListener('pointermove',event=>{const hit=event.target.closest('.timeline-hit');if(hit)showSegment(hit,event.clientX,event.clientY);else hideSegment()});svg.addEventListener('pointerleave',hideSegment);dot.addEventListener('pointerenter',hideSegment);zones.addEventListener('focusin',event=>{const hit=event.target.closest('.timeline-hit');if(hit){const p=hit.getPointAtLength(hit.getTotalLength()/2),point=new DOMPoint(p.x,p.y).matrixTransform(hit.getScreenCTM());showSegment(hit,point.x,point.y)}});zones.addEventListener('focusout',hideSegment);tickUI();queue();
 })();
+
+// Follow the actual clipping edge; portraits and timeline keep their original rendering.
+(() => {
+ const orbital=document.getElementById('originalOrbital'),layout=document.querySelector('.layout'),dock=document.getElementById('sessionBottomDock');
+ if(!orbital||!layout||!dock)return;let frame=0;
+ function update(){frame=0;if(document.body.classList.contains('in-void'))return;const r=orbital.getBoundingClientRect();if(!r.height)return;let bottom=r.bottom;
+  for(let parent=orbital.parentElement;parent&&parent!==document.body;parent=parent.parentElement){if(/^(hidden|clip|auto|scroll)$/.test(getComputedStyle(parent).overflowY))bottom=Math.min(bottom,parent.getBoundingClientRect().bottom)}
+  if(getComputedStyle(dock).position==='fixed')bottom=Math.min(bottom,dock.getBoundingClientRect().top);
+  const end=Math.max(0,Math.min(r.height,bottom-r.top)),feather=Math.min(end*.45,(parseFloat(getComputedStyle(document.documentElement).fontSize)||16)*4);
+  orbital.style.setProperty('--orbital-fade-end',end+'px');orbital.style.setProperty('--orbital-fade-start',Math.max(0,end-feather)+'px');
+ }
+ const queue=()=>{if(!frame)frame=requestAnimationFrame(update)};
+ const observer=new ResizeObserver(queue);for(const element of[orbital,layout,dock])observer.observe(element);
+ new MutationObserver(queue).observe(document.body,{attributes:true,attributeFilter:['class']});
+ window.addEventListener('resize',queue);window.visualViewport?.addEventListener('resize',queue);document.addEventListener('scroll',queue,true);queue();
+})();
